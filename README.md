@@ -1,5 +1,4 @@
-# Smart Scheduler
-
+# My Scheduler App
 A full-stack scheduling application that helps users efficiently plan their time by automatically organizing tasks based on priorities, deadlines, and available time slots.
 
 ## About
