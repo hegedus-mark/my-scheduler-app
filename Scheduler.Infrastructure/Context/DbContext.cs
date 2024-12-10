@@ -7,7 +7,7 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
 {
     public DbSet<Day> Days { get; set; }
     public DbSet<Event> Events { get; set; }
-    public DbSet<UnscheduledTask> Tasks { get; set; }
+    public DbSet<TaskItem> Tasks { get; set; }
     public DbSet<UserConfig> UserConfigs { get; set; }
 
     public DbContext(DbContextOptions<DbContext> options) : base(options)

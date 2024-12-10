@@ -1,11 +1,13 @@
 using System.Text;
 using Scheduler.Core.Models;
+using Scheduler.Core.Models.CalendarItems;
+using Scheduler.Core.Models.Results;
 
 namespace Scheduler.Core.Algo;
 
 public class UserTaskScheduler
 {
-    public SchedulingResult ScheduleTasks(List<Day> days, List<UnscheduledTask> unscheduledTasks)
+    public SchedulingResult ScheduleTasks(List<Day> days, List<TaskItem> unscheduledTasks)
     {
         // Validate input parameters
         if (days == null || !days.Any())
@@ -14,12 +16,10 @@ public class UserTaskScheduler
             throw new ArgumentException("Must provide tasks to schedule");
 
         var scheduledTasks = new List<ScheduledTask>();
-        var failedToSchedule = new List<UnscheduledTask>();
+        var failedToSchedule = new List<TaskItem>();
 
-        // Sort days chronologically, could be done outside maybe? 
         var sortedDays = days.OrderBy(d => d.DayDate).ToList();
 
-        // Sort tasks by score in descending order and then by due date
         var sortedTasks = unscheduledTasks
             .OrderByDescending(t => t.Score)
             .ThenBy(t => t.DueDate)
@@ -37,14 +37,10 @@ public class UserTaskScheduler
 
                 if (suitableSlot != null)
                 {
-                    // Create a new TimeSlot for the scheduled task
-                    var scheduledTimeSlot = new TimeSlot(
-                        suitableSlot.Start,
-                        suitableSlot.Start.Add(requiredDuration)
-                    );
-                    
+                    var timeslot = TimeSlot.Create(suitableSlot.Value.Start,
+                        suitableSlot.Value.Start.Add(task.Duration));
                     // Create the ScheduledTask object
-                    var scheduledTask = new ScheduledTask(task, scheduledTimeSlot);
+                    var scheduledTask = new ScheduledTask(task, timeslot);
 
                     // Add the task to the day's calendar
                     day.AddCalendarItem(scheduledTask);
@@ -65,11 +61,7 @@ public class UserTaskScheduler
         return new SchedulingResult(scheduledTasks, failedToSchedule);
     }
 
-    /// <summary>
-    /// Finds the best available time slot for a task with the given duration.
-    /// Prioritizes earlier time slots and tries to minimize fragmentation.
-    /// </summary>
-    private TimeSlot? FindBestTimeSlot(List<TimeSlot> freeSlots, TimeSpan requiredDuration)
+    private TimeSlot? FindBestTimeSlot(IEnumerable<TimeSlot> freeSlots, TimeSpan requiredDuration)
     {
         // Sort slots by start time to ensure we schedule as early as possible
         var sortedSlots = freeSlots
@@ -80,15 +72,16 @@ public class UserTaskScheduler
         if (!sortedSlots.Any())
             return null;
 
-        // First try to find a slot that perfectly matches the required duration
-        var perfectSlot = sortedSlots
-            .FirstOrDefault(s => s.Duration == requiredDuration);
-
-        if (perfectSlot != null)
+        TimeSlot perfectSlot;
+        try
+        {
+            perfectSlot = sortedSlots
+                .First(s => s.Duration == requiredDuration);
             return perfectSlot;
-
-        // Otherwise, return the earliest slot that can accommodate the task
-        return sortedSlots.First();
+        }
+        catch (InvalidOperationException e)
+        {
+            return sortedSlots.First();
+        }
     }
-    
 }

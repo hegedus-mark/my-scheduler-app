@@ -1,12 +1,13 @@
 using Scheduler.Core.Enum;
 
-namespace Scheduler.Core.Models;
+namespace Scheduler.Core.Models.CalendarItems;
 
 public class ScheduledTask : CalendarItem
 {
-    public UnscheduledTask OriginalTask { get; }
+    public TaskItem OriginalTask { get; }
 
-    public ScheduledTask(UnscheduledTask task, TimeSlot assignedTimeSlot) : base(assignedTimeSlot)
+    //For new ScheduledTask
+    public ScheduledTask(TaskItem task, TimeSlot assignedTimeSlot) : base(assignedTimeSlot)
     {
         if (assignedTimeSlot.Duration != task.Duration)
         {
@@ -22,6 +23,13 @@ public class ScheduledTask : CalendarItem
                 nameof(assignedTimeSlot));
         }
 
+        OriginalTask = task;
+    }
+    
+    //For existing ScheduledTask
+    public ScheduledTask(Guid id, TaskItem task, TimeSlot timeSlot)
+        : base(id, timeSlot)
+    {
         OriginalTask = task;
     }
 

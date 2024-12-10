@@ -11,23 +11,23 @@ public class SimpleScoringStrategy : IScoringStrategy
         _userConfig = userConfig;
     }
     
-    public int CalculateScore(UnscheduledTask task)
+    public int CalculateScore(TaskItem taskItem)
     {
         int score = 0;
 
-        TimeSpan timeUntilDue = task.DueDate - DateTime.Today;
+        TimeSpan timeUntilDue = taskItem.DueDate - DateTime.Today;
         score += (int)(100 / (timeUntilDue.TotalDays + 1)); //Just some random formula to score due dates
 
         if (_userConfig.LongestJobFirst)
         {
-            score += (int)task.Duration.Hours * 10;
+            score += (int)taskItem.Duration.Hours * 10;
         }
         else
         {
-            score -= (int)task.Duration.Hours * 10;
+            score -= (int)taskItem.Duration.Hours * 10;
         }
 
-        score += task.PriorityLevel switch
+        score += taskItem.PriorityLevel switch
         {
             PriorityLevel.High => 50,
             PriorityLevel.Medium => 25,
