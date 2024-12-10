@@ -1,0 +1,6 @@
+﻿services:
+  schedularprototype:
+    image: schedularprototype
+    build:
+      context: .
+      dockerfile: SchedularPrototype/Dockerfile
