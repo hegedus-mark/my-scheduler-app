@@ -1,25 +1,21 @@
-using Scheduler.Core.Extensions;
-
 namespace Scheduler.Core.Models;
 
 public readonly record struct TimeSlot
 {
-    public DateOnly Day { get; }
+    private static readonly TimeSpan MinDuration = TimeSpan.FromMinutes(1);
+
+    private TimeSlot(TimeOnly start, TimeOnly end)
+    {
+        Start = start;
+        End = end;
+    }
+
     public TimeOnly Start { get; }
     public TimeOnly End { get; }
 
     public TimeSpan Duration => End - Start;
 
-    private static readonly TimeSpan MinDuration = TimeSpan.FromMinutes(1);
-
-    private TimeSlot(DateOnly day, TimeOnly start, TimeOnly end)
-    {
-        Day = day;
-        Start = start;
-        End = end;
-    }
-
-    public static TimeSlot Create(DateOnly day, TimeOnly start, TimeOnly end)
+    public static TimeSlot Create(TimeOnly start, TimeOnly end)
     {
         if (start >= end)
             throw new ArgumentException("Start time must be before end time.");
@@ -27,51 +23,21 @@ public readonly record struct TimeSlot
         if (end - start < MinDuration)
             throw new ArgumentException("Duration must be at least 1 minute.");
 
-        return new TimeSlot(day, start, end);
+        return new TimeSlot(start, end);
     }
 
-
-    public bool IsInsideTimeSlot(TimeSlot other)
+    public bool Contains(TimeSlot other)
     {
-        return Day == other.Day &&
-               other.Start <= Start &&
-               other.End >= End;
+        return Start <= other.Start && End >= other.End;
     }
-
-    public override string ToString() => $"{Start:HH:mm} - {End:HH:mm}";
 
     public bool Overlaps(TimeSlot other)
     {
-        return Day == other.Day &&
-               Start < other.End &&
-               other.Start < End;
+        return Start < other.End && End > other.Start;
     }
 
-    public bool Contains(DateTime time)
+    public override string ToString()
     {
-        var timeDate = DateOnly.FromDateTime(time);
-        var timeOfDay = TimeOnly.FromDateTime(time);
-
-        return Day == timeDate &&
-               timeOfDay >= Start &&
-               timeOfDay <= End;
-    }
-
-    public bool IsBefore(DateTime dateTime)
-    {
-        var compareDate = dateTime.ToDateOnly();
-        var compareTime = dateTime.ToTimeOnly();
-
-        return Day < compareDate ||
-               (Day == compareDate && End <= compareTime);
-    }
-
-    public bool IsAfter(DateTime dateTime)
-    {
-        var compareDate = dateTime.ToDateOnly();
-        var compareTime = dateTime.ToTimeOnly();
-
-        return Day > compareDate ||
-               (Day == compareDate && Start >= compareTime);
+        return $"{Start:HH:mm} - {End:HH:mm}";
     }
 }

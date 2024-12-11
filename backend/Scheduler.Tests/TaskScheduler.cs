@@ -4,7 +4,6 @@ using Scheduler.Core.Enum;
 using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.Scoring;
-using Xunit;
 
 namespace Tests;
 
@@ -18,13 +17,10 @@ public class UserTaskSchedulerTests
     {
         _mockScoringStrategy = new Mock<IScoringStrategy>();
 
-        _mockScoringStrategy
-            .Setup(s => s.CalculateScore(It.IsAny<TaskItem>()))
-            .Returns(0);
+        _mockScoringStrategy.Setup(s => s.CalculateScore(It.IsAny<TaskItem>())).Returns(0);
 
         _scheduler = new UserTaskScheduler();
     }
-
 
     [Fact]
     public void ScheduleTasks_WithEqualScores_SchedulesByDueDate()
@@ -37,7 +33,7 @@ public class UserTaskSchedulerTests
         {
             CreateTestTask(1, "Later Due Date", today.AddDays(3), TimeSpan.FromHours(1)),
             CreateTestTask(2, "Middle Due Date", today.AddDays(2), TimeSpan.FromHours(1)),
-            CreateTestTask(3, "Earlier Due Date", today.AddDays(1), TimeSpan.FromHours(1))
+            CreateTestTask(3, "Earlier Due Date", today.AddDays(1), TimeSpan.FromHours(1)),
         };
 
         // Act
@@ -80,9 +76,21 @@ public class UserTaskSchedulerTests
         // Create tasks with same due date but different priorities
         var tasks = new List<TaskItem>
         {
-            CreateTestTask(1, "Low Priority Task", commonDueDate, TimeSpan.FromHours(1), PriorityLevel.Low),
-            CreateTestTask(2, "High Priority Task", commonDueDate, TimeSpan.FromHours(1), PriorityLevel.High),
-            CreateTestTask(3, "Medium Priority Task", commonDueDate, TimeSpan.FromHours(1), PriorityLevel.Medium)
+            CreateTestTask(
+                1,
+                "Low Priority Task",
+                commonDueDate,
+                TimeSpan.FromHours(1),
+                PriorityLevel.Low
+            ),
+            CreateTestTask(
+                2,
+                "High Priority Task",
+                commonDueDate,
+                TimeSpan.FromHours(1),
+                PriorityLevel.High
+            ),
+            CreateTestTask(3, "Medium Priority Task", commonDueDate, TimeSpan.FromHours(1)),
         };
 
         // Act
@@ -98,10 +106,14 @@ public class UserTaskSchedulerTests
         Assert.Equal("Low Priority Task", result.ScheduledTasks[2].Name);
 
         // Verify time slot ordering
-        Assert.True(result.ScheduledTasks[0].TimeSlot.Start < result.ScheduledTasks[1].TimeSlot.Start,
-            "High priority task should be scheduled before medium priority task");
-        Assert.True(result.ScheduledTasks[1].TimeSlot.Start < result.ScheduledTasks[2].TimeSlot.Start,
-            "Medium priority task should be scheduled before low priority task");
+        Assert.True(
+            result.ScheduledTasks[0].TimeSlot.Start < result.ScheduledTasks[1].TimeSlot.Start,
+            "High priority task should be scheduled before medium priority task"
+        );
+        Assert.True(
+            result.ScheduledTasks[1].TimeSlot.Start < result.ScheduledTasks[2].TimeSlot.Start,
+            "Medium priority task should be scheduled before low priority task"
+        );
 
         // Verify the mock was called for each task
         _mockScoringStrategy.Verify(
@@ -137,7 +149,7 @@ public class UserTaskSchedulerTests
                 today.AddDays(2),
                 TimeSpan.FromHours(1),
                 PriorityLevel.High
-            )
+            ),
         };
 
         // Act
@@ -164,18 +176,21 @@ public class UserTaskSchedulerTests
 
         // Configure scoring based on priority levels
         _mockScoringStrategy
-            .Setup(s => s.CalculateScore(It.Is<TaskItem>(t =>
-                t.PriorityLevel == PriorityLevel.High)))
+            .Setup(s =>
+                s.CalculateScore(It.Is<TaskItem>(t => t.PriorityLevel == PriorityLevel.High))
+            )
             .Returns(100);
 
         _mockScoringStrategy
-            .Setup(s => s.CalculateScore(It.Is<TaskItem>(t =>
-                t.PriorityLevel == PriorityLevel.Medium)))
+            .Setup(s =>
+                s.CalculateScore(It.Is<TaskItem>(t => t.PriorityLevel == PriorityLevel.Medium))
+            )
             .Returns(50);
 
         _mockScoringStrategy
-            .Setup(s => s.CalculateScore(It.Is<TaskItem>(t =>
-                t.PriorityLevel == PriorityLevel.Low)))
+            .Setup(s =>
+                s.CalculateScore(It.Is<TaskItem>(t => t.PriorityLevel == PriorityLevel.Low))
+            )
             .Returns(25);
     }
 
@@ -184,7 +199,7 @@ public class UserTaskSchedulerTests
         var dateOnly = date.ToDateOnly();
         return new ScheduleDay(
             dateOnly,
-            TimeSlot.Create(dateOnly, new TimeOnly(startHour, 0), new TimeOnly(endHour, 0))
+            TimeSlot.Create(new TimeOnly(startHour, 0), new TimeOnly(endHour, 0))
         );
     }
 
@@ -193,14 +208,9 @@ public class UserTaskSchedulerTests
         string name,
         DateTime dueDate,
         TimeSpan duration,
-        PriorityLevel priority = PriorityLevel.Medium)
+        PriorityLevel priority = PriorityLevel.Medium
+    )
     {
-        return new TaskItem(
-            name,
-            dueDate,
-            priority,
-            _mockScoringStrategy.Object,
-            duration
-        );
+        return new TaskItem(name, dueDate, priority, _mockScoringStrategy.Object, duration);
     }
 }

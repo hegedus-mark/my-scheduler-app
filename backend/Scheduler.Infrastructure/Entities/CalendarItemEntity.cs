@@ -4,7 +4,7 @@ public class CalendarItemEntity
 {
     public Guid Id { get; set; }
     public Guid DayId { get; set; }
-    public string Type { get; set; }  // "Event" or "Task"
+    public string Type { get; set; } // "Event" or "Task"
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 

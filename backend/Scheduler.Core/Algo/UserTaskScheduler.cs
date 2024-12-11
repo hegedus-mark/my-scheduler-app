@@ -1,4 +1,3 @@
-using System.Text;
 using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.CalendarItems;
@@ -19,8 +18,10 @@ public class UserTaskScheduler
         var scheduledTasks = new List<ScheduledTask>();
         var failedToSchedule = new List<TaskItem>();
 
+        //These will be sorted by outside
         var sortedDays = days.OrderBy(d => d.DayDate).ToList();
 
+        //These should be encapsulated maybe in a new class? UnscheduledTasks ?
         var sortedTasks = unscheduledTasks
             .OrderByDescending(t => t.Score)
             .ThenBy(t => t.DueDate)
@@ -39,14 +40,11 @@ public class UserTaskScheduler
                 if (suitableSlot != null)
                 {
                     var timeslot = TimeSlot.Create(
-                        day.DayDate,
                         suitableSlot.Value.Start,
-                        suitableSlot.Value.Start.Add(task.Duration));
-                    // Create the ScheduledTask object
-                    var scheduledTask = new ScheduledTask(task, timeslot);
+                        suitableSlot.Value.Start.Add(task.Duration)
+                    );
 
-                    // Add the task to the day's calendar
-                    day.AddCalendarItem(scheduledTask);
+                    var scheduledTask = day.AddScheduledTask(task, timeslot);
 
                     // Add to our list of successfully scheduled tasks
                     scheduledTasks.Add(scheduledTask);
@@ -56,9 +54,7 @@ public class UserTaskScheduler
             }
 
             if (!taskScheduled)
-            {
                 failedToSchedule.Add(task);
-            }
         }
 
         return new SchedulingResult(scheduledTasks, failedToSchedule);
@@ -78,8 +74,7 @@ public class UserTaskScheduler
         TimeSlot perfectSlot;
         try
         {
-            perfectSlot = sortedSlots
-                .First(s => s.Duration == requiredDuration);
+            perfectSlot = sortedSlots.First(s => s.Duration == requiredDuration);
             return perfectSlot;
         }
         catch (InvalidOperationException e)
