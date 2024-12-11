@@ -1,4 +1,4 @@
-using Infrastructure.Entities;
+/*using Infrastructure.Entities;
 using Scheduler.Core.Enum;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.CalendarItems;
@@ -8,7 +8,7 @@ namespace Infrastructure.Mapping;
 
 public class DayMapper
 {
-    public static DayEntity ToEntity(Day domain)
+    public static DayEntity ToEntity(ScheduleDay domain)
     {
         return new DayEntity
         {
@@ -19,7 +19,6 @@ public class DayMapper
             CalendarItems = domain.CalendarItems.Select(item =>
                 new CalendarItemEntity
                 {
-                    // Use the existing ID instead of generating a new one
                     Id = item.Id,
                     StartTime = item.TimeSlot.Start,
                     EndTime = item.TimeSlot.End,
@@ -36,10 +35,10 @@ public class DayMapper
         };
     }
 
-    public static Day ToDomain(DayEntity entity)
+    public static ScheduleDay ToDomain(DayEntity entity)
     {
         var workingHours = TimeSlot.Create(entity.WorkStartTime, entity.WorkEndTime);
-        var day = new Day(entity.Date, workingHours, entity.Id);
+        var day = new ScheduleDay(entity.Date, workingHours, entity.Id);
 
         foreach (var itemEntity in entity.CalendarItems)
         {
@@ -71,4 +70,4 @@ public class DayMapper
 
         return day;
     }
-}
+}*/

@@ -2,65 +2,58 @@ using Scheduler.Core.Models.CalendarItems;
 
 namespace Scheduler.Core.Models;
 
-public class Day
+public class ScheduleDay : EntityBase
 {
+    //TODO: Move these to appsettings
     private static readonly TimeSpan MinTaskTime = new TimeSpan(0, 30, 0);
     private static readonly TimeSpan MinEventTime = new TimeSpan(0, 1, 0);
 
     private readonly List<CalendarItem> _calendarItems;
     private readonly List<TimeSlot> _freeSlots;
 
-    public Guid Id { get; }
-    public DateTime DayDate { get; }
+    public DateOnly DayDate { get; }
     public TimeSlot WorkingHours { get; }
     public IReadOnlyList<CalendarItem> CalendarItems => _calendarItems;
     public IReadOnlyList<TimeSlot> FreeSlots => _freeSlots;
 
-    public Day(DateTime dayDate, TimeSlot workingHours)
+    public ScheduleDay(DateOnly dayDate, TimeSlot workingHours)
+        : base(Guid.NewGuid())
     {
-        DayDate = dayDate.Date; // Set DayDate to midnight
+        DayDate = dayDate; // Set DayDate to midnight
 
-        if (workingHours.Day != dayDate.Date)
+        if (workingHours.Day != dayDate)
         {
-            throw new ArgumentException("StartWork and EndWork must be on the same day as DayDate.");
+            throw new ArgumentException(
+                "StartWork and EndWork must be on the same day as DayDate."
+            );
         }
 
-        Id = Guid.NewGuid();
         WorkingHours = workingHours;
         _calendarItems = new List<CalendarItem>();
-        _freeSlots = [TimeSlot.Create(workingHours.Start, workingHours.End)]; // At first the entire day is free
+        _freeSlots = [TimeSlot.Create(dayDate, workingHours.Start, workingHours.End)]; // At first the entire day is free
     }
 
-    public Day(DateTime dayDate, TimeSlot workingHours, Guid id)
+    public ScheduleDay(DateOnly dayDate, TimeSlot workingHours, Guid id)
+        : base(id)
     {
-        DayDate = dayDate.Date; // Set DayDate to midnight
+        DayDate = dayDate;
 
-        if (workingHours.Day != dayDate.Date)
+        if (workingHours.Day != dayDate)
         {
-            throw new ArgumentException("StartWork and EndWork must be on the same day as DayDate.");
+            throw new ArgumentException(
+                "StartWork and EndWork must be on the same day as DayDate."
+            );
         }
 
-        Id = id;
         WorkingHours = workingHours;
         _calendarItems = new List<CalendarItem>();
-        _freeSlots = [TimeSlot.Create(workingHours.Start, workingHours.End)]; // At first the entire day is free
+        _freeSlots = [TimeSlot.Create(dayDate, workingHours.Start, workingHours.End)]; // At first the entire day is free
     }
-
 
     public void AddCalendarItem(CalendarItem calendarItem)
     {
         _calendarItems.Add(calendarItem);
         ReCalculateFreeSlots(calendarItem);
-    }
-
-    public IEnumerable<Event> GetEvents()
-    {
-        return _calendarItems.OfType<Event>().ToList();
-    }
-
-    public IEnumerable<ScheduledTask> GetTasks()
-    {
-        return _calendarItems.OfType<ScheduledTask>().ToList();
     }
 
     private void ReCalculateFreeSlots(CalendarItem item)
@@ -73,13 +66,17 @@ public class Day
 
         if (parentFreeSlot.Start < placedTimeSlot.Start)
         {
-            var firstHalfSlot = TimeSlot.Create(parentFreeSlot.Start, placedTimeSlot.Start);
+            var firstHalfSlot = TimeSlot.Create(
+                DayDate,
+                parentFreeSlot.Start,
+                placedTimeSlot.Start
+            );
             _freeSlots.Add(firstHalfSlot);
         }
 
         if (parentFreeSlot.End > placedTimeSlot.End)
         {
-            var secondHalfSlot = TimeSlot.Create(placedTimeSlot.End, parentFreeSlot.End);
+            var secondHalfSlot = TimeSlot.Create(DayDate, placedTimeSlot.End, parentFreeSlot.End);
             _freeSlots.Add(secondHalfSlot);
         }
     }
@@ -95,6 +92,17 @@ public class Day
         }
 
         throw new InvalidOperationException(
-            "Added calendarItem is not placed in a free slot, there must be an overlap");
+            "Added calendarItem is not placed in a free slot, there must be an overlap"
+        );
+    }
+
+    public IEnumerable<Event> GetEvents()
+    {
+        return _calendarItems.OfType<Event>().ToList();
+    }
+
+    public IEnumerable<ScheduledTask> GetTasks()
+    {
+        return _calendarItems.OfType<ScheduledTask>().ToList();
     }
 }

@@ -10,7 +10,7 @@ public class SimpleScoringStrategy : IScoringStrategy
     {
         _userConfig = userConfig;
     }
-    
+
     public int CalculateScore(TaskItem taskItem)
     {
         int score = 0;

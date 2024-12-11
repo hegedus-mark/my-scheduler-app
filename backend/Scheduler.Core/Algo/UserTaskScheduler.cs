@@ -1,4 +1,5 @@
 using System.Text;
+using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.CalendarItems;
 using Scheduler.Core.Models.Results;
@@ -7,7 +8,7 @@ namespace Scheduler.Core.Algo;
 
 public class UserTaskScheduler
 {
-    public SchedulingResult ScheduleTasks(List<Day> days, List<TaskItem> unscheduledTasks)
+    public SchedulingResult ScheduleTasks(List<ScheduleDay> days, List<TaskItem> unscheduledTasks)
     {
         // Validate input parameters
         if (days == null || !days.Any())
@@ -31,13 +32,15 @@ public class UserTaskScheduler
             var requiredDuration = task.Duration;
 
             // Find the earliest possible day for this task
-            foreach (var day in sortedDays.Where(d => d.DayDate <= task.DueDate.Date))
+            foreach (var day in sortedDays.Where(d => d.DayDate.IsOnOrBeforeDay(task.DueDate)))
             {
                 var suitableSlot = FindBestTimeSlot(day.FreeSlots, requiredDuration);
 
                 if (suitableSlot != null)
                 {
-                    var timeslot = TimeSlot.Create(suitableSlot.Value.Start,
+                    var timeslot = TimeSlot.Create(
+                        day.DayDate,
+                        suitableSlot.Value.Start,
                         suitableSlot.Value.Start.Add(task.Duration));
                     // Create the ScheduledTask object
                     var scheduledTask = new ScheduledTask(task, timeslot);

@@ -16,7 +16,7 @@ public class ScheduledTask : CalendarItem
                 nameof(assignedTimeSlot));
         }
 
-        if (assignedTimeSlot.End > task.DueDate)
+        if (assignedTimeSlot.IsAfter(task.DueDate))
         {
             throw new ArgumentException(
                 "Cannot schedule task after its due date",
@@ -25,7 +25,7 @@ public class ScheduledTask : CalendarItem
 
         OriginalTask = task;
     }
-    
+
     //For existing ScheduledTask
     public ScheduledTask(Guid id, TaskItem task, TimeSlot timeSlot)
         : base(id, timeSlot)

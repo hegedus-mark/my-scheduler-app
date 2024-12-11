@@ -1,6 +1,7 @@
 using Moq;
 using Scheduler.Core.Algo;
 using Scheduler.Core.Enum;
+using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.Scoring;
 using Xunit;
@@ -30,7 +31,7 @@ public class UserTaskSchedulerTests
     {
         // Arrange
         var today = DateTime.Today;
-        var days = new List<Day> { CreateTestDay(today) };
+        var days = new List<ScheduleDay> { CreateTestDay(today) };
 
         var tasks = new List<TaskItem>
         {
@@ -74,7 +75,7 @@ public class UserTaskSchedulerTests
 
         var today = DateTime.Today;
         var commonDueDate = today.AddDays(2); // Same due date for all tasks
-        var days = new List<Day> { CreateTestDay(today) };
+        var days = new List<ScheduleDay> { CreateTestDay(today) };
 
         // Create tasks with same due date but different priorities
         var tasks = new List<TaskItem>
@@ -117,7 +118,7 @@ public class UserTaskSchedulerTests
         SetupPriorityBasedScoring();
 
         var today = DateTime.Today;
-        var days = new List<Day> { CreateTestDay(today) };
+        var days = new List<ScheduleDay> { CreateTestDay(today) };
 
         var tasks = new List<TaskItem>
         {
@@ -178,11 +179,12 @@ public class UserTaskSchedulerTests
             .Returns(25);
     }
 
-    private Day CreateTestDay(DateTime date, int startHour = 9, int endHour = 17)
+    private ScheduleDay CreateTestDay(DateTime date, int startHour = 9, int endHour = 17)
     {
-        return new Day(
-            date,
-            TimeSlot.Create(date.Date.AddHours(startHour), date.Date.AddHours(endHour))
+        var dateOnly = date.ToDateOnly();
+        return new ScheduleDay(
+            dateOnly,
+            TimeSlot.Create(dateOnly, new TimeOnly(startHour, 0), new TimeOnly(endHour, 0))
         );
     }
 

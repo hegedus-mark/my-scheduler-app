@@ -1,23 +1,21 @@
-using Scheduler.Core.Models.CalendarItems;
-
-namespace Scheduler.Core.Models;
+namespace Scheduler.Core.Models.CalendarItems;
 
 public class Event : CalendarItem
 {
-    public bool IsRecurring { get; set; }
+    public RecurrencePattern RecurrencePattern { get; }
 
-   
+
     // Constructor for new events
-    public Event(TimeSlot timeSlot, bool isRecurring)
+    public Event(TimeSlot timeSlot, RecurrencePattern recurrencePattern)
         : base(timeSlot)
     {
-        IsRecurring = isRecurring;
+        RecurrencePattern = recurrencePattern;
     }
 
     // Constructor for existing events
-    public Event(Guid id, TimeSlot timeSlot, bool isRecurring)
+    public Event(Guid id, TimeSlot timeSlot, RecurrencePattern recurrencePattern)
         : base(id, timeSlot)
     {
-        IsRecurring = isRecurring;
+        RecurrencePattern = recurrencePattern;
     }
 }

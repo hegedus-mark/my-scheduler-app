@@ -1,20 +1,19 @@
 namespace Scheduler.Core.Models.CalendarItems;
 
-public abstract class CalendarItem
+public abstract class CalendarItem : EntityBase
 {
-    public Guid Id { get; private set; }
     public TimeSlot TimeSlot { get; private set; }
-    
+
     //For new CalendarItems
     protected CalendarItem(TimeSlot timeSlot)
-        : this(Guid.NewGuid(), timeSlot)
+        : base(Guid.NewGuid())
     {
+        TimeSlot = timeSlot;
     }
 
     //For existing CalendarItems
-    protected CalendarItem(Guid id, TimeSlot timeSlot)
+    protected CalendarItem(Guid id, TimeSlot timeSlot) : base(id)
     {
-        Id = id;
         TimeSlot = timeSlot;
     }
 }

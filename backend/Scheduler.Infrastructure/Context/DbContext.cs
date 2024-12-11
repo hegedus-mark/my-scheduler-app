@@ -1,3 +1,4 @@
+using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using Scheduler.Core.Models;
 
@@ -5,10 +6,8 @@ namespace Infrastructure.Context;
 
 public class DbContext : Microsoft.EntityFrameworkCore.DbContext
 {
-    public DbSet<Day> Days { get; set; }
-    public DbSet<Event> Events { get; set; }
-    public DbSet<TaskItem> Tasks { get; set; }
-    public DbSet<UserConfig> UserConfigs { get; set; }
+    public DbSet<DayEntity> Days;
+    public DbSet<CalendarItemEntity> CalendarItems;
 
     public DbContext(DbContextOptions<DbContext> options) : base(options)
     {
@@ -16,6 +15,6 @@ public class DbContext : Microsoft.EntityFrameworkCore.DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        
+
     }
 }
