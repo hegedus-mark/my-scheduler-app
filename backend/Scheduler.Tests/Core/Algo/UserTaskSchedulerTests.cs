@@ -5,7 +5,7 @@ using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.Scoring;
 
-namespace Tests;
+namespace Tests.Core.Algo;
 
 public class UserTaskSchedulerTests
 {
