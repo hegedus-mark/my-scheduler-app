@@ -5,12 +5,9 @@ namespace Scheduler.Core.Models;
 /// </summary>
 public abstract class EntityBase
 {
-    protected EntityBase()
-        : this(Guid.NewGuid()) { }
-
-    protected EntityBase(Guid id)
+    protected EntityBase(Guid? id = null)
     {
-        Id = id;
+        Id = id ?? Guid.NewGuid();
     }
 
     public Guid Id { get; private set; }

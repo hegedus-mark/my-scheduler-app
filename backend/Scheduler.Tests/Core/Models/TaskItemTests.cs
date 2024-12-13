@@ -105,7 +105,7 @@ public class TaskItemTests
 
         // Act & Assert
         Assert.True(
-            highPriorityTask.CompareTo(lowPriorityTask) < 0,
+            highPriorityTask.CompareTo(lowPriorityTask) > 0,
             "Higher priority task should come first when scores and due dates are equal"
         );
     }

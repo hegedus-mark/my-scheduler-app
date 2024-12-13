@@ -2,12 +2,16 @@ using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.CalendarItems;
 using Scheduler.Core.Models.Results;
+using WorkingDay = Scheduler.Core.Models.CalendarItems.WorkingDay;
 
 namespace Scheduler.Core.Algo;
 
 public class UserTaskScheduler
 {
-    public SchedulingResult ScheduleTasks(List<ScheduleDay> days, List<TaskItem> unscheduledTasks)
+    public SchedulingResult ScheduleTasks(
+        IReadOnlyCollection<WorkingDay> days,
+        IReadOnlyCollection<TaskItem> unscheduledTasks
+    )
     {
         // Validate input parameters
         if (days == null || !days.Any())
@@ -60,7 +64,10 @@ public class UserTaskScheduler
         return new SchedulingResult(scheduledTasks, failedToSchedule);
     }
 
-    private TimeSlot? FindBestTimeSlot(IEnumerable<TimeSlot> freeSlots, TimeSpan requiredDuration)
+    private TimeSlot? FindBestTimeSlot(
+        IReadOnlyCollection<TimeSlot> freeSlots,
+        TimeSpan requiredDuration
+    )
     {
         // Sort slots by start time to ensure we schedule as early as possible
         var sortedSlots = freeSlots

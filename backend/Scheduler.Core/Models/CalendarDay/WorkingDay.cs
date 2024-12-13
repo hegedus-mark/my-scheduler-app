@@ -1,73 +1,61 @@
 using Scheduler.Core.Extensions;
-using Scheduler.Core.Models.CalendarItems;
 
-namespace Scheduler.Core.Models;
+namespace Scheduler.Core.Models.CalendarItems;
 
-/// <summary>
-///     Represents a single day in the scheduling system, managing calendar items and available time slots.
-/// </summary>
-public class ScheduleDay : EntityBase
+public class WorkingDay : EntityBase, ICalendarDay
 {
-    //TODO: Move these to appsettings
-    private static readonly TimeSpan MinTaskTime = new(0, 30, 0);
-    private static readonly TimeSpan MinEventTime = new(0, 1, 0);
-
     private readonly List<CalendarItem> _calendarItems;
     private readonly List<TimeSlot> _freeSlots;
 
-    /// <summary>
-    ///     Initializes a new day with specified date and working hours.
-    /// </summary>
-    /// <param name="dayDate">The date of this schedule day</param>
-    /// <param name="workingHours">The working hours time slot for this day</param>
-    public ScheduleDay(DateOnly dayDate, TimeSlot workingHours)
-        : base(Guid.NewGuid())
-    {
-        DayDate = dayDate; // Set DayDate to midnight
-
-        WorkingHours = workingHours;
-        _calendarItems = new List<CalendarItem>();
-        _freeSlots = [TimeSlot.Create(workingHours.Start, workingHours.End)]; // At first the entire day is free
-    }
-
-    public ScheduleDay(DateOnly dayDate, TimeSlot workingHours, Guid id)
+    private WorkingDay(Guid? id, DateOnly dayDate, TimeSlot workingHours)
         : base(id)
     {
         DayDate = dayDate;
-
         WorkingHours = workingHours;
         _calendarItems = new List<CalendarItem>();
         _freeSlots = [TimeSlot.Create(workingHours.Start, workingHours.End)]; // At first the entire day is free
     }
 
-    /// <summary>
-    ///     Gets the date of this schedule day.
-    /// </summary>
-    public DateOnly DayDate { get; }
-
-    /// <summary>
-    ///     Gets the working hours for this day.
-    /// </summary>
     public TimeSlot WorkingHours { get; }
-
-    /// <summary>
-    ///     Gets the list of all calendar items scheduled for this day.
-    /// </summary>
-    public IReadOnlyList<CalendarItem> CalendarItems => _calendarItems;
 
     /// <summary>
     ///     Gets the list of available time slots in this day.
     /// </summary>
     public IReadOnlyList<TimeSlot> FreeSlots => _freeSlots;
 
-    /// <summary>
-    ///     Adds an event to this day and updates available time slots.
-    /// </summary>
-    /// <param name="eventItem">The event to add</param>
+    public bool IsWorkingDay => true;
+
+    public DateOnly DayDate { get; }
+
+    public IReadOnlyList<CalendarItem> CalendarItems => _calendarItems;
+
     public void AddEvent(Event eventItem)
     {
         _calendarItems.Add(eventItem);
         ReCalculateFreeSlots(eventItem);
+    }
+
+    /// <summary>
+    ///     Creates a new working day with a new unique identifier.
+    /// </summary>
+    /// <param name="dayDate">The date for this working day</param>
+    /// <param name="workingHours">The time slot defining the working hours for this day</param>
+    /// <returns>A new working day instance</returns>
+    public static WorkingDay Create(DateOnly dayDate, TimeSlot workingHours)
+    {
+        return new WorkingDay(null, dayDate, workingHours);
+    }
+
+    /// <summary>
+    ///     Creates a working day instance with an existing identifier, typically used when loading from storage.
+    /// </summary>
+    /// <param name="id">The unique identifier of the existing working day</param>
+    /// <param name="dayDate">The date for this working day</param>
+    /// <param name="workingHours">The time slot defining the working hours for this day</param>
+    /// <returns>A working day instance with the specified identifier</returns>
+    public static WorkingDay Load(Guid id, DateOnly dayDate, TimeSlot workingHours)
+    {
+        return new WorkingDay(id, dayDate, workingHours);
     }
 
     /// <summary>
@@ -124,12 +112,12 @@ public class ScheduleDay : EntityBase
         );
     }
 
-    public IEnumerable<Event> GetEvents()
+    public IReadOnlyList<Event> GetEvents()
     {
         return _calendarItems.OfType<Event>().ToList();
     }
 
-    public IEnumerable<ScheduledTask> GetTasks()
+    public IReadOnlyList<ScheduledTask> GetTasks()
     {
         return _calendarItems.OfType<ScheduledTask>().ToList();
     }
@@ -151,7 +139,7 @@ public class ScheduleDay : EntityBase
     /// <param name="timeSlot">The time slot to check</param>
     /// <param name="itemToExclude">Optional calendar item to exclude from the check</param>
     /// <returns>True if there is an overlap, false otherwise</returns>
-    public bool DoesTimeSlotOverlap(TimeSlot timeSlot, CalendarItem itemToExclude = null)
+    private bool DoesTimeSlotOverlap(TimeSlot timeSlot, CalendarItem itemToExclude = null)
     {
         return _calendarItems
             .Where(item => item != itemToExclude)

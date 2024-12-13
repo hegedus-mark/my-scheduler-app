@@ -4,6 +4,7 @@ using Scheduler.Core.Enum;
 using Scheduler.Core.Extensions;
 using Scheduler.Core.Models;
 using Scheduler.Core.Models.Scoring;
+using WorkingDay = Scheduler.Core.Models.CalendarItems.WorkingDay;
 
 namespace Tests.Core.Algo;
 
@@ -27,7 +28,7 @@ public class UserTaskSchedulerTests
     {
         // Arrange
         var today = DateTime.Today;
-        var days = new List<ScheduleDay> { CreateTestDay(today) };
+        var days = new List<WorkingDay> { CreateTestDay(today) };
 
         var tasks = new List<TaskItem>
         {
@@ -71,7 +72,7 @@ public class UserTaskSchedulerTests
 
         var today = DateTime.Today;
         var commonDueDate = today.AddDays(2); // Same due date for all tasks
-        var days = new List<ScheduleDay> { CreateTestDay(today) };
+        var days = new List<WorkingDay> { CreateTestDay(today) };
 
         // Create tasks with same due date but different priorities
         var tasks = new List<TaskItem>
@@ -130,7 +131,7 @@ public class UserTaskSchedulerTests
         SetupPriorityBasedScoring();
 
         var today = DateTime.Today;
-        var days = new List<ScheduleDay> { CreateTestDay(today) };
+        var days = new List<WorkingDay> { CreateTestDay(today) };
 
         var tasks = new List<TaskItem>
         {
@@ -194,10 +195,10 @@ public class UserTaskSchedulerTests
             .Returns(25);
     }
 
-    private ScheduleDay CreateTestDay(DateTime date, int startHour = 9, int endHour = 17)
+    private WorkingDay CreateTestDay(DateTime date, int startHour = 9, int endHour = 17)
     {
         var dateOnly = date.ToDateOnly();
-        return new ScheduleDay(
+        return WorkingDay.Create(
             dateOnly,
             TimeSlot.Create(new TimeOnly(startHour, 0), new TimeOnly(endHour, 0))
         );
