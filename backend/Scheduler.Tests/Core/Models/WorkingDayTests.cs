@@ -1,8 +1,10 @@
 using Moq;
-using Scheduler.Core.Enum;
-using Scheduler.Core.Models;
-using Scheduler.Core.Models.CalendarItems;
-using Scheduler.Core.Models.Scoring;
+using Scheduler.Domain.Calendars.Entities;
+using Scheduler.Domain.Calendars.Events;
+using Scheduler.Domain.Shared;
+using Scheduler.Domain.Shared.Enums;
+using Scheduler.Domain.Tasks.Entities;
+using Scheduler.Domain.Tasks.Scoring;
 
 namespace Tests.Core.Models;
 

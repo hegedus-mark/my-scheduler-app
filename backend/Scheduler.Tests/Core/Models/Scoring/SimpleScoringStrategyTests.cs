@@ -1,6 +1,7 @@
-using Scheduler.Core.Enum;
-using Scheduler.Core.Models;
-using Scheduler.Core.Models.Scoring;
+using Scheduler.Domain.Calendars.Configuration;
+using Scheduler.Domain.Shared.Enums;
+using Scheduler.Domain.Tasks.Entities;
+using Scheduler.Domain.Tasks.Scoring;
 
 namespace Tests.Core.Models.Scoring;
 
@@ -35,9 +36,9 @@ public class SimpleScoringStrategyTests
         // Arrange
         var dueDate = DateTime.Today.AddDays(7); // Keep due date constant
 
-        var shortTask = new TestSetup(true).CreateTask(dueDate, TimeSpan.FromHours(1));
+        var shortTask = new TestSetup().CreateTask(dueDate, TimeSpan.FromHours(1));
 
-        var longTask = new TestSetup(true).CreateTask(dueDate, TimeSpan.FromHours(3));
+        var longTask = new TestSetup().CreateTask(dueDate, TimeSpan.FromHours(3));
 
         var shortTaskReversed = new TestSetup(false).CreateTask(dueDate, TimeSpan.FromHours(1));
 
@@ -101,7 +102,7 @@ public class SimpleScoringStrategyTests
     public void CalculateScore_CombinedFactors_ProducesExpectedResults()
     {
         // Arrange
-        var setup = new TestSetup(true);
+        var setup = new TestSetup();
 
         // Create tasks with various combinations of factors
         var urgentHighPriorityLongTask = setup.CreateTask(

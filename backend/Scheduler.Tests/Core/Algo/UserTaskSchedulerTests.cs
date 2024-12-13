@@ -1,10 +1,11 @@
 using Moq;
-using Scheduler.Core.Algo;
-using Scheduler.Core.Enum;
-using Scheduler.Core.Extensions;
-using Scheduler.Core.Models;
-using Scheduler.Core.Models.Scoring;
-using WorkingDay = Scheduler.Core.Models.CalendarItems.WorkingDay;
+using Scheduler.Domain.Extensions;
+using Scheduler.Domain.Shared;
+using Scheduler.Domain.Shared.Enums;
+using Scheduler.Domain.Tasks.Entities;
+using Scheduler.Domain.Tasks.Scoring;
+using Scheduler.Domain.Tasks.Services;
+using WorkingDay = Scheduler.Domain.Calendars.Entities.WorkingDay;
 
 namespace Tests.Core.Algo;
 

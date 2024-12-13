@@ -1,8 +1,8 @@
 /*using Infrastructure.Entities;
-using Scheduler.Core.Enum;
-using Scheduler.Core.Models;
-using Scheduler.Core.Models.CalendarItems;
-using Scheduler.Core.Models.Scoring;
+using Scheduler.Application.Enum;
+using Scheduler.Application.Models;
+using Scheduler.Application.Models.CalendarItems;
+using Scheduler.Application.Models.Scoring;
 
 namespace Infrastructure.Mapping;
 

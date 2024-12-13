@@ -1,4 +1,4 @@
-using Scheduler.Core.Models;
+using Scheduler.Domain.Shared;
 
 namespace Tests.Core;
 
