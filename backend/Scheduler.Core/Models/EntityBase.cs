@@ -1,9 +1,10 @@
 namespace Scheduler.Core.Models;
 
+/// <summary>
+///     Base class for entities with unique identifiers.
+/// </summary>
 public abstract class EntityBase
 {
-    public Guid Id { get; private set; }
-
     protected EntityBase()
         : this(Guid.NewGuid()) { }
 
@@ -11,4 +12,6 @@ public abstract class EntityBase
     {
         Id = id;
     }
+
+    public Guid Id { get; private set; }
 }

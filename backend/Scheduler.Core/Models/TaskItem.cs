@@ -3,19 +3,27 @@ using Scheduler.Core.Models.Scoring;
 
 namespace Scheduler.Core.Models;
 
+/// <summary>
+///     Represents a task to be scheduled, with prioritization and scoring capabilities.
+/// </summary>
 public class TaskItem : IComparable<TaskItem>
 {
-    public string Name { get; }
-    public DateTime DueDate { get; }
-    public TimeSpan Duration { get; }
-    public PriorityLevel PriorityLevel { get; }
-    public int Score { get; }
-
+    /// <summary>
+    ///     Creates a new task with specified parameters.
+    /// </summary>
+    /// <param name="name">The task name</param>
+    /// <param name="dueDate">When the task must be completed</param>
+    /// <param name="priorityLevel">The task's priority level</param>
+    /// <param name="scoringStrategy">Strategy used to calculate the task's scheduling priority</param>
+    /// <param name="duration">Expected time needed to complete the task</param>
+    /// <exception cref="ArgumentException">Thrown when duration is not positive</exception>
     public TaskItem(
         string name,
         DateTime dueDate,
         PriorityLevel priorityLevel,
-        IScoringStrategy scoringStrategy, TimeSpan duration)
+        IScoringStrategy scoringStrategy,
+        TimeSpan duration
+    )
     {
         if (duration <= TimeSpan.Zero)
             throw new ArgumentException("Duration must be positive", nameof(duration));
@@ -27,6 +35,35 @@ public class TaskItem : IComparable<TaskItem>
         Score = scoringStrategy.CalculateScore(this);
     }
 
+    /// <summary>
+    ///     Gets the name of the task.
+    /// </summary>
+    public string Name { get; }
+
+    /// <summary>
+    ///     Gets the due date for task completion.
+    /// </summary>
+    public DateTime DueDate { get; }
+
+    /// <summary>
+    ///     Gets the estimated duration of the task.
+    /// </summary>
+    public TimeSpan Duration { get; }
+
+    /// <summary>
+    ///     Gets the priority level of the task.
+    /// </summary>
+    public PriorityLevel PriorityLevel { get; }
+
+    /// <summary>
+    ///     Gets the calculated scheduling priority score.
+    /// </summary>
+    public int Score { get; }
+
+    /// <summary>
+    ///     Compares tasks based on score (descending), due date (ascending),
+    ///     priority (descending), and duration (ascending).
+    /// </summary>
     public int CompareTo(TaskItem? other)
     {
         if (other == null)
