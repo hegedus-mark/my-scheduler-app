@@ -4,10 +4,10 @@ namespace Scheduler.Domain.Models.Configuration;
 
 public class DayScheduleOverride
 {
-    public DayScheduleOverride(
+    private DayScheduleOverride(
         DateOnly date,
+        bool isWorkingDay,
         TimeSlot? customWorkingHours = null,
-        bool? isWorkingDay = null,
         string? overrideReason = null
     )
     {
@@ -20,7 +20,7 @@ public class DayScheduleOverride
     public TimeSlot? CustomWorkingHours { get; }
     public DateOnly Date { get; }
 
-    public bool? IsWorkingDay { get; }
+    public bool IsWorkingDay { get; }
     public string? OverrideReason { get; }
 
     public static DayScheduleOverride CreateWorkingHoursOverride(
@@ -31,7 +31,7 @@ public class DayScheduleOverride
     )
     {
         var timeSlot = TimeSlot.Create(startTime, endTime);
-        return new DayScheduleOverride(date, timeSlot, null, reason);
+        return new DayScheduleOverride(date, true, timeSlot, reason);
     }
 
     public static DayScheduleOverride CreateWorkingDayOverride(
@@ -40,14 +40,11 @@ public class DayScheduleOverride
         string? reason = null
     )
     {
-        return new DayScheduleOverride(date, null, isWorkingDay, reason);
+        return new DayScheduleOverride(date, isWorkingDay, null, reason);
     }
 
     public bool ModifiesSchedule(UserScheduleConfig defaultConfig)
     {
-        if (IsWorkingDay.HasValue)
-            return true;
-
         if (CustomWorkingHours.HasValue)
         {
             var defaultStart = defaultConfig.DefaultWorkStartTime;

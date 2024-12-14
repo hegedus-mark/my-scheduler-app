@@ -11,26 +11,64 @@ namespace Scheduler.Domain.Models;
 
 public class ScheduleCalendar : EntityBase
 {
+    private const int DATE_RANGE_TO_BE_INITIALISED = 365; //Initialise the first year
     private readonly SortedDictionary<DateOnly, ICalendarDay> _days;
     private readonly SortedDictionary<DateOnly, DayScheduleOverride> _dayScheduleOverrides;
     private readonly UserTaskScheduler _taskScheduler;
     private readonly UserScheduleConfig _userScheduleConfig;
 
-    //new Calendar
-    public ScheduleCalendar()
-        : base(Guid.NewGuid()) { }
+    private ScheduleCalendar(
+        Guid? id,
+        UserScheduleConfig userScheduleConfig,
+        UserTaskScheduler taskScheduler
+    )
+        : base(id)
+    {
+        var initialDateRange = DateRange.CreateFromDuration(
+            DateTime.Now.ToDateOnly(),
+            0,
+            0,
+            DATE_RANGE_TO_BE_INITIALISED
+        );
+        _days = new SortedDictionary<DateOnly, ICalendarDay>();
+        _dayScheduleOverrides = new SortedDictionary<DateOnly, DayScheduleOverride>();
+        EnsureDaysExist(initialDateRange);
+        _userScheduleConfig = userScheduleConfig;
+        _taskScheduler = taskScheduler;
+    }
 
-    //existing Calendar
-    public ScheduleCalendar(Guid id)
-        : base(id) { }
+    public static ScheduleCalendar Create(
+        UserScheduleConfig userScheduleConfig,
+        UserTaskScheduler userTaskScheduler
+    )
+    {
+        return new ScheduleCalendar(null, userScheduleConfig, userTaskScheduler);
+    }
+
+    public static ScheduleCalendar Load(
+        Guid id,
+        UserScheduleConfig userScheduleConfig,
+        UserTaskScheduler userTaskScheduler
+    )
+    {
+        return new ScheduleCalendar(null, userScheduleConfig, userTaskScheduler);
+    }
 
     public IEnumerable<ICalendarDay> GetDaysInRage(DateOnly start, DateOnly end)
     {
         return _days.Where(kv => kv.Key >= start && kv.Key <= end).Select(kv => kv.Value);
     }
 
+    public IEnumerable<WorkingDay> GetWorkingDaysInRange(DateRange dateRange)
+    {
+        return _days
+            .Where(kv => kv.Key >= dateRange.Start && kv.Key <= dateRange.End)
+            .Select(kv => kv.Value)
+            .OfType<WorkingDay>();
+    }
+
     public SchedulingResult ScheduleTasks(
-        IEnumerable<TaskItem> taskToBeScheduled,
+        IReadOnlyCollection<TaskItem> taskToBeScheduled,
         DateRange? schedulingWindow = null
     )
     {
@@ -44,7 +82,11 @@ public class ScheduleCalendar : EntityBase
             schedulingWindow = new DateRange(tomorrow, lastTaskDueDate.ToDateOnly());
         }
 
-        //var result = _taskScheduler.ScheduleTasks(taskToBeScheduled);
+        EnsureDaysExist(schedulingWindow.Value);
+        var result = _taskScheduler.ScheduleTasks(
+            GetWorkingDaysInRange(schedulingWindow.Value).ToList(),
+            taskToBeScheduled
+        );
         throw new NotImplementedException();
     }
 
@@ -60,13 +102,28 @@ public class ScheduleCalendar : EntityBase
                     _userScheduleConfig.DefaultWorkEndTime
                 );
                 if (_dayScheduleOverrides.TryGetValue(requestedDate, out var overrideConfig))
-                    timeSlot =
-                        overrideConfig.IsWorkingDay.HasValue && overrideConfig.IsWorkingDay.Value
-                            ? TimeSlot.Create(
-                                overrideConfig.CustomWorkingHours.Value.Start,
-                                overrideConfig.CustomWorkingHours.Value.End
-                            )
-                            : TimeSlot.Create(TimeOnly.MinValue, TimeOnly.MinValue);
+                {
+                    if (overrideConfig.IsWorkingDay)
+                    {
+                        var start =
+                            overrideConfig.CustomWorkingHours?.Start
+                            ?? throw new InvalidOperationException(
+                                "overrideDay config must have an start Time"
+                            );
+                        var end =
+                            overrideConfig.CustomWorkingHours?.End
+                            ?? throw new InvalidOperationException(
+                                "overrideDay config must have an end Time"
+                            );
+
+                        timeSlot = TimeSlot.Create(start, end);
+                    }
+                    else
+                    {
+                        _days.Add(requestedDate, NonWorkingDay.Create(requestedDate));
+                        return;
+                    }
+                }
 
                 _days.Add(requestedDate, WorkingDay.Create(requestedDate, timeSlot));
             }
