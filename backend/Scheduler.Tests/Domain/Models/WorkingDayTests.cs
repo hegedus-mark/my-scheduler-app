@@ -4,7 +4,7 @@ using Scheduler.Domain.Services;
 using Scheduler.Domain.Shared;
 using Scheduler.Domain.Shared.Enums;
 
-namespace Tests.Core.Models;
+namespace Tests.Domain.Models;
 
 public class WorkingDayTests
 {

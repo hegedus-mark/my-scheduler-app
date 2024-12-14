@@ -6,7 +6,7 @@ using Scheduler.Domain.Shared;
 using Scheduler.Domain.Shared.Enums;
 using WorkingDay = Scheduler.Domain.Models.WorkingDay;
 
-namespace Tests.Core.Algo;
+namespace Tests.Domain.Services;
 
 public class UserTaskSchedulerTests
 {

@@ -3,7 +3,7 @@ using Scheduler.Domain.Models.Configuration;
 using Scheduler.Domain.Services;
 using Scheduler.Domain.Shared.Enums;
 
-namespace Tests.Core.Models.Scoring;
+namespace Tests.Domain.Services;
 
 public class SimpleScoringStrategyTests
 {

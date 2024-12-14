@@ -4,7 +4,7 @@ using Scheduler.Domain.Services;
 using Scheduler.Domain.Shared;
 using Scheduler.Domain.Shared.Enums;
 
-namespace Tests.Core.Models.CalendarItems;
+namespace Tests.Domain.Models;
 
 public class ScheduledTaskTests
 {

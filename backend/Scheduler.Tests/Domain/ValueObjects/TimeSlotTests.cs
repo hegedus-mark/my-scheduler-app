@@ -1,6 +1,6 @@
 using Scheduler.Domain.Shared;
 
-namespace Tests.Core;
+namespace Tests.Domain.ValueObjects;
 
 public class TimeSlotTests
 {
