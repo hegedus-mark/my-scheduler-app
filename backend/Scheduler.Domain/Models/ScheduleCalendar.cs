@@ -11,16 +11,16 @@ namespace Scheduler.Domain.Models;
 
 public class ScheduleCalendar : EntityBase
 {
-    private const int DATE_RANGE_TO_BE_INITIALISED = 365; //Initialise the first year
+    private const int DATE_RANGE_TO_BE_INITIALISED = 365; //TODO: Put this in appsettings
     private readonly SortedDictionary<DateOnly, ICalendarDay> _days;
     private readonly SortedDictionary<DateOnly, DayScheduleOverride> _dayScheduleOverrides;
-    private readonly UserTaskScheduler _taskScheduler;
+    private readonly ISchedulingStrategy _schedulingStrategy;
     private readonly UserScheduleConfig _userScheduleConfig;
 
     private ScheduleCalendar(
         Guid? id,
         UserScheduleConfig userScheduleConfig,
-        UserTaskScheduler taskScheduler
+        ISchedulingStrategy schedulingStrategy
     )
         : base(id)
     {
@@ -34,24 +34,24 @@ public class ScheduleCalendar : EntityBase
         _dayScheduleOverrides = new SortedDictionary<DateOnly, DayScheduleOverride>();
         EnsureDaysExist(initialDateRange);
         _userScheduleConfig = userScheduleConfig;
-        _taskScheduler = taskScheduler;
+        _schedulingStrategy = schedulingStrategy;
     }
 
     public static ScheduleCalendar Create(
         UserScheduleConfig userScheduleConfig,
-        UserTaskScheduler userTaskScheduler
+        ISchedulingStrategy schedulingStrategy
     )
     {
-        return new ScheduleCalendar(null, userScheduleConfig, userTaskScheduler);
+        return new ScheduleCalendar(null, userScheduleConfig, schedulingStrategy);
     }
 
     public static ScheduleCalendar Load(
         Guid id,
         UserScheduleConfig userScheduleConfig,
-        UserTaskScheduler userTaskScheduler
+        ISchedulingStrategy schedulingStrategy
     )
     {
-        return new ScheduleCalendar(null, userScheduleConfig, userTaskScheduler);
+        return new ScheduleCalendar(null, userScheduleConfig, schedulingStrategy);
     }
 
     public IEnumerable<ICalendarDay> GetDaysInRage(DateOnly start, DateOnly end)
@@ -68,26 +68,31 @@ public class ScheduleCalendar : EntityBase
     }
 
     public SchedulingResult ScheduleTasks(
-        IReadOnlyCollection<TaskItem> taskToBeScheduled,
+        IReadOnlyCollection<TaskItem> tasksToBeScheduled,
         DateRange? schedulingWindow = null
     )
     {
-        //if no schedulingWindow use the latest dueDate
-        if (!schedulingWindow.HasValue)
-        {
-            var tomorrow = DateTime.Now.AddDays(1).ToDateOnly();
-            var lastTaskDueDate =
-                taskToBeScheduled.MaxBy(t => t.DueDate)?.DueDate
-                ?? throw new InvalidOperationException("There wasn't any DueDate in taskItem");
-            schedulingWindow = new DateRange(tomorrow, lastTaskDueDate.ToDateOnly());
-        }
+        var window = DetermineSchedulingWindow(tasksToBeScheduled, schedulingWindow);
+        EnsureDaysExist(window);
 
-        EnsureDaysExist(schedulingWindow.Value);
-        var result = _taskScheduler.ScheduleTasks(
-            GetWorkingDaysInRange(schedulingWindow.Value).ToList(),
-            taskToBeScheduled
-        );
-        throw new NotImplementedException();
+        var workingDays = GetWorkingDaysInRange(window).ToList();
+        return _schedulingStrategy.Schedule(workingDays, tasksToBeScheduled, _userScheduleConfig);
+    }
+
+    private DateRange DetermineSchedulingWindow(
+        IReadOnlyCollection<TaskItem> tasks,
+        DateRange? schedulingWindow
+    )
+    {
+        if (schedulingWindow.HasValue)
+            return schedulingWindow.Value;
+
+        var tomorrow = DateTime.Now.AddDays(1).ToDateOnly();
+        var lastTaskDueDate =
+            tasks.MaxBy(t => t.DueDate)?.DueDate
+            ?? throw new InvalidOperationException("No tasks provided with due dates");
+
+        return new DateRange(tomorrow, lastTaskDueDate.ToDateOnly());
     }
 
     private void EnsureDaysExist(DateRange dateWindow)
