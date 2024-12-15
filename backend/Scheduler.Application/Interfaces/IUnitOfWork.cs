@@ -1,6 +1,3 @@
-namespace Scheduler.Core.Interfaces;
+namespace Scheduler.Application.Interfaces;
 
-public interface IUnitOfWork
-{
-
-}
+public interface IUnitOfWork { }

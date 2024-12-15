@@ -1,6 +1,3 @@
-namespace Scheduler.Core.Services;
+namespace Scheduler.Application.Services;
 
-public class CalendarItemManger
-{
-
-}
+public class CalendarItemManger { }
