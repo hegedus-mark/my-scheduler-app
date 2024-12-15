@@ -1,4 +1,4 @@
-namespace Scheduler.Domain.Extensions;
+namespace Scheduler.Shared.Extensions;
 
 public static class DateExtensions
 {
@@ -15,6 +15,11 @@ public static class DateExtensions
     public static TimeOnly ToTimeOnly(this DateTime dateTime)
     {
         return TimeOnly.FromDateTime(dateTime);
+    }
+
+    public static DateTime ToDateTime(this TimeOnly timeOnly, DateOnly date)
+    {
+        return new DateTime(date, timeOnly);
     }
 
     public static bool IsSameDay(this DateOnly date, DateTime dateTime)

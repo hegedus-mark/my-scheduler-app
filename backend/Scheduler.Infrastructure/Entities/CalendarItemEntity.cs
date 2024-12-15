@@ -1,18 +1,24 @@
+using Scheduler.Domain.Shared.Enums;
+
 namespace Infrastructure.Entities;
 
 public class CalendarItemEntity
 {
     public Guid Id { get; set; }
     public Guid DayId { get; set; }
-    public string Type { get; set; } // "Event" or "Task"
+    public string ItemType { get; set; } // "Event" or "ScheduledTask"
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
 
-    // For tasks
+    // Navigation property
+    public DayEntity Day { get; set; }
+
+    // For scheduled tasks
     public string? TaskName { get; set; }
-    public int? Priority { get; set; }
+    public PriorityLevel? Priority { get; set; }
     public DateTime? DueDate { get; set; }
+    public TimeSpan? Duration { get; set; }
 
     // For events
-    public bool? IsRecurring { get; set; }
+    public RecurrencePatternEntity? RecurrencePattern { get; set; }
 }

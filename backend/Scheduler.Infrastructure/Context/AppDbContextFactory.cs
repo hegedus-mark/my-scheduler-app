@@ -4,21 +4,19 @@ using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.Context;
 
-public class DbContextFactory : IDesignTimeDbContextFactory<DbContext>
+public class AppDbContextFactory : IDesignTimeDbContextFactory<AppDbContext>
 {
-    public DbContext CreateDbContext(string[] args)
+    public AppDbContext CreateDbContext(string[] args)
     {
-
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
             .AddJsonFile("appsettings.json")
             .Build();
 
-        var optionsBuilder = new DbContextOptionsBuilder<DbContext>();
+        var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
         var connectionString = configuration.GetConnectionString("DefaultConnection");
         optionsBuilder.UseSqlServer(connectionString);
 
-        return new DbContext(optionsBuilder.Options);
-
+        return new AppDbContext(optionsBuilder.Options);
     }
 }
