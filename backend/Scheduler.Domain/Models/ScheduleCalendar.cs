@@ -32,9 +32,10 @@ public class ScheduleCalendar : EntityBase
         );
         _days = new SortedDictionary<DateOnly, ICalendarDay>();
         _dayScheduleOverrides = new SortedDictionary<DateOnly, DayScheduleOverride>();
-        EnsureDaysExist(initialDateRange);
         _userScheduleConfig = userScheduleConfig;
         _schedulingStrategy = schedulingStrategy;
+
+        EnsureDaysExist(initialDateRange);
     }
 
     public static ScheduleCalendar Create(
