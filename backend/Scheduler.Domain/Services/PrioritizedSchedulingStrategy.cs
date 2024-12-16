@@ -1,8 +1,7 @@
-using Scheduler.Domain.Extensions;
 using Scheduler.Domain.Models;
-using Scheduler.Domain.Models.Configuration;
 using Scheduler.Domain.Shared;
 using Scheduler.Domain.Shared.Results;
+using Scheduler.Shared.Extensions;
 
 namespace Scheduler.Domain.Services;
 
@@ -10,8 +9,7 @@ public class PrioritizedSchedulingStrategy : ISchedulingStrategy
 {
     public SchedulingResult Schedule(
         IReadOnlyList<WorkingDay> availableDays,
-        IReadOnlyCollection<TaskItem> tasks,
-        UserScheduleConfig config
+        IReadOnlyCollection<TaskItem> tasks
     )
     {
         if (!availableDays.Any())

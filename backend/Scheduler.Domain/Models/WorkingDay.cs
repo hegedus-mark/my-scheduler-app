@@ -1,7 +1,7 @@
 using Scheduler.Domain.Calendars.Interfaces;
-using Scheduler.Domain.Extensions;
 using Scheduler.Domain.Models.Base;
 using Scheduler.Domain.Shared;
+using Scheduler.Shared.Extensions;
 
 namespace Scheduler.Domain.Models;
 

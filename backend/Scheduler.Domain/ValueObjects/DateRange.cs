@@ -1,4 +1,4 @@
-using Scheduler.Domain.Extensions;
+using Scheduler.Shared.Extensions;
 
 namespace Scheduler.Domain.ValueObjects;
 

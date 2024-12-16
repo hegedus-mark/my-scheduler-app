@@ -17,7 +17,7 @@ public class PrioritizedSchedulingStrategyTests
     {
         _strategy = new PrioritizedSchedulingStrategy();
         _defaultConfig = UserScheduleConfig.CreateDefault();
-        _mockScoringStrategy = new SimpleScoringStrategy(new UserConfig(true));
+        _mockScoringStrategy = new SimpleScoringStrategy();
     }
 
     [Fact]
@@ -27,7 +27,7 @@ public class PrioritizedSchedulingStrategyTests
         var tasks = new List<TaskItem> { CreateTestTask("Task1") };
 
         // Act
-        var action = () => _strategy.Schedule(new List<WorkingDay>(), tasks, _defaultConfig);
+        var action = () => _strategy.Schedule(new List<WorkingDay>(), tasks);
 
         // Assert
         action
@@ -43,7 +43,7 @@ public class PrioritizedSchedulingStrategyTests
         var days = new List<WorkingDay> { CreateTestWorkingDay(DateTime.Today) };
 
         // Act
-        var action = () => _strategy.Schedule(days, new List<TaskItem>(), _defaultConfig);
+        var action = () => _strategy.Schedule(days, new List<TaskItem>());
 
         // Assert
         action.Should().Throw<ArgumentException>().WithMessage("Must provide tasks to schedule");
@@ -58,7 +58,7 @@ public class PrioritizedSchedulingStrategyTests
         var task = CreateTestTask("Task1");
 
         // Act
-        var result = _strategy.Schedule(new[] { workingDay }, new[] { task }, _defaultConfig);
+        var result = _strategy.Schedule(new[] { workingDay }, new[] { task });
 
         // Assert
         result.ScheduledTasks.Should().HaveCount(1);
@@ -78,8 +78,7 @@ public class PrioritizedSchedulingStrategyTests
         // Act
         var result = _strategy.Schedule(
             new[] { workingDay },
-            new[] { lowPriorityTask, highPriorityTask },
-            _defaultConfig
+            new[] { lowPriorityTask, highPriorityTask }
         );
 
         // Assert
@@ -97,7 +96,7 @@ public class PrioritizedSchedulingStrategyTests
         var task = CreateTestTask("Past Due", PriorityLevel.High, DateTime.Today.AddDays(-1));
 
         // Act
-        var result = _strategy.Schedule(new[] { workingDay }, new[] { task }, _defaultConfig);
+        var result = _strategy.Schedule(new[] { workingDay }, new[] { task });
 
         // Assert
         result.ScheduledTasks.Should().BeEmpty();
@@ -121,7 +120,7 @@ public class PrioritizedSchedulingStrategyTests
         workingDay.AddEvent(testEvent); //should schedule it at the end of the day instead of the beginning
 
         // Act
-        var result = _strategy.Schedule(new[] { workingDay }, new[] { task }, _defaultConfig);
+        var result = _strategy.Schedule(new[] { workingDay }, new[] { task });
         var scheduledTask = result.ScheduledTasks[0];
 
         // Assert
@@ -142,7 +141,7 @@ public class PrioritizedSchedulingStrategyTests
         var task = CreateTestTask("Early Task");
 
         // Act
-        var result = _strategy.Schedule(workingDays, new[] { task }, _defaultConfig);
+        var result = _strategy.Schedule(workingDays, new[] { task });
         var scheduledTask = result.ScheduledTasks[0];
 
         // Assert

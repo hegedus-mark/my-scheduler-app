@@ -30,45 +30,6 @@ public class SimpleScoringStrategyTests
         );
     }
 
-    [Fact]
-    public void CalculateScore_DurationComponent_RespectsUserPreference()
-    {
-        // Arrange
-        var dueDate = DateTime.Today.AddDays(7); // Keep due date constant
-
-        var shortTask = new TestSetup().CreateTask(dueDate, TimeSpan.FromHours(1));
-
-        var longTask = new TestSetup().CreateTask(dueDate, TimeSpan.FromHours(3));
-
-        var shortTaskReversed = new TestSetup(false).CreateTask(dueDate, TimeSpan.FromHours(1));
-
-        var longTaskReversed = new TestSetup(false).CreateTask(dueDate, TimeSpan.FromHours(3));
-
-        // Act
-        var shortScore = new SimpleScoringStrategy(new UserConfig(true)).CalculateScore(shortTask);
-        var longScore = new SimpleScoringStrategy(new UserConfig(true)).CalculateScore(longTask);
-
-        var shortScoreReversed = new SimpleScoringStrategy(new UserConfig(false)).CalculateScore(
-            shortTaskReversed
-        );
-        var longScoreReversed = new SimpleScoringStrategy(new UserConfig(false)).CalculateScore(
-            longTaskReversed
-        );
-
-        // Assert
-        // When longest job first is true, longer tasks should score higher
-        Assert.True(
-            longScore > shortScore,
-            "With LongestJobFirst=true, longer tasks should score higher"
-        );
-
-        // When longest job first is false, shorter tasks should score higher
-        Assert.True(
-            shortScoreReversed > longScoreReversed,
-            "With LongestJobFirst=false, shorter tasks should score higher"
-        );
-    }
-
     [Theory]
     [InlineData(PriorityLevel.High, PriorityLevel.Medium)]
     [InlineData(PriorityLevel.Medium, PriorityLevel.Low)]
@@ -132,13 +93,11 @@ public class SimpleScoringStrategyTests
     // We'll create a helper for common test scenarios
     private class TestSetup
     {
-        public TestSetup(bool longestJobFirst = true)
+        public TestSetup()
         {
-            UserConfig = new UserConfig(longestJobFirst);
-            ScoringStrategy = new SimpleScoringStrategy(UserConfig);
+            ScoringStrategy = new SimpleScoringStrategy();
         }
 
-        public UserConfig UserConfig { get; }
         public SimpleScoringStrategy ScoringStrategy { get; }
 
         // Helper to create tasks with specific characteristics for testing
