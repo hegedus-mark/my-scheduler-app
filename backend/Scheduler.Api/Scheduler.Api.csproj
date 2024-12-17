@@ -13,14 +13,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Scheduler.Application\Scheduler.Application.csproj" />
-      <ProjectReference Include="..\Scheduler.Infrastructure\Scheduler.Infrastructure.csproj" />
+        <ProjectReference Include="..\Scheduler.Application\Scheduler.Application.csproj"/>
+        <ProjectReference Include="..\Scheduler.Infrastructure\Scheduler.Infrastructure.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Configuration\"/>
     </ItemGroup>
 
 </Project>
