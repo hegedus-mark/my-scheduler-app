@@ -1,5 +1,5 @@
 using Scheduler.Domain.Models;
-using Scheduler.Domain.Shared.Enums;
+using Scheduler.Shared.Enums;
 
 namespace Scheduler.Domain.Services;
 

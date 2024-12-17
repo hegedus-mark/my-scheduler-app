@@ -1,7 +1,6 @@
 using System.Text;
-using Scheduler.Domain.Models;
 
-namespace Scheduler.Domain.Shared.Results;
+namespace Scheduler.Domain.Models.Results;
 
 public class SchedulingResult
 {

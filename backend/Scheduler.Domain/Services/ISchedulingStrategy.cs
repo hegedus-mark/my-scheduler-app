@@ -1,5 +1,5 @@
 using Scheduler.Domain.Models;
-using Scheduler.Domain.Shared.Results;
+using Scheduler.Domain.Models.Results;
 
 namespace Scheduler.Domain.Services;
 

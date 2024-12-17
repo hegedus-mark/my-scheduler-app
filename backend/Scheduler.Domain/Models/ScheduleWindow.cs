@@ -1,6 +1,6 @@
-using Scheduler.Domain.Calendars.Interfaces;
+using Scheduler.Domain.Models.Interfaces;
+using Scheduler.Domain.Models.Results;
 using Scheduler.Domain.Services;
-using Scheduler.Domain.Shared.Results;
 
 namespace Scheduler.Domain.Models;
 

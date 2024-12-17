@@ -1,7 +1,6 @@
-using Scheduler.Domain.Models;
 using Scheduler.Domain.Models.Base;
 
-namespace Scheduler.Domain.Calendars.Interfaces;
+namespace Scheduler.Domain.Models.Interfaces;
 
 public interface ICalendarDay
 {

@@ -1,6 +1,6 @@
 using Scheduler.Domain.Models.Base;
 using Scheduler.Domain.Shared;
-using Scheduler.Domain.Shared.Enums;
+using Scheduler.Shared.Enums;
 
 namespace Scheduler.Domain.Models;
 

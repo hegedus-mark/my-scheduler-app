@@ -1,5 +1,5 @@
-using Scheduler.Domain.Calendars.Interfaces;
 using Scheduler.Domain.Models.Base;
+using Scheduler.Domain.Models.Interfaces;
 using Scheduler.Domain.Shared;
 using Scheduler.Shared.Extensions;
 
