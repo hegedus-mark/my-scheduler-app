@@ -11,8 +11,4 @@
         <ProjectReference Include="..\Scheduler.Domain\Scheduler.Domain.csproj"/>
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Mapping\" />
-    </ItemGroup>
-
 </Project>
