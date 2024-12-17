@@ -1,3 +1,3 @@
 namespace Scheduler.Application.Interfaces;
 
-public class ICalendarRepository { }
+public interface ICalendarRepository { }
