@@ -1,7 +1,7 @@
 using Moq;
 using Scheduler.Domain.Models;
 using Scheduler.Domain.Services;
-using Scheduler.Domain.Shared.Enums;
+using Scheduler.Shared.Enums;
 
 namespace Tests.Domain.Models;
 

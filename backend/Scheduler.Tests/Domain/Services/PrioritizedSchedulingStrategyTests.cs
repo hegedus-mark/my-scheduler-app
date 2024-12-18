@@ -2,8 +2,8 @@ using FluentAssertions;
 using Scheduler.Domain.Models;
 using Scheduler.Domain.Models.Configuration;
 using Scheduler.Domain.Services;
-using Scheduler.Domain.Shared;
-using Scheduler.Domain.Shared.Enums;
+using Scheduler.Shared.Enums;
+using Scheduler.Shared.ValueObjects;
 
 namespace Tests.Domain.Services;
 

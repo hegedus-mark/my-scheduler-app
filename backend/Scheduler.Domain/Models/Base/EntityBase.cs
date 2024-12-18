@@ -1,14 +1,16 @@
+using Scheduler.Domain.Interfaces;
+
 namespace Scheduler.Domain.Models.Base;
 
 /// <summary>
 ///     Base class for entities with unique identifiers.
 /// </summary>
-public abstract class EntityBase
+public abstract class EntityBase : IIdModel
 {
     protected EntityBase(Guid? id = null)
     {
         Id = id ?? Guid.NewGuid();
     }
 
-    public Guid Id { get; private set; }
+    public Guid Id { get; }
 }

@@ -1,5 +1,5 @@
+using Scheduler.Domain.Interfaces;
 using Scheduler.Domain.Models.Base;
-using Scheduler.Domain.Models.Interfaces;
 
 namespace Scheduler.Domain.Models;
 

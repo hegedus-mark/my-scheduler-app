@@ -1,8 +1,9 @@
+using Scheduler.Domain.Models;
 using Scheduler.Domain.Models.Base;
 
-namespace Scheduler.Domain.Models.Interfaces;
+namespace Scheduler.Domain.Interfaces;
 
-public interface ICalendarDay
+public interface ICalendarDay : IIdModel
 {
     /// <summary>
     ///     Gets the date of this schedule day.

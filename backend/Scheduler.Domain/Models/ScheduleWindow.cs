@@ -1,4 +1,4 @@
-using Scheduler.Domain.Models.Interfaces;
+using Scheduler.Domain.Interfaces;
 using Scheduler.Domain.Models.Results;
 using Scheduler.Domain.Services;
 

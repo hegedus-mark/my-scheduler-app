@@ -1,5 +1,5 @@
 using Scheduler.Domain.Models.Base;
-using Scheduler.Domain.Shared;
+using Scheduler.Shared.ValueObjects;
 
 namespace Scheduler.Domain.Models;
 

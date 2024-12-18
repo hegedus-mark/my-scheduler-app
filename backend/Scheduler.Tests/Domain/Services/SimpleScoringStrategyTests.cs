@@ -1,7 +1,6 @@
 using Scheduler.Domain.Models;
-using Scheduler.Domain.Models.Configuration;
 using Scheduler.Domain.Services;
-using Scheduler.Domain.Shared.Enums;
+using Scheduler.Shared.Enums;
 
 namespace Tests.Domain.Services;
 
