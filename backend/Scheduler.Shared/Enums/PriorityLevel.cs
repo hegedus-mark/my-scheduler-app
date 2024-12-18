@@ -1,4 +1,4 @@
-namespace Scheduler.Domain.Enums;
+namespace Scheduler.Shared.Enums;
 
 public enum PriorityLevel
 {

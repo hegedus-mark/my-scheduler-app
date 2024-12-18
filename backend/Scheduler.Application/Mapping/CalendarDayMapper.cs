@@ -5,6 +5,7 @@ using Scheduler.Domain.Models.Base;
 using Scheduler.Domain.Services;
 using Scheduler.Domain.Shared;
 using Scheduler.Shared.Extensions;
+using Scheduler.Shared.ValueObjects;
 
 namespace Scheduler.Application.Mapping;
 

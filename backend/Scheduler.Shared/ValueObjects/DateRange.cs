@@ -1,6 +1,6 @@
 using Scheduler.Shared.Extensions;
 
-namespace Scheduler.Domain.ValueObjects;
+namespace Scheduler.Shared.ValueObjects;
 
 public readonly record struct DateRange
 {

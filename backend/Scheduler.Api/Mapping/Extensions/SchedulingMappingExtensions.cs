@@ -1,4 +1,4 @@
-using Scheduler.Domain.ValueObjects;
+using Scheduler.Shared.ValueObjects;
 
 namespace SchedularPrototype.Mapping.Extensions;
 
