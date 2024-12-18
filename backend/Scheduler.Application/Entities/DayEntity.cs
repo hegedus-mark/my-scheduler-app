@@ -1,4 +1,4 @@
-namespace Infrastructure.Entities;
+namespace Scheduler.Application.Entities;
 
 public class DayEntity
 {

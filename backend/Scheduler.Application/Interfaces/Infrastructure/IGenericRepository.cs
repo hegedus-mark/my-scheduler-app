@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 
-namespace Scheduler.Application.Interfaces;
+namespace Scheduler.Application.Interfaces.Infrastructure;
 
 public interface IGenericRepository<TEntity>
     where TEntity : class
@@ -12,6 +12,7 @@ public interface IGenericRepository<TEntity>
 
     void Add(TEntity entity);
     void AddRange(IEnumerable<TEntity> entities);
+    Task AddRangeAsync(IEnumerable<TEntity> entities);
 
     void Update(TEntity entity);
     void UpdateRange(IEnumerable<TEntity> entities);

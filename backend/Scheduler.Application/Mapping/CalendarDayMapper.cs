@@ -1,9 +1,10 @@
 using Infrastructure.Entities;
-using Scheduler.Domain.Calendars.Interfaces;
+using Scheduler.Application.Entities;
+using Scheduler.Application.Interfaces.Mapping;
+using Scheduler.Domain.Interfaces;
 using Scheduler.Domain.Models;
 using Scheduler.Domain.Models.Base;
 using Scheduler.Domain.Services;
-using Scheduler.Domain.Shared;
 using Scheduler.Shared.Extensions;
 using Scheduler.Shared.ValueObjects;
 

@@ -1,4 +1,4 @@
-namespace Scheduler.Application.Mapping;
+namespace Scheduler.Application.Interfaces.Mapping;
 
 public interface IMapper<TDomain, TEntity>
 {

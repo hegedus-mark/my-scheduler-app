@@ -1,4 +1,5 @@
 using Infrastructure.Entities;
+using Scheduler.Application.Interfaces.Mapping;
 using Scheduler.Domain.Models.Configuration;
 
 namespace Scheduler.Application.Mapping;

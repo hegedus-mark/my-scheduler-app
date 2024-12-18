@@ -1,3 +1,7 @@
-namespace Scheduler.Application.Interfaces;
+namespace Scheduler.Application.Interfaces.Infrastructure;
 
-public interface IUnitOfWork { }
+public interface IUnitOfWork : IDisposable
+{
+    IDayRepository CalendarDays { get; }
+    Task<int> SaveChangesAsync();
+}

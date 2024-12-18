@@ -1,6 +1,6 @@
 using Scheduler.Domain.Shared.Enums;
 
-namespace Infrastructure.Entities;
+namespace Scheduler.Application.Entities;
 
 public class RecurrencePatternEntity
 {
