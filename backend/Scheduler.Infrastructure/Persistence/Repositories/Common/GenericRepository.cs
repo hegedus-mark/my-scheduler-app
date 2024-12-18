@@ -1,6 +1,6 @@
 using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
-using Scheduler.Application.Interfaces;
+using Scheduler.Application.Interfaces.Infrastructure;
 
 namespace Infrastructure.Persistence.Repositories.Common;
 
@@ -50,6 +50,11 @@ internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
         DbSet.AddRange(entities);
     }
 
+    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+    {
+        await DbSet.AddRangeAsync(entities);
+    }
+
     public virtual void Update(TEntity entity)
     {
         DbSet.Update(entity);
@@ -81,34 +86,24 @@ internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
         IQueryable<TEntity> query = DbSet;
 
         if (filter != null)
-        {
             query = query.Where(filter);
-        }
 
         foreach (
             var includeProperty in includeProperties.Split(
-                new char[] { ',' },
+                new[] { ',' },
                 StringSplitOptions.RemoveEmptyEntries
             )
         )
-        {
             query = query.Include(includeProperty);
-        }
 
         if (orderBy != null)
-        {
             query = orderBy(query);
-        }
 
         if (skip.HasValue)
-        {
             query = query.Skip(skip.Value);
-        }
 
         if (take.HasValue)
-        {
             query = query.Take(take.Value);
-        }
 
         return query;
     }

@@ -1,6 +1,8 @@
+using Infrastructure.Configuration;
 using Infrastructure.Entities;
 using Infrastructure.EntityConfigurations;
 using Microsoft.EntityFrameworkCore;
+using Scheduler.Application.Entities;
 
 namespace Infrastructure.Context;
 

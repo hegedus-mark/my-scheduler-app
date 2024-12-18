@@ -1,8 +1,8 @@
-using Infrastructure.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using Scheduler.Application.Entities;
 
-namespace Infrastructure.EntityConfigurations;
+namespace Infrastructure.Configuration;
 
 public class DayEntityConfiguration : IEntityTypeConfiguration<DayEntity>
 {
