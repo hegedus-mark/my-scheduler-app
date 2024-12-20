@@ -8,7 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Tests", "Scheduler.Tests\Scheduler.Tests.csproj", "{83FEB968-C8E3-46B2-8021-F8D8A5A6C67D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Domain.Tests", "Scheduler.Domain.Tests\Scheduler.Domain.Tests.csproj", "{83FEB968-C8E3-46B2-8021-F8D8A5A6C67D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Infrastructure", "Scheduler.Infrastructure\Scheduler.Infrastructure.csproj", "{9FAAAE56-6CAA-4DA0-86F2-621994971C1D}"
 EndProject
@@ -21,6 +21,10 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Domain", "Scheduler.Domain\Scheduler.Domain.csproj", "{2F7B43F6-6300-45D9-A5A7-7DDCB295C2B6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Shared", "Scheduler.Shared\Scheduler.Shared.csproj", "{DB48ED3D-A9E9-421E-B477-C976824BC9D5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Shared.Tests", "Scheduler.Shared.Tests\Scheduler.Shared.Tests.csproj", "{BA3CA624-4C92-4820-9323-01D485DA79E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Application.Tests", "Scheduler.Application.Tests\Scheduler.Application.Tests.csproj", "{3F2BB943-AD32-4B9C-B11D-D514448228C9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -52,6 +56,14 @@ Global
 		{DB48ED3D-A9E9-421E-B477-C976824BC9D5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DB48ED3D-A9E9-421E-B477-C976824BC9D5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DB48ED3D-A9E9-421E-B477-C976824BC9D5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA3CA624-4C92-4820-9323-01D485DA79E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA3CA624-4C92-4820-9323-01D485DA79E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA3CA624-4C92-4820-9323-01D485DA79E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA3CA624-4C92-4820-9323-01D485DA79E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F2BB943-AD32-4B9C-B11D-D514448228C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F2BB943-AD32-4B9C-B11D-D514448228C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F2BB943-AD32-4B9C-B11D-D514448228C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F2BB943-AD32-4B9C-B11D-D514448228C9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E6A5BA76-28A6-4F10-BE69-442D68435D68} = {968DCDE7-42A3-4E8D-98A2-BE2274671A5E}
@@ -60,5 +72,7 @@ Global
 		{83FEB968-C8E3-46B2-8021-F8D8A5A6C67D} = {3EA5BE11-D039-49C8-A3AD-D0151DCA7FB6}
 		{2F7B43F6-6300-45D9-A5A7-7DDCB295C2B6} = {968DCDE7-42A3-4E8D-98A2-BE2274671A5E}
 		{DB48ED3D-A9E9-421E-B477-C976824BC9D5} = {968DCDE7-42A3-4E8D-98A2-BE2274671A5E}
+		{BA3CA624-4C92-4820-9323-01D485DA79E1} = {3EA5BE11-D039-49C8-A3AD-D0151DCA7FB6}
+		{3F2BB943-AD32-4B9C-B11D-D514448228C9} = {3EA5BE11-D039-49C8-A3AD-D0151DCA7FB6}
 	EndGlobalSection
 EndGlobal

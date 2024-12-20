@@ -61,6 +61,7 @@ public class SchedulingService : ISchedulingService
             ?? DateRange.CreateFromDuration(
                 DateTime.Now.ToDateOnly(),
                 0,
+                0,
                 DEFAULT_SCHEDULING_WINDOW
             );
         var existingDays = await _unitOfWork.CalendarDays.GetDaysInRangeAsync(schedulingWindow);
@@ -117,7 +118,8 @@ public class SchedulingService : ISchedulingService
     {
         var newDays = calendarDays
             .Where(d => existingDays.All(e => e.Id != d.Id))
-            .Select(d => _dayMapper.ToEntity(d));
+            .Select(d => _dayMapper.ToEntity(d))
+            .ToList();
 
         await _unitOfWork.CalendarDays.AddRangeAsync(newDays);
         await _unitOfWork.SaveChangesAsync();
