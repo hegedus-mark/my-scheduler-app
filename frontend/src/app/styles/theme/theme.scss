@@ -1,0 +1,12 @@
+@use './colors' as *;
+
+
+:root {
+  // Generate CSS Custom Properties for colors
+  @each $color-name, $shades in $colors {
+    @each $shade, $value in $shades {
+      --color-#{$color-name}-#{$shade}: #{$value};
+    }
+  }
+
+}

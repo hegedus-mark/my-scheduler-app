@@ -1,4 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
+// Import theme
+@use 'app/styles/theme/theme' as *;
+
+// Tailwind directives
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+// Base styles
+@layer base {
+  html {
+    @apply antialiased;
+    font-family: var(--font-family), serif;
+  }
+
+  body {
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-white;
+  }
+
+  h1 {
+    @apply text-4xl font-bold;
+  }
+
+  h2 {
+    @apply text-3xl font-semibold;
+  }
+
+  h3 {
+    @apply text-2xl font-semibold;
+  }
+
+  h4 {
+    @apply text-xl font-medium;
+  }
+}
+
+// Component styles
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium transition-colors duration-200;
+
+    &-primary {
+      @apply bg-primary-600 text-white hover:bg-primary-700 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2;
+    }
+
+    &-secondary {
+      @apply bg-gray-200 text-gray-900 hover:bg-gray-300 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2
+      dark:bg-gray-700 dark:text-white dark:hover:bg-gray-600;
+    }
+
+    &-outline {
+      @apply border-2 border-gray-300 hover:bg-gray-100 focus:ring-2 focus:ring-gray-500 focus:ring-offset-2
+      dark:border-gray-600 dark:hover:bg-gray-800;
+    }
+
+    &-sm {
+      @apply px-3 py-1.5 text-sm;
+    }
+
+    &-lg {
+      @apply px-6 py-3 text-lg;
+    }
+  }
+
+  .input {
+    @apply block w-full px-4 py-2 rounded-lg border border-gray-300 bg-white text-gray-900
+    focus:ring-2 focus:ring-primary-500 focus:border-primary-500
+    dark:bg-gray-800 dark:border-gray-600 dark:text-white
+    dark:focus:ring-primary-500 dark:focus:border-primary-500;
+  }
+
+  .card {
+    @apply bg-white p-6 rounded-lg shadow-sm border border-gray-200
+    dark:bg-gray-800 dark:border-gray-700;
+  }
+}
