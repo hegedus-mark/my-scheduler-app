@@ -20,8 +20,8 @@ export class ButtonComponent {
 
   variant = input<ButtonVariant>('primary');
   size = input<ButtonSize>('md');
-  disabled = input.required({ transform: booleanAttribute });
-  loading = input.required({ transform: booleanAttribute });
+  disabled = input(false, { transform: booleanAttribute });
+  loading = input(false, { transform: booleanAttribute });
   fullWidth = input(false);
   icon = input<string | undefined>(undefined);
   type = input<ButtonType>('button');
