@@ -8,10 +8,13 @@ import {
   output
 } from '@angular/core';
 import {ButtonSize, ButtonType, ButtonVariant} from './button.types';
+import {SpinnerComponent} from "../spinner/spinner.component";
 
 @Component({
   selector: 'app-button',
-  imports: [],
+  imports: [
+    SpinnerComponent
+  ],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush
