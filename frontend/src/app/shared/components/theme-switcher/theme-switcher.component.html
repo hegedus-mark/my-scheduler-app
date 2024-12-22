@@ -1,0 +1,32 @@
+<div class="dropdown">
+  <button
+    tabindex="0"
+    role="button"
+    class="btn btn-ghost gap-2"
+  >
+    <span class="hidden sm:inline">Theme</span>
+    <svg
+      class="h-4 w-4 fill-current opacity-60"
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 2048 2048"
+    >
+      <path d="M1799 349l242 241-1017 1017L7 590l242-241 775 775 775-775z"></path>
+    </svg>
+  </button>
+  <ul
+    tabindex="0"
+    class="dropdown-content menu p-2 shadow-lg bg-base-200 rounded-box w-52 mt-4"
+  >
+    @for (theme of THEMES_CONFIG; track theme.id) {
+      <li>
+        <button
+          class="btn btn-sm btn-ghost justify-start"
+          [class.active]="(currentTheme$ | async) === theme.id"
+          (click)="setTheme(theme.id)"
+        >
+          {{ theme.name }}
+        </button>
+      </li>
+    }
+  </ul>
+</div>
