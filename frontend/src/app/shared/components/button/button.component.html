@@ -1,20 +1,13 @@
 <button
   [type]="type()"
   [disabled]="disabled() || loading()"
-  [class]="classes()"
   (click)="clicked.emit()"
+   class="btn"
 >
   @if (loading()) {
-    <ng-container>
-      <app-spinner/>
+      <span class="loading loading-spinner"></span>
       Loading...
-    </ng-container>
   } @else if (!loading()) {
-    <ng-container>
-      @if (icon()) {
-        <i [class]="icon() + ' mr-2'"></i>
-      }
       <ng-content></ng-content>
-    </ng-container>
   }
 </button>
