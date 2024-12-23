@@ -1,2 +1,6 @@
-<p>main-layout works!</p>
-<router-outlet />
+<div class="flex h-screen">
+  <app-sidebar [navigationItems]="navigationConfig" />
+  <main class="flex-1 overflow-auto">
+    <router-outlet />
+  </main>
+</div>

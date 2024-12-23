@@ -1,1 +1,45 @@
-<p>sidebar works!</p>
+<aside
+  class="flex flex-col w-64 min-h-screen bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800"
+>
+  <!-- Logo Section -->
+  <div
+    class="flex items-center h-16 px-6 border-b border-gray-200 dark:border-gray-800"
+  >
+    <img ngSrc="assets/logo.svg" alt="Logo" class="h-8 w-auto" fill />
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex-1 px-4 py-4 space-y-1 overflow-y-auto">
+    @for (item of navigationItems(); track item.path) {
+      <a
+        [routerLink]="[item.path]"
+        routerLinkActive="bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-white"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="flex items-center px-4 py-2 text-sm text-gray-600 dark:text-gray-400 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors group"
+      >
+        @if (item.icon) {
+          <i
+            [class]="
+              item.icon +
+              ' h-5 w-5 mr-3 text-gray-400 group-hover:text-gray-500 dark:group-hover:text-gray-300'
+            "
+          ></i>
+        }
+        {{ item.name }}
+      </a>
+    }
+  </nav>
+
+  <!-- User Profile Section -->
+  <div
+    class="flex items-center gap-3 px-6 py-4 border-t border-gray-200 dark:border-gray-800"
+  >
+    <div class="w-8 h-8 rounded-full bg-gray-200 dark:bg-gray-700"></div>
+    <div class="flex-1">
+      <p class="text-sm font-medium text-gray-900 dark:text-white">John Doe</p>
+      <p class="text-xs text-gray-500 dark:text-gray-400">
+        john&#64;example.com
+      </p>
+    </div>
+  </div>
+</aside>
