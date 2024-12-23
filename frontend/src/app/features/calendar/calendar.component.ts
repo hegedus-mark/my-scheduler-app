@@ -63,10 +63,6 @@ export class CalendarComponent {
     },
   ];
 
-  getEventClass(event: CalendarEvent): string {
-    return event.type === "task" ? "event-task" : "event-meeting";
-  }
-
   getEventTypeClass(event: CalendarEvent): string {
     return event.type === "task" ? "text-blue-500" : "text-purple-500";
   }

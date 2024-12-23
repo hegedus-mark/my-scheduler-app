@@ -53,10 +53,7 @@
           <!-- Events for this day -->
           <div class="mt-2 space-y-1">
             @for (event of day.events; track event) {
-              <div
-                [class]="getEventClass(event)"
-                class="px-2 py-1 text-xs rounded-md truncate"
-              >
+              <div class="px-2 py-1 text-xs rounded-md truncate">
                 {{ event.title }}
               </div>
             }
