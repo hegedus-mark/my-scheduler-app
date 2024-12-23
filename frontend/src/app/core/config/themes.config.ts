@@ -46,7 +46,7 @@ const themeIds = [
 ] as const;
 
 // Transform into ThemesConfig array
-export const THEMES_CONFIG: ThemesConfig[] = themeIds.map(id => ({
+export const THEMES_CONFIG: ThemesConfig[] = themeIds.map((id) => ({
   id,
-  name: id === 'cmyk' ? 'CMYK' : capitalize(id), // Special case for CMYK
+  name: id === "cmyk" ? "CMYK" : capitalize(id), // Special case for CMYK
 }));

@@ -1,33 +1,35 @@
-import {Route} from "@angular/router";
+import { Route } from "@angular/router";
 
-export interface NavItem{
+export interface NavItem {
   name: string;
   path: string;
   icon?: string;
-  route: Route
+  route: Route;
 }
 
 export const navigationConfig: NavItem[] = [
   {
-    name: 'Dashboard',
-    path: '/dashboard',
-    icon: 'dashboard-icon',
+    name: "Dashboard",
+    path: "/dashboard",
+    icon: "dashboard-icon",
     route: {
-      path: 'dashboard',
+      path: "dashboard",
       loadChildren: () =>
-        import('@features/dashboard/dashboard.routes')
-          .then(m => m.DASHBOARD_ROUTES)
-    }
+        import("@features/dashboard/dashboard.routes").then(
+          (m) => m.DASHBOARD_ROUTES,
+        ),
+    },
   },
   {
-    name: 'Calendar',
-    path: '/calendar',
-    icon: 'calendar-icon',
+    name: "Calendar",
+    path: "/calendar",
+    icon: "calendar-icon",
     route: {
-      path: 'calendar',
+      path: "calendar",
       loadChildren: () =>
-        import('@features/calendar/calendar.routes')
-          .then(m => m.CALENDAR_ROUTES)
-    }
+        import("@features/calendar/calendar.routes").then(
+          (m) => m.CALENDAR_ROUTES,
+        ),
+    },
   },
-]
+];

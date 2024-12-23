@@ -2,12 +2,12 @@
   [type]="type()"
   [disabled]="disabled() || loading()"
   (click)="clicked.emit()"
-   class="btn"
+  class="btn"
 >
   @if (loading()) {
-      <span class="loading loading-spinner"></span>
-      Loading...
+    <span class="loading loading-spinner"></span>
+    Loading...
   } @else if (!loading()) {
-      <ng-content></ng-content>
+    <ng-content></ng-content>
   }
 </button>

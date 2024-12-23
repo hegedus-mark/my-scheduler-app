@@ -2,24 +2,20 @@ import {
   booleanAttribute,
   ChangeDetectionStrategy,
   Component,
-  computed,
-  EventEmitter,
   input,
-  output
-} from '@angular/core';
+  output,
+} from "@angular/core";
 
 @Component({
-  selector: 'app-button',
+  selector: "app-button",
   imports: [],
-  templateUrl: './button.component.html',
-  styleUrl: './button.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  templateUrl: "./button.component.html",
+  styleUrl: "./button.component.scss",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ButtonComponent {
-
-  disabled = input(false,{ transform: booleanAttribute });
-  loading = input(false,{ transform: booleanAttribute });
-  type = input<'button' | 'submit' | 'reset'>('button');
+  disabled = input(false, { transform: booleanAttribute });
+  loading = input(false, { transform: booleanAttribute });
+  type = input<"button" | "submit" | "reset">("button");
   clicked = output<void>();
-
 }
