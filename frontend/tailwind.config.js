@@ -2,7 +2,7 @@
 
   import daisyui from "daisyui"
 
-  module.exports = {
+ export default {
   content: [
     "./src/**/*.{html,ts}"
   ],
