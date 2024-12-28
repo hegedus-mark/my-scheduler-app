@@ -1,4 +1,11 @@
-import { Component, computed, signal } from "@angular/core";
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from "@angular/core";
 import { CalendarEvent } from "@features/calendar/week/week-calendar.types";
 import { DatePipe } from "@angular/common";
 import {
@@ -10,6 +17,8 @@ import {
   User,
   Users,
 } from "lucide-angular";
+import { ActivatedRoute } from "@angular/router";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-week-calendar",
@@ -17,7 +26,12 @@ import {
   templateUrl: "./week-calendar.component.html",
   styleUrl: "./week-calendar.component.scss",
 })
-export class WeekCalendarComponent {
+export class WeekCalendarComponent implements OnInit {
+  //DI
+  private route = inject(ActivatedRoute);
+  private destroyRef = inject(DestroyRef);
+
+  //constants
   private readonly HOURS_IN_DAY = 24;
   private readonly DAYS_IN_WEEK = 7;
   readonly HOUR_HEIGHT = 60; // pixels per hour
@@ -27,7 +41,6 @@ export class WeekCalendarComponent {
   readonly currentWeekDays = computed(() =>
     this.getWeekDays(this.currentDate()),
   );
-
   readonly timeSlots = computed(() => {
     return Array.from({ length: this.HOURS_IN_DAY }, (_, i) => {
       const hour = i;
@@ -37,6 +50,16 @@ export class WeekCalendarComponent {
       };
     });
   });
+
+  ngOnInit() {
+    this.route.queryParams
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((params) => {
+        if (params["date"]) {
+          this.currentDate.set(new Date(params["date"]));
+        }
+      });
+  }
 
   readonly weekGrid = computed(() => {
     const days = this.currentWeekDays();
@@ -52,9 +75,6 @@ export class WeekCalendarComponent {
       })),
     }));
   });
-
-  // Events signal
-  readonly events = signal<CalendarEvent[]>([]);
 
   // Helper methods
   private getWeekDays(date: Date): Date[] {
@@ -85,6 +105,9 @@ export class WeekCalendarComponent {
       date.getFullYear() === today.getFullYear()
     );
   }
+
+  // Events signal
+  readonly events = signal<CalendarEvent[]>([]);
 
   // Event handling methods
   getEventsForSlot(date: Date, hour: number): CalendarEvent[] {
