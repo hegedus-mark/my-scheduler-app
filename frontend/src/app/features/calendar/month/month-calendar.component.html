@@ -1,0 +1,75 @@
+<!-- Calendar Container -->
+<div class="flex flex-col h-full bg-base-100">
+  <!-- Calendar Header -->
+  <div class="flex items-center justify-between p-4 bg-base-200">
+    <h2 class="text-xl font-semibold text-base-content">
+      {{ monthYearDisplay() }}
+    </h2>
+    <div class="flex items-center gap-2">
+      <!-- Navigation Controls -->
+      <button
+        (click)="handleMonthChange(-1)"
+        class="btn btn-ghost btn-sm"
+        aria-label="Previous month"
+      >
+        <lucide-icon [img]="ChevronLeft" class="w-5 h-5" />
+      </button>
+      <button
+        (click)="handleMonthChange(1)"
+        class="btn btn-ghost btn-sm"
+        aria-label="Next month"
+      >
+        <lucide-icon [img]="ChevronRight" class="w-5 h-5" />
+      </button>
+    </div>
+  </div>
+
+  <!-- Calendar Grid -->
+  <div class="flex-1 grid">
+    <!-- Weekday Headers -->
+    <div class="grid grid-cols-7 border-b border-base-300">
+      @for (day of DaysOfWeek; track day) {
+        <div
+          class="p-2 text-sm font-medium text-base-content/70 text-center bg-base-200"
+        >
+          {{ day }}
+        </div>
+      }
+    </div>
+
+    <!-- Calendar Days Grid -->
+    <div class="grid grid-cols-7 flex-1">
+      @for (cell of currentDaysInMonth(); track cell.date) {
+        <div
+          class="relative min-h-[100px] border-b border-r border-base-200 p-2 group"
+          [class.bg-base-100]="cell.currentMonth"
+          [class.bg-base-200]="!cell.currentMonth"
+          [class.hover:bg-base-200]="cell.currentMonth"
+        >
+          <!-- Date Display -->
+          <span
+            [class.text-base-content]="cell.currentMonth"
+            [class.text-base-content-50]="!cell.currentMonth"
+            class="text-sm"
+          >
+            {{ cell.date.getDate() }}
+          </span>
+
+          <!-- Event Container -->
+          <div class="mt-1 space-y-1">
+            <!-- Events will be rendered here -->
+          </div>
+
+          <!-- Add Event Button (Only visible on hover for current month) -->
+          @if (cell.currentMonth) {
+            <button
+              class="btn btn-ghost btn-xs absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+            >
+              <lucide-icon [img]="Plus" class="w-5 h-5" />
+            </button>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>
