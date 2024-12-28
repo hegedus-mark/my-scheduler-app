@@ -1,4 +1,11 @@
-import { Component, computed, OnDestroy, OnInit, signal } from "@angular/core";
+import {
+  Component,
+  computed,
+  DestroyRef,
+  inject,
+  OnInit,
+  signal,
+} from "@angular/core";
 import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import {
   LucideAngularModule,
@@ -9,7 +16,7 @@ import {
   CalendarDays,
   Calendar,
 } from "lucide-angular";
-import { Subject, takeUntil } from "rxjs";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 type CalendarView = "month" | "week";
 
@@ -19,9 +26,11 @@ type CalendarView = "month" | "week";
   templateUrl: "./calendar-main.component.html",
   styleUrl: "./calendar-main.component.scss",
 })
-export class CalendarMainComponent implements OnInit, OnDestroy {
-  //clean up event
-  private destroy$ = new Subject<void>();
+export class CalendarMainComponent implements OnInit {
+  //injection
+  private destroyRef = inject(DestroyRef);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
 
   // View management
   readonly currentView = signal<CalendarView>("month");
@@ -34,17 +43,12 @@ export class CalendarMainComponent implements OnInit, OnDestroy {
     });
   });
 
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
-
   ngOnInit() {
     console.log("Initial URL:", this.router.url); // Debug log
     console.log("Route snapshot:", this.route.snapshot); // Debug log
 
     this.route.firstChild?.url
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((url) => {
         const view = url[0]?.path as CalendarView;
         if (view) {
@@ -53,17 +57,12 @@ export class CalendarMainComponent implements OnInit, OnDestroy {
       });
 
     this.route.queryParams
-      .pipe(takeUntil(this.destroy$))
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         if (params["date"]) {
           this.currentDate.set(new Date(params["date"]));
         }
       });
-  }
-
-  ngOnDestroy() {
-    this.destroy$.next();
-    this.destroy$.complete();
   }
 
   switchView(view: CalendarView) {
