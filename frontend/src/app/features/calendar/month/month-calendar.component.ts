@@ -1,4 +1,4 @@
-import { Component, computed, signal } from "@angular/core";
+import { Component, computed, OnInit, signal } from "@angular/core";
 import {
   ChevronLeft,
   ChevronRight,
@@ -7,6 +7,7 @@ import {
   Users,
 } from "lucide-angular";
 import { MonthCalendarCell } from "@features/calendar/month/month-calendar.types";
+import { ActivatedRoute, Router } from "@angular/router";
 
 @Component({
   selector: "app-month-calendar",
@@ -14,24 +15,11 @@ import { MonthCalendarCell } from "@features/calendar/month/month-calendar.types
   templateUrl: "./month-calendar.component.html",
   styleUrl: "./month-calendar.component.scss",
 })
-export class MonthCalendarComponent {
+export class MonthCalendarComponent implements OnInit {
   readonly ChevronLeft = ChevronLeft;
   readonly ChevronRight = ChevronRight;
   readonly Plus = Plus;
   readonly Users = Users;
-  private readonly CELLS = 42; // 6 * 7
-
-  readonly currentDate = signal(new Date());
-  readonly currentDaysInMonth = computed(() =>
-    this.getDaysInMonth(this.currentDate()),
-  );
-  readonly monthYearDisplay = computed(() => {
-    return this.currentDate().toLocaleDateString("default", {
-      month: "long",
-      year: "numeric",
-    });
-  });
-
   readonly DaysOfWeek = [
     "Sun",
     "Mon",
@@ -41,6 +29,26 @@ export class MonthCalendarComponent {
     "Fri",
     "Sat",
   ] as const;
+  private readonly CELLS = 42; // 6 * 7
+
+  readonly currentDate = signal(new Date());
+  readonly currentDaysInMonth = computed(() =>
+    this.getDaysInMonth(this.currentDate()),
+  );
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+  ) {}
+
+  ngOnInit() {
+    // Subscribe to query params to get the date
+    this.route.queryParams.subscribe((params) => {
+      if (params["date"]) {
+        this.currentDate.set(new Date(params["date"]));
+      }
+    });
+  }
 
   private getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
@@ -91,9 +99,15 @@ export class MonthCalendarComponent {
     return result;
   };
 
+  // Update navigation methods to use routing
   handleMonthChange = (offset: number) => {
-    this.currentDate.update(
-      (date) => new Date(date.getFullYear(), date.getMonth() + offset),
-    );
+    const newDate = new Date(this.currentDate());
+    newDate.setMonth(newDate.getMonth() + offset);
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { date: newDate.toISOString() },
+      queryParamsHandling: "merge",
+    });
   };
 }

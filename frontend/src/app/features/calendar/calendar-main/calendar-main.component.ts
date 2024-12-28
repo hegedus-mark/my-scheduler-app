@@ -1,4 +1,4 @@
-import { Component, OnInit, signal } from "@angular/core";
+import { Component, computed, OnInit, signal } from "@angular/core";
 import { ActivatedRoute, Router, RouterOutlet } from "@angular/router";
 import {
   LucideAngularModule,
@@ -29,6 +29,13 @@ export class CalendarMainComponent implements OnInit {
   // View management
   readonly currentView = signal<CalendarView>("month");
   readonly currentDate = signal(new Date());
+
+  readonly monthYearDisplay = computed(() => {
+    return this.currentDate().toLocaleDateString("default", {
+      month: "long",
+      year: "numeric",
+    });
+  });
 
   constructor(
     private router: Router,
