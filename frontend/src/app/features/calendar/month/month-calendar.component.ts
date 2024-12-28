@@ -6,13 +6,7 @@ import {
   OnInit,
   signal,
 } from "@angular/core";
-import {
-  ChevronLeft,
-  ChevronRight,
-  LucideAngularModule,
-  Plus,
-  Users,
-} from "lucide-angular";
+import { LucideAngularModule, Plus } from "lucide-angular";
 import { MonthCalendarCell } from "@features/calendar/month/month-calendar.types";
 import { ActivatedRoute, Router } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
@@ -116,8 +110,5 @@ export class MonthCalendarComponent implements OnInit {
     return result;
   };
 
-  readonly ChevronLeft = ChevronLeft;
-  readonly ChevronRight = ChevronRight;
   readonly Plus = Plus;
-  readonly Users = Users;
 }

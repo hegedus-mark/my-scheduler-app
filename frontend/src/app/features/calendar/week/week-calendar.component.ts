@@ -8,15 +8,7 @@ import {
 } from "@angular/core";
 import { CalendarEvent } from "@features/calendar/week/week-calendar.types";
 import { DatePipe } from "@angular/common";
-import {
-  ChevronLast,
-  ChevronLeft,
-  ChevronRight,
-  LucideAngularModule,
-  Plus,
-  User,
-  Users,
-} from "lucide-angular";
+import { LucideAngularModule, Plus } from "lucide-angular";
 import { ActivatedRoute } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
@@ -153,10 +145,5 @@ export class WeekCalendarComponent implements OnInit {
     console.log("Add event at:", { startTime, endTime });
   }
 
-  readonly ChevronRight = ChevronRight;
-  readonly ChevronLast = ChevronLast;
-  readonly ChevronLeft = ChevronLeft;
   readonly Plus = Plus;
-  readonly User = User;
-  readonly Users = Users;
 }
