@@ -28,23 +28,6 @@ export class WeekCalendarComponent {
     this.getWeekDays(this.currentDate()),
   );
 
-  // Display computed values
-  readonly weekDisplayRange = computed(() => {
-    const days = this.currentWeekDays();
-    const firstDay = days[0];
-    const lastDay = days[days.length - 1];
-    const sameMonth = firstDay.getMonth() === lastDay.getMonth();
-    const sameYear = firstDay.getFullYear() === lastDay.getFullYear();
-
-    if (sameMonth && sameYear) {
-      return `${firstDay.toLocaleDateString("default", { month: "long" })} ${this.formatDateRange(firstDay, lastDay)}, ${firstDay.getFullYear()}`;
-    } else if (sameYear) {
-      return `${firstDay.toLocaleDateString("default", { month: "short" })} ${firstDay.getDate()} - ${lastDay.toLocaleDateString("default", { month: "short" })} ${lastDay.getDate()}, ${firstDay.getFullYear()}`;
-    } else {
-      return `${firstDay.toLocaleDateString("default", { month: "short" })} ${firstDay.getDate()}, ${firstDay.getFullYear()} - ${lastDay.toLocaleDateString("default", { month: "short" })} ${lastDay.getDate()}, ${lastDay.getFullYear()}`;
-    }
-  });
-
   readonly timeSlots = computed(() => {
     return Array.from({ length: this.HOURS_IN_DAY }, (_, i) => {
       const hour = i;
@@ -94,10 +77,6 @@ export class WeekCalendarComponent {
     return hour > 12 ? `${hour - 12} PM` : `${hour} AM`;
   }
 
-  private formatDateRange(start: Date, end: Date): string {
-    return `${start.getDate()}-${end.getDate()}`;
-  }
-
   private isToday(date: Date): boolean {
     const today = new Date();
     return (
@@ -115,15 +94,6 @@ export class WeekCalendarComponent {
       return event.startTime < slotEnd && event.endTime > slotStart;
     });
   }
-
-  // Navigation methods
-  handleWeekChange = (offset: number) => {
-    this.currentDate.update((date) => {
-      const newDate = new Date(date);
-      newDate.setDate(newDate.getDate() + offset * 7);
-      return newDate;
-    });
-  };
 
   // Time calculation helpers
   getTopPosition(hour: number): number {
@@ -160,10 +130,10 @@ export class WeekCalendarComponent {
     console.log("Add event at:", { startTime, endTime });
   }
 
-  protected readonly ChevronRight = ChevronRight;
-  protected readonly ChevronLast = ChevronLast;
-  protected readonly ChevronLeft = ChevronLeft;
-  protected readonly Plus = Plus;
-  protected readonly User = User;
-  protected readonly Users = Users;
+  readonly ChevronRight = ChevronRight;
+  readonly ChevronLast = ChevronLast;
+  readonly ChevronLeft = ChevronLeft;
+  readonly Plus = Plus;
+  readonly User = User;
+  readonly Users = Users;
 }

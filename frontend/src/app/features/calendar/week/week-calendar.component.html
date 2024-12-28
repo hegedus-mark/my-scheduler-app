@@ -1,40 +1,5 @@
 <!-- Week Calendar Container -->
 <div class="flex flex-col h-full bg-base-100">
-  <!-- Calendar Header -->
-  <div
-    class="flex items-center justify-between p-4 bg-base-200 border-b border-base-300"
-  >
-    <h2 class="text-xl font-semibold text-base-content">
-      {{ weekDisplayRange() }}
-    </h2>
-    <div class="flex items-center gap-2">
-      <!-- Navigation Controls -->
-      <button
-        (click)="handleWeekChange(-1)"
-        class="btn btn-ghost btn-sm"
-        aria-label="Previous week"
-      >
-        <lucide-icon [img]="ChevronLeft" class="w-5 h-5" />
-      </button>
-      <button
-        (click)="handleWeekChange(1)"
-        class="btn btn-ghost btn-sm"
-        aria-label="Next week"
-      >
-        <lucide-icon [img]="ChevronRight" class="w-5 h-5" />
-      </button>
-      <!-- Action Buttons -->
-      <div class="flex items-center gap-2 ml-4">
-        <button class="btn btn-ghost btn-sm">
-          <lucide-icon [img]="Users" class="w-5 h-5" />
-        </button>
-        <button class="btn btn-primary btn-sm">
-          <lucide-icon [img]="Plus" class="w-5 h-5" />
-        </button>
-      </div>
-    </div>
-  </div>
-
   <!-- Calendar Grid Container -->
   <div class="flex-1 flex overflow-hidden">
     <!-- Time Labels Column -->
