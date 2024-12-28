@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.calendar-grid {
+  // Hide scrollbar on WebKit browsers
+  &::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: hsl(var(--bc) / 0.2);
+    border-radius: 3px;
+  }
+}
+
+// Prevent text selection in time grid
+.time-grid {
+  user-select: none;
+}
+
+// Event styling
+.calendar-event {
+  position: absolute;
+  left: 1px;
+  right: 1px;
+  overflow: hidden;
+  z-index: 1;
+
+  &:hover {
+    z-index: 2;
+  }
+}
+
+// Current time indicator
+.current-time-indicator {
+  z-index: 3;
+
+  .dot {
+    box-shadow: 0 0 0 2px hsl(var(--b1));
+  }
+}
