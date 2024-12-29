@@ -1,16 +1,13 @@
-import {
-  Component,
-  computed,
-  DestroyRef,
-  inject,
-  OnInit,
-  signal,
-} from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { CalendarEvent } from "@features/calendar/components/week-calendar/week-calendar.types";
 import { DatePipe } from "@angular/common";
 import { LucideAngularModule, Plus } from "lucide-angular";
-import { ActivatedRoute } from "@angular/router";
-import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { CalendarService } from "@features/calendar/services/calendar.service";
+import {
+  DAYS_IN_WEEK,
+  HOUR_HEIGHT,
+  HOURS_IN_DAY,
+} from "@features/calendar/constants/calendar.constants";
 
 @Component({
   selector: "app-week-calendar-calendar",
@@ -18,23 +15,17 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   templateUrl: "./week-calendar.component.html",
   styleUrl: "./week-calendar.component.scss",
 })
-export class WeekCalendarComponent implements OnInit {
+export class WeekCalendarComponent {
   //DI
-  private route = inject(ActivatedRoute);
-  private destroyRef = inject(DestroyRef);
-
-  //constants
-  private readonly HOURS_IN_DAY = 24;
-  private readonly DAYS_IN_WEEK = 7;
-  readonly HOUR_HEIGHT = 60; // pixels per hour
+  private readonly calendarService = inject(CalendarService);
 
   // Time-related signals
-  readonly currentDate = signal(new Date());
+  readonly currentDate = this.calendarService.currentDate;
   readonly currentWeekDays = computed(() =>
     this.getWeekDays(this.currentDate()),
   );
   readonly timeSlots = computed(() => {
-    return Array.from({ length: this.HOURS_IN_DAY }, (_, i) => {
+    return Array.from({ length: HOURS_IN_DAY }, (_, i) => {
       const hour = i;
       return {
         hour,
@@ -42,16 +33,6 @@ export class WeekCalendarComponent implements OnInit {
       };
     });
   });
-
-  ngOnInit() {
-    this.route.queryParams
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe((params) => {
-        if (params["date"]) {
-          this.currentDate.set(new Date(params["date"]));
-        }
-      });
-  }
 
   readonly weekGrid = computed(() => {
     const days = this.currentWeekDays();
@@ -75,7 +56,7 @@ export class WeekCalendarComponent implements OnInit {
     // Start with Sunday or Monday based on preference
     current.setDate(current.getDate() - current.getDay());
 
-    for (let i = 0; i < this.DAYS_IN_WEEK; i++) {
+    for (let i = 0; i < DAYS_IN_WEEK; i++) {
       week.push(new Date(current));
       current.setDate(current.getDate() + 1);
     }
@@ -112,7 +93,7 @@ export class WeekCalendarComponent implements OnInit {
 
   // Time calculation helpers
   getTopPosition(hour: number): number {
-    return hour * this.HOUR_HEIGHT;
+    return hour * HOUR_HEIGHT;
   }
 
   calculateEventPosition(startTime: Date, endTime: Date) {
@@ -121,7 +102,7 @@ export class WeekCalendarComponent implements OnInit {
 
     return {
       top: this.getTopPosition(startHour),
-      height: (endHour - startHour) * this.HOUR_HEIGHT,
+      height: (endHour - startHour) * HOUR_HEIGHT,
     };
   }
 
