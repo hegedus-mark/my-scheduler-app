@@ -11,6 +11,7 @@ import {
 } from "lucide-angular";
 import { CalendarService } from "@features/calendar/services/calendar.service";
 import { CalendarView } from "@features/calendar/types/calendar.types";
+import { formatHeader } from "@features/calendar/utils/header.utils";
 
 //TODO: Refactor the entire calendar feature component, create a CalendarService, and util methods!
 @Component({
@@ -28,11 +29,8 @@ export class CalendarMainComponent {
   readonly currentView = this.calendarService.currentView;
   readonly currentDate = this.calendarService.currentDate;
 
-  readonly monthYearDisplay = computed(() => {
-    return this.currentDate().toLocaleDateString("default", {
-      month: "long",
-      year: "numeric",
-    });
+  readonly headerDisplay = computed(() => {
+    return formatHeader(this.currentDate(), this.currentView());
   });
 
   switchView(view: CalendarView) {
