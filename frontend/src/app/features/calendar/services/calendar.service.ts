@@ -11,8 +11,11 @@ export class CalendarService {
     skipSelf: true,
   });
 
-  readonly currentView = signal<CalendarView>("month");
-  readonly currentDate = signal(new Date());
+  private readonly viewSignal = signal<CalendarView>("month");
+  private readonly dateSignal = signal(new Date());
+
+  readonly currentView = this.viewSignal.asReadonly();
+  readonly currentDate = this.dateSignal.asReadonly();
 
   constructor() {
     this.setupSubscription();
@@ -20,10 +23,10 @@ export class CalendarService {
 
   switchView(view: CalendarView) {
     this.router.navigate([`/calendar/${view}`], {
-      queryParams: { date: this.currentDate().toISOString() },
+      queryParams: { date: this.dateSignal().toISOString() },
       queryParamsHandling: "merge",
     });
-    this.currentView.set(view);
+    this.viewSignal.set(view);
   }
 
   navigateToDate(date: Date) {
@@ -35,13 +38,13 @@ export class CalendarService {
   }
 
   handleDateChange(offset: number) {
-    const newDate = new Date(this.currentDate());
-    if (this.currentView() === "month") {
+    const newDate = new Date(this.dateSignal());
+    if (this.viewSignal() === "month") {
       newDate.setMonth(newDate.getMonth() + offset);
     } else {
       newDate.setDate(newDate.getDate() + offset * 7);
     }
-    this.currentDate.set(newDate);
+    this.dateSignal.set(newDate);
     this.navigateToDate(newDate);
   }
 
@@ -51,7 +54,7 @@ export class CalendarService {
       .subscribe((url) => {
         const view = url[0]?.path as CalendarView;
         if (view) {
-          this.currentView.set(view);
+          this.viewSignal.set(view);
         }
       });
 
@@ -59,7 +62,7 @@ export class CalendarService {
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe((params) => {
         if (params["date"]) {
-          this.currentDate.set(new Date(params["date"]));
+          this.dateSignal.set(new Date(params["date"]));
         }
       });
   }
