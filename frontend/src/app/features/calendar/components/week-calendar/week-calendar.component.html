@@ -1,0 +1,74 @@
+<!-- Week Calendar Container -->
+<div class="flex flex-col h-full bg-base-100">
+  <!-- Calendar Grid Container -->
+  <div class="flex-1 flex overflow-hidden">
+    <!-- Time Labels Column -->
+    <div class="w-16 flex-none bg-base-200 border-r border-base-300">
+      <!-- Empty header cell -->
+      <div class="h-14 border-b border-base-300"></div>
+      <!-- Time labels -->
+      <div class="relative">
+        @for (slot of timeSlots(); track slot.hour) {
+          <div
+            class="absolute w-full text-xs text-base-content/70"
+            [style.top.px]="getTopPosition(slot.hour)"
+          >
+            {{ slot.display }}
+          </div>
+        }
+      </div>
+    </div>
+
+    <!-- Days Grid -->
+    <div class="flex-1 overflow-auto">
+      <!-- Days Header -->
+      <div class="flex h-14 bg-base-200 border-b border-base-300">
+        @for (day of weekGrid(); track day.date) {
+          <div class="flex-1 border-r border-base-300 p-2">
+            <div class="text-sm font-medium text-base-content/70">
+              {{ day.date | date: "EEE" }}
+            </div>
+            <div
+              [class.text-primary]="day.isToday"
+              [class.font-semibold]="day.isToday"
+              class="text-base-content"
+            >
+              {{ day.date | date: "d" }}
+            </div>
+          </div>
+        }
+      </div>
+
+      <!-- Time Grid -->
+      <div class="relative flex">
+        @for (day of weekGrid(); track day.date) {
+          <!-- Day Column -->
+          <div class="flex-1 border-r border-base-300">
+            <!-- Hour Cells -->
+            @for (slot of day.slots; track slot.hour) {
+              <div class="relative h-[60px] border-b border-base-200 group">
+                <!-- Add Event Hover Button -->
+                <button
+                  class="btn btn-ghost btn-xs absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity"
+                >
+                  <lucide-icon [img]="Plus" class="w-5 h-5" />
+                </button>
+              </div>
+            }
+
+            <!-- Current Time Indicator (Only show for today) -->
+            @if (day.isToday) {
+              <div
+                class="absolute left-0 right-0 flex items-center pointer-events-none"
+                [style.top.px]="currentTimePosition()"
+              >
+                <div class="w-2 h-2 rounded-full bg-primary"></div>
+                <div class="flex-1 border-t border-primary"></div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</div>

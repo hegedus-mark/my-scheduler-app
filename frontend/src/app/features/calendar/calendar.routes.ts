@@ -1,9 +1,30 @@
 import { Routes } from "@angular/router";
-import { CalendarComponent } from "./calendar.component";
+import { CalendarMainComponent } from "@features/calendar/components/calendar-main/calendar-main.component";
 
 export const CALENDAR_ROUTES: Routes = [
   {
     path: "",
-    component: CalendarComponent,
+    component: CalendarMainComponent,
+    children: [
+      {
+        path: "",
+        redirectTo: "week",
+        pathMatch: "full",
+      },
+      {
+        path: "month",
+        loadComponent: () =>
+          import(
+            "@features/calendar/components/month-calendar/month-calendar.component"
+          ).then((m) => m.MonthCalendarComponent),
+      },
+      {
+        path: "week",
+        loadComponent: () =>
+          import(
+            "@features/calendar/components/week-calendar/week-calendar.component"
+          ).then((m) => m.WeekCalendarComponent),
+      },
+    ],
   },
 ];
