@@ -1,5 +1,5 @@
 import { Routes } from "@angular/router";
-import { CalendarMainComponent } from "@features/calendar/calendar-main/calendar-main.component";
+import { CalendarMainComponent } from "@features/calendar/components/calendar-main/calendar-main.component";
 
 export const CALENDAR_ROUTES: Routes = [
   {
@@ -14,16 +14,16 @@ export const CALENDAR_ROUTES: Routes = [
       {
         path: "month",
         loadComponent: () =>
-          import("./month/month-calendar.component").then(
-            (m) => m.MonthCalendarComponent,
-          ),
+          import(
+            "@features/calendar/components/month-calendar/month-calendar.component"
+          ).then((m) => m.MonthCalendarComponent),
       },
       {
         path: "week",
         loadComponent: () =>
-          import("./week/week-calendar.component").then(
-            (m) => m.WeekCalendarComponent,
-          ),
+          import(
+            "@features/calendar/components/week-calendar/week-calendar.component"
+          ).then((m) => m.WeekCalendarComponent),
       },
     ],
   },

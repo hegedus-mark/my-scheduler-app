@@ -7,12 +7,12 @@ import {
   signal,
 } from "@angular/core";
 import { LucideAngularModule, Plus } from "lucide-angular";
-import { MonthCalendarCell } from "@features/calendar/month/month-calendar.types";
+import { MonthCalendarCell } from "@features/calendar/components/month-calendar/month-calendar.types";
 import { ActivatedRoute, Router } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: "app-month-calendar",
+  selector: "app-month-calendar-calendar",
   imports: [LucideAngularModule],
   templateUrl: "./month-calendar.component.html",
   styleUrl: "./month-calendar.component.scss",
@@ -71,7 +71,7 @@ export class MonthCalendarComponent implements OnInit {
 
     const result = new Array<MonthCalendarCell>(this.CELLS);
 
-    //prev month
+    //prev month-calendar
     const prevMonth = new Date(year, month - 1);
     const daysInPrevMonth = new Date(year, month, 0).getDate();
     for (let i = 0; i < startingDay; i++) {
@@ -85,7 +85,7 @@ export class MonthCalendarComponent implements OnInit {
       };
     }
 
-    //current month
+    //current month-calendar
     for (let i = 0; i < daysInMonth; i++) {
       result[startingDay + i] = {
         currentMonth: true,
@@ -93,7 +93,7 @@ export class MonthCalendarComponent implements OnInit {
       };
     }
 
-    //next month
+    //next month-calendar
     const nextMonth = new Date(year, month + 1);
     let nextMonthDay = 1;
     for (let i = startingDay + daysInMonth; i < this.CELLS; i++) {

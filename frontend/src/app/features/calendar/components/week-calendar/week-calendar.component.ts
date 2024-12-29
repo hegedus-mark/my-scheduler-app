@@ -6,14 +6,14 @@ import {
   OnInit,
   signal,
 } from "@angular/core";
-import { CalendarEvent } from "@features/calendar/week/week-calendar.types";
+import { CalendarEvent } from "@features/calendar/components/week-calendar/week-calendar.types";
 import { DatePipe } from "@angular/common";
 import { LucideAngularModule, Plus } from "lucide-angular";
 import { ActivatedRoute } from "@angular/router";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
-  selector: "app-week-calendar",
+  selector: "app-week-calendar-calendar",
   imports: [DatePipe, LucideAngularModule],
   templateUrl: "./week-calendar.component.html",
   styleUrl: "./week-calendar.component.scss",
