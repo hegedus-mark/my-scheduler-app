@@ -46,30 +46,7 @@
           <div class="flex-1 border-r border-base-300">
             <!-- Hour Cells -->
             @for (slot of day.slots; track slot.hour) {
-              <div
-                class="relative h-[60px] border-b border-base-200 group"
-                (click)="handleAddEvent(slot.date, slot.hour)"
-              >
-                <!-- Events -->
-                @for (
-                  event of getEventsForSlot(slot.date, slot.hour);
-                  track event.id
-                ) {
-                  <div
-                    class="absolute left-1 right-1 rounded bg-primary bg-opacity-20 p-1 text-xs overflow-hidden cursor-pointer"
-                    [style.top.px]="
-                      calculateEventPosition(event.startTime, event.endTime).top
-                    "
-                    [style.height.px]="
-                      calculateEventPosition(event.startTime, event.endTime)
-                        .height
-                    "
-                    (click)="handleEventClick(event); $event.stopPropagation()"
-                  >
-                    {{ event.title }}
-                  </div>
-                }
-
+              <div class="relative h-[60px] border-b border-base-200 group">
                 <!-- Add Event Hover Button -->
                 <button
                   class="btn btn-ghost btn-xs absolute top-0 right-0 opacity-0 group-hover:opacity-100 transition-opacity"
