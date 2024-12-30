@@ -1,0 +1,64 @@
+<form (ngSubmit)="onSubmit()" #eventFormEl="ngForm">
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Event Name</span>
+    </label>
+    <input
+      type="text"
+      class="input input-bordered"
+      [(ngModel)]="eventForm.name"
+      name="name"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Date</span>
+    </label>
+    <input
+      type="datetime-local"
+      class="input input-bordered"
+      [(ngModel)]="eventForm.date"
+      name="date"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Length (hours)</span>
+    </label>
+    <input
+      type="number"
+      class="input input-bordered"
+      [(ngModel)]="eventForm.length"
+      name="length"
+      min="0.5"
+      step="0.5"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Color</span>
+    </label>
+    <div class="flex gap-2">
+      @for (color of colors; track color.value) {
+        <div
+          class="w-8 h-8 rounded-full cursor-pointer border-2"
+          [style.background-color]="color.value"
+          [style.border-color]="
+            eventForm.color === color.value ? 'black' : 'transparent'
+          "
+          (click)="eventForm.color = color.value"
+        ></div>
+      }
+    </div>
+  </div>
+
+  <div class="modal-action">
+    <button type="submit" class="btn btn-primary">Create Event</button>
+  </div>
+</form>

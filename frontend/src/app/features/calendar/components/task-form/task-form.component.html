@@ -1,0 +1,61 @@
+<form (ngSubmit)="onSubmit()" #taskFormEl="ngForm">
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Task Name</span>
+    </label>
+    <input
+      type="text"
+      class="input input-bordered"
+      [(ngModel)]="taskForm.name"
+      name="name"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Deadline</span>
+    </label>
+    <input
+      type="datetime-local"
+      class="input input-bordered"
+      [(ngModel)]="taskForm.deadline"
+      name="deadline"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Estimated Hours</span>
+    </label>
+    <input
+      type="number"
+      class="input input-bordered"
+      [(ngModel)]="taskForm.estimatedHours"
+      name="estimatedHours"
+      min="0.5"
+      step="0.5"
+      required
+    />
+  </div>
+
+  <div class="form-control">
+    <label class="label">
+      <span class="label-text">Priority</span>
+    </label>
+    <select
+      class="select select-bordered"
+      [(ngModel)]="taskForm.priority"
+      name="priority"
+    >
+      @for (priority of priorities; track priority) {
+        <option [value]="priority">{{ priority | titlecase }}</option>
+      }
+    </select>
+  </div>
+
+  <div class="modal-action">
+    <button type="submit" class="btn btn-primary">Create Task</button>
+  </div>
+</form>

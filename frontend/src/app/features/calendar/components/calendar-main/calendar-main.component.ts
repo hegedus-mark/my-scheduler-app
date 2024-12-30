@@ -9,14 +9,15 @@ import {
   CalendarDays,
   Calendar,
 } from "lucide-angular";
-import { CalendarService } from "@features/calendar/services/calendar.service";
+import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { CalendarView } from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
+import { CreateModalComponent } from "@features/calendar/components/create-modal/create-modal.component";
+import { CreateModalService } from "@features/calendar/services/create-modal/create-modal.service";
 
-//TODO: Refactor the entire calendar feature component, create a CalendarService, and util methods!
 @Component({
   selector: "app-calendar-main",
-  imports: [RouterOutlet, LucideAngularModule],
+  imports: [RouterOutlet, LucideAngularModule, CreateModalComponent],
   templateUrl: "./calendar-main.component.html",
   styleUrl: "./calendar-main.component.scss",
   providers: [CalendarService],
@@ -24,6 +25,7 @@ import { formatHeader } from "@features/calendar/utils/header.utils";
 export class CalendarMainComponent {
   //injection
   private calendarService = inject(CalendarService);
+  private modalService = inject(CreateModalService);
 
   // View management
   readonly currentView = this.calendarService.currentView;
@@ -40,6 +42,10 @@ export class CalendarMainComponent {
   handleDateChange = (offset: number) => {
     this.calendarService.handleDateChange(offset);
   };
+
+  openModal(): void {
+    this.modalService.open("task");
+  }
 
   //icons
   readonly ChevronLeft = ChevronLeft;
