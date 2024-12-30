@@ -1,4 +1,4 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, ViewChild } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import {
   LucideAngularModule,
@@ -12,11 +12,12 @@ import {
 import { CalendarService } from "@features/calendar/services/calendar.service";
 import { CalendarView } from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
+import { CreateModalComponent } from "@features/calendar/components/create-modal/create-modal.component";
 
 //TODO: Refactor the entire calendar feature component, create a CalendarService, and util methods!
 @Component({
   selector: "app-calendar-main",
-  imports: [RouterOutlet, LucideAngularModule],
+  imports: [RouterOutlet, LucideAngularModule, CreateModalComponent],
   templateUrl: "./calendar-main.component.html",
   styleUrl: "./calendar-main.component.scss",
   providers: [CalendarService],
@@ -24,6 +25,7 @@ import { formatHeader } from "@features/calendar/utils/header.utils";
 export class CalendarMainComponent {
   //injection
   private calendarService = inject(CalendarService);
+  @ViewChild(CreateModalComponent) createModalComponent!: CreateModalComponent;
 
   // View management
   readonly currentView = this.calendarService.currentView;
@@ -40,6 +42,10 @@ export class CalendarMainComponent {
   handleDateChange = (offset: number) => {
     this.calendarService.handleDateChange(offset);
   };
+
+  openModal(): void {
+    this.createModalComponent.open("task");
+  }
 
   //icons
   readonly ChevronLeft = ChevronLeft;

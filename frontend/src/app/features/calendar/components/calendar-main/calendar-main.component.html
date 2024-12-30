@@ -47,10 +47,8 @@
         <lucide-icon [img]="ChevronRight" class="w-5 h-5" />
       </button>
       <div class="divider divider-horizontal mx-2"></div>
-      <button class="btn btn-ghost btn-sm">
-        <lucide-icon [img]="Users" class="w-5 h-5" />
-      </button>
-      <button class="btn btn-primary btn-sm">
+      <button class="btn btn-primary btn-sm" (click)="openModal()">
+        Create
         <lucide-icon [img]="Plus" class="w-5 h-5" />
       </button>
     </div>
@@ -60,4 +58,6 @@
   <div class="flex-1">
     <router-outlet></router-outlet>
   </div>
+
+  <app-create-modal />
 </div>
