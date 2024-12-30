@@ -1,7 +1,7 @@
 import { Component, computed, inject } from "@angular/core";
 import { LucideAngularModule, Plus } from "lucide-angular";
 import { DAYS_OF_WEEK } from "@features/calendar/constants/calendar.constants";
-import { CalendarService } from "@features/calendar/services/calendar.service";
+import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { generateMonthViewGrid } from "@features/calendar/utils/month-grid.utils";
 
 @Component({

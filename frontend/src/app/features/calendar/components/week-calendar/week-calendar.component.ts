@@ -1,7 +1,7 @@
 import { Component, computed, inject } from "@angular/core";
 import { DatePipe } from "@angular/common";
 import { LucideAngularModule, Plus } from "lucide-angular";
-import { CalendarService } from "@features/calendar/services/calendar.service";
+import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { getWeekDays } from "@features/calendar/utils/date.utils";
 import {
   calculateTopPosition,

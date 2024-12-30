@@ -9,7 +9,7 @@ import {
   CalendarDays,
   Calendar,
 } from "lucide-angular";
-import { CalendarService } from "@features/calendar/services/calendar.service";
+import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { CalendarView } from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
 import { CreateModalComponent } from "@features/calendar/components/create-modal/create-modal.component";
