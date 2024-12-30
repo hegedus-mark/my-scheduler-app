@@ -1,4 +1,4 @@
-<dialog class="modal" [class.modal-open]="modalOpen()">
+<dialog class="modal overflow-hidden" [class.modal-open]="modalOpen()">
   <div class="modal-box">
     <!-- Header -->
     <div class="flex items-center justify-between mb-4">
@@ -6,19 +6,19 @@
         <button
           class="join-item btn btn-sm"
           [class.btn-active]="modalType() === 'task'"
-          (click)="modalType.set('task')"
+          (click)="this.modalService.changeType('task')"
         >
           Task
         </button>
         <button
           class="join-item btn btn-sm"
           [class.btn-active]="modalType() === 'event'"
-          (click)="modalType.set('event')"
+          (click)="this.modalService.changeType('event')"
         >
           Event
         </button>
       </div>
-      <button class="btn btn-ghost btn-sm" (click)="close()">
+      <button class="btn btn-ghost btn-sm" (click)="this.modalService.close()">
         <lucide-icon [img]="X" class="w-5 h-5" />
       </button>
     </div>
@@ -31,6 +31,6 @@
     }
   </div>
   <form method="dialog" class="modal-backdrop">
-    <button (click)="close()">close</button>
+    <button (click)="this.modalService.close()">close</button>
   </form>
 </dialog>

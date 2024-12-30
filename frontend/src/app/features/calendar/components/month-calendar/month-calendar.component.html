@@ -40,6 +40,7 @@
           @if (cell.currentMonth) {
             <button
               class="btn btn-ghost btn-xs absolute top-1 right-1 opacity-0 group-hover:opacity-100 transition-opacity"
+              (click)="openModal()"
             >
               <lucide-icon [img]="Plus" class="w-5 h-5" />
             </button>
