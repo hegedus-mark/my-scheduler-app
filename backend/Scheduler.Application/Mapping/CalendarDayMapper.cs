@@ -1,4 +1,3 @@
-using Infrastructure.Entities;
 using Scheduler.Application.Entities;
 using Scheduler.Application.Interfaces.Mapping;
 using Scheduler.Domain.Interfaces;
