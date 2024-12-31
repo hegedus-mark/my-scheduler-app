@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace SchedularPrototype.Controllers;
+namespace Api.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

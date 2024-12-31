@@ -1,9 +1,9 @@
+using Api.Mapping.Extensions;
+using Api.Models.Requests;
 using AutoMapper;
-using SchedularPrototype.Mapping.Extensions;
-using SchedularPrototype.Models.Requests;
 using Scheduler.Application.Commands.ScheduleTasks;
 
-namespace SchedularPrototype.Mapping;
+namespace Api.Mapping;
 
 public class SchedulingMappingProfile : Profile
 {

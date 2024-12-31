@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace SchedularPrototype.Middleware;
+namespace Api.Middleware;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {

@@ -1,6 +1,6 @@
 using Scheduler.Shared.ValueObjects;
 
-namespace SchedularPrototype.Mapping.Extensions;
+namespace Api.Mapping.Extensions;
 
 public static class SchedulingMappingExtensions
 {

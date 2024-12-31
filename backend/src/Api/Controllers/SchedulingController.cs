@@ -1,11 +1,11 @@
+using Api.Models.Requests;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SchedularPrototype.Models.Requests;
 using Scheduler.Application.Commands.ScheduleTasks;
 using Scheduler.Application.Interfaces.Services;
 using Scheduler.Application.Services;
 
-namespace SchedularPrototype.Controllers;
+namespace Api.Controllers;
 
 public class SchedulingController : BaseController
 {

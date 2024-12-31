@@ -1,6 +1,6 @@
 using Scheduler.Shared.Enums;
 
-namespace SchedularPrototype.Models.Requests;
+namespace Api.Models.Requests;
 
 public class TaskRequestDto
 {

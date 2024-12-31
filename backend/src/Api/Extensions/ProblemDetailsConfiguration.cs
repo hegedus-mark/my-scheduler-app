@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace SchedularPrototype.Extensions;
+namespace Api.Extensions;
 
 public static class ProblemDetailsConfiguration
 {

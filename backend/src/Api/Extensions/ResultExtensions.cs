@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Scheduler.Shared.Enums;
 using Scheduler.Shared.Models;
 
-namespace SchedularPrototype.Extensions;
+namespace Api.Extensions;
 
 public static class ResultExtensions
 {

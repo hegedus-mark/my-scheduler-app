@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Scheduler.Api\Scheduler.Api.csproj"/>
+        <ProjectReference Include="..\Api\Api.csproj"/>
         <ProjectReference Include="..\Scheduler.Application\Scheduler.Application.csproj"/>
         <ProjectReference Include="..\Scheduler.Domain\Scheduler.Domain.csproj"/>
         <ProjectReference Include="..\Scheduler.Infrastructure\Scheduler.Infrastructure.csproj"/>
