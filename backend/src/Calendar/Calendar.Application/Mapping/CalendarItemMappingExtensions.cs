@@ -45,6 +45,7 @@ public static class CalendarItemMappingExtensions
                 return TaskReservation.Load(
                     TimeSlot.Create(dto.StartTime.ToTimeOnly(), dto.EndTime.ToTimeOnly()),
                     dto.Title,
+                    dto.ExternalTaskId!.Value,
                     dto.Id
                 );
             default:
