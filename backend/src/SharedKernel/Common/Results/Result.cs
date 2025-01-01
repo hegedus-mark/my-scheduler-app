@@ -2,6 +2,8 @@ using SharedKernel.Common.Errors;
 
 namespace SharedKernel.Common.Results;
 
+//TODO: probably shouldn't couple it with APi request status codes. let the api manage that
+
 public class Result<T>
 {
     private readonly List<Error> _errors = new();
@@ -40,5 +42,46 @@ public class Result<T>
     )
     {
         return new Result<T>(default, errors, status);
+    }
+}
+
+public class Result
+{
+    private Result(bool isSuccess, Error? error = null)
+    {
+        if (!isSuccess && error == null)
+            throw new InvalidOperationException("A failing result must have an error");
+
+        IsSuccess = isSuccess;
+        Error = error;
+    }
+
+    public bool IsSuccess { get; }
+    public bool IsFailure => !IsSuccess;
+    public Error? Error { get; }
+
+    // Factory methods to create Results
+    public static Result Success()
+    {
+        return new Result(true);
+    }
+
+    public static Result Failure(string message)
+    {
+        return new Result(false, new Error("StateTransition.Failed", message));
+    }
+
+    public Result OnSuccess(Action action)
+    {
+        if (IsSuccess)
+            action();
+        return this;
+    }
+
+    public Result OnFailure(Action<Error> action)
+    {
+        if (IsFailure)
+            action(Error!);
+        return this;
     }
 }
