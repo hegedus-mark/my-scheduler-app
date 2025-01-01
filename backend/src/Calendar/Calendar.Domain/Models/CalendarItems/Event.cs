@@ -1,7 +1,7 @@
 using Calendar.Domain.ValueObjects;
 using SharedKernel.Domain.ValueObjects;
 
-namespace Calendar.Domain.Models.CalendarItem;
+namespace Calendar.Domain.Models.CalendarItems;
 
 public class Event : CalendarItem
 {

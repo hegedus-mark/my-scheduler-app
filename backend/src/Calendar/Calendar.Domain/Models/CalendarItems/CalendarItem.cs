@@ -2,7 +2,7 @@ using SharedKernel.Common.Results;
 using SharedKernel.Domain.Base;
 using SharedKernel.Domain.ValueObjects;
 
-namespace Calendar.Domain.Models.CalendarItem;
+namespace Calendar.Domain.Models.CalendarItems;
 
 public class CalendarItem : EntityBase
 {

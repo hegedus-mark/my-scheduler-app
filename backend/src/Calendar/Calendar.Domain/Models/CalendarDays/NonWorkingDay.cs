@@ -1,13 +1,15 @@
-namespace Calendar.Domain.Models.CalendarDay;
+using Calendar.Domain.Models.CalendarItems;
+
+namespace Calendar.Domain.Models.CalendarDays;
 
 public class NonWorkingDay : CalendarDay
 {
-    private readonly List<CalendarItem.CalendarItem> _calendarItems;
+    private readonly List<CalendarItem> _calendarItems;
 
     private NonWorkingDay(Guid? id, DateOnly dayDate)
         : base(dayDate, id)
     {
-        _calendarItems = new List<CalendarItem.CalendarItem>();
+        _calendarItems = new List<CalendarItem>();
     }
 
     public override bool IsWorkingDay => false;

@@ -1,6 +1,7 @@
+using Calendar.Domain.Models.CalendarItems;
 using SharedKernel.Domain.ValueObjects;
 
-namespace Calendar.Domain.Models.CalendarDay;
+namespace Calendar.Domain.Models.CalendarDays;
 
 public class WorkingDay : CalendarDay
 {
@@ -40,12 +41,12 @@ public class WorkingDay : CalendarDay
     /// <param name="dayDate">The date for this working day</param>
     /// <param name="workingHours">The time slot defining the working hours for this day</param>
     /// <returns>A working day instance with the specified identifier</returns>
-    public static WorkingDay Load(Guid id, DateOnly dayDate, TimeSlot workingHours)
+    public static WorkingDay Load(DateOnly dayDate, TimeSlot workingHours, Guid id)
     {
         return new WorkingDay(id, dayDate, workingHours);
     }
 
-    private void ReCalculateFreeSlots(CalendarItem.CalendarItem item)
+    private void ReCalculateFreeSlots(CalendarItem item)
     {
         var placedTimeSlot = item.TimeSlot;
 
@@ -94,10 +95,7 @@ public class WorkingDay : CalendarDay
     /// <param name="timeSlot">The time slot to check</param>
     /// <param name="itemToExclude">Optional calendar item to exclude from the check</param>
     /// <returns>True if there is an overlap, false otherwise</returns>
-    private bool DoesTimeSlotOverlap(
-        TimeSlot timeSlot,
-        CalendarItem.CalendarItem itemToExclude = null
-    )
+    private bool DoesTimeSlotOverlap(TimeSlot timeSlot, CalendarItem itemToExclude = null)
     {
         return Items
             .Where(item => !Equals(item, itemToExclude))
