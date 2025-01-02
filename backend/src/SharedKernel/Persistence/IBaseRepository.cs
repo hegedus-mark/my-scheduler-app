@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 namespace SharedKernel.Persistence;
 
-public interface IGenericRepository<TEntity>
+public interface IBaseRepository<TEntity>
     where TEntity : class
 {
     Task<TEntity?> GetByIdAsync(Guid id);
