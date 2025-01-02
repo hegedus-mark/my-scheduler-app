@@ -6,4 +6,12 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+        <ProjectReference Include="..\..\SharedKernel\SharedKernel.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="DataTransfer\Mapping\"/>
+    </ItemGroup>
+
 </Project>
