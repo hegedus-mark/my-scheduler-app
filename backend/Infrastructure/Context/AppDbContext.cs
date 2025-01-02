@@ -1,6 +1,6 @@
 using Calendar.Application.DataTransfer.DTOs;
 using Microsoft.EntityFrameworkCore;
-using Scheduling.Application.DTOs;
+using Scheduling.Application.DataTransfer.DTOs;
 
 namespace Infrastructure.Context;
 
