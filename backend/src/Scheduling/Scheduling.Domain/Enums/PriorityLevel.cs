@@ -1,4 +1,4 @@
-namespace SharedKernel.Domain.Enums;
+namespace Scheduling.Domain.Enums;
 
 public enum PriorityLevel
 {

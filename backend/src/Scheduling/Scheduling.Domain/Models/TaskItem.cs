@@ -1,9 +1,9 @@
+using Scheduling.Domain.Enums;
 using Scheduling.Domain.Events;
 using Scheduling.Domain.Services;
 using SharedKernel.Common.Guard;
 using SharedKernel.Common.Results;
 using SharedKernel.Domain.Base;
-using SharedKernel.Domain.Enums;
 using SharedKernel.Domain.ValueObjects;
 
 namespace Scheduling.Domain.Models;
