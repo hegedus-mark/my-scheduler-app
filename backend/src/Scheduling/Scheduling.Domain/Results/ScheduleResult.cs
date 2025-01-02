@@ -76,19 +76,4 @@ public class SchedulingResult
 
         return summary.ToString();
     }
-
-    // This helps us analyze why tasks failed to schedule
-    public IDictionary<string, int> GetFailureAnalysis()
-    {
-        return FailedTasks.GroupBy(t => t.FailureReason).ToDictionary(g => g.Key, g => g.Count());
-    }
-
-    // This helps identify scheduling patterns
-    public IDictionary<DateOnly, int> GetSchedulingDistribution()
-    {
-        return ScheduledTasks
-            .GroupBy(t => t.ScheduledTime!.Value.Date)
-            .OrderBy(g => g.Key)
-            .ToDictionary(g => g.Key, g => g.Count());
-    }
 }

@@ -18,7 +18,6 @@ public class PrioritizedSchedulingStrategy : ISchedulingStrategy
         IReadOnlyList<CalendarTimeWindow> availableWindows
     )
     {
-        // Input validation with meaningful error messages
         if (!availableWindows.Any())
             throw new ArgumentException("Cannot schedule tasks without available time windows");
         if (!tasks.Any())
