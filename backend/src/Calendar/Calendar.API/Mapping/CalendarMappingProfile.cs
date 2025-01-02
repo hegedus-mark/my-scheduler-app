@@ -1,6 +1,6 @@
 using AutoMapper;
-using Calendar.Application.Commands;
-using Calendar.Application.Queries;
+using Calendar.Application.Operations.Commands;
+using Calendar.Application.Operations.Queries;
 using Scheduling.Application.CalendarIntegration.DTOs;
 using SharedKernel.Domain.ValueObjects;
 

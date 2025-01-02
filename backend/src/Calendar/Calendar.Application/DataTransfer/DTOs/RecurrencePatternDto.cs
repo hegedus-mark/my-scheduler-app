@@ -1,6 +1,6 @@
 using SharedKernel.Domain.Enums;
 
-namespace Calendar.Application.DTOs;
+namespace Calendar.Application.DataTransfer.DTOs;
 
 public class RecurrencePatternDto
 {

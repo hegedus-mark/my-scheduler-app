@@ -1,7 +1,7 @@
 using AutoMapper;
-using Calendar.Application.Commands;
-using Calendar.Application.Interfaces;
-using Calendar.Application.Queries;
+using Calendar.Application.Operations.Commands;
+using Calendar.Application.Operations.Interfaces;
+using Calendar.Application.Operations.Queries;
 using Scheduling.Application.CalendarIntegration;
 using Scheduling.Application.CalendarIntegration.DTOs;
 using SharedKernel.Common.Results;

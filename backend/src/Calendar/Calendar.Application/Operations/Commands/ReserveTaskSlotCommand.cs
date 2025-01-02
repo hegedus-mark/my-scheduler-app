@@ -1,4 +1,4 @@
-namespace Calendar.Application.Commands;
+namespace Calendar.Application.Operations.Commands;
 
 public class ReserveTaskSlotCommand
 {

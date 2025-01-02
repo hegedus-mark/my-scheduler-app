@@ -1,4 +1,4 @@
-namespace Calendar.Application.DTOs;
+namespace Calendar.Application.DataTransfer.DTOs;
 
 public class CalendarItemDto
 {

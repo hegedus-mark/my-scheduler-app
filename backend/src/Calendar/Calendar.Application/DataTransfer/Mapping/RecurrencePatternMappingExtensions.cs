@@ -1,8 +1,8 @@
-using Calendar.Application.DTOs;
+using Calendar.Application.DataTransfer.DTOs;
 using Calendar.Domain.Enums;
 using Calendar.Domain.ValueObjects;
 
-namespace Calendar.Application.Mapping;
+namespace Calendar.Application.DataTransfer.Mapping;
 
 public static class RecurrencePatternMappingExtensions
 {

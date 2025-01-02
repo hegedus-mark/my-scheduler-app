@@ -1,10 +1,10 @@
-using Calendar.Application.DTOs;
+using Calendar.Application.DataTransfer.DTOs;
 using Calendar.Domain.Models.CalendarDays;
 using Calendar.Domain.Models.CalendarItems;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 
-namespace Calendar.Application.Mapping;
+namespace Calendar.Application.DataTransfer.Mapping;
 
 public static class CalendarItemMappingExtensions
 {
