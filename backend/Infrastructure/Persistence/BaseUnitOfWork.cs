@@ -4,13 +4,13 @@ using SharedKernel.Persistence;
 
 namespace Infrastructure.Persistence;
 
-public class UnitOfWork : IBaseUnitOfWork
+public class BaseUnitOfWork : IBaseUnitOfWork
 {
     protected readonly AppDbContext Context;
     private IDbContextTransaction? _currentTransaction;
     protected bool Disposed;
 
-    public UnitOfWork(AppDbContext context)
+    public BaseUnitOfWork(AppDbContext context)
     {
         Context = context;
     }

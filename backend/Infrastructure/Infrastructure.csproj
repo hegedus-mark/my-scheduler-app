@@ -7,7 +7,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Persistence\Repositories\"/>
+        <Folder Include="Calendar\Configurations\"/>
+        <Folder Include="Scheduling\Configurations\"/>
+        <Folder Include="Scheduling\Repositories\"/>
     </ItemGroup>
 
     <ItemGroup>

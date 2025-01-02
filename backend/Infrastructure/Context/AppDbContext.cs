@@ -1,4 +1,4 @@
-using Calendar.Application.DTOs;
+using Calendar.Application.DataTransfer.DTOs;
 using Microsoft.EntityFrameworkCore;
 using Scheduling.Application.DTOs;
 
