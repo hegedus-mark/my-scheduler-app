@@ -5,10 +5,7 @@ using Scheduling.Application.Contracts.Repositories;
 
 namespace Infrastructure.Persistence;
 
-public class SharedUnitOfWork
-    : BaseUnitOfWork,
-        ICalendarRepositoryContainer,
-        ISchedulingRepositoryContainer
+public class SharedUnitOfWork : BaseUnitOfWork, ICalendarUnitOfWork, ISchedulingUnitOfWork
 {
     private ICalendarDayRepository? _calendarDayRepository;
     private ICalendarItemRepository? _calendarItemRepository;
