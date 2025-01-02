@@ -21,4 +21,16 @@ public class CalendarItem : EntityBase
         TimeSlot = newSlot;
         return Result<CalendarItem>.Success(this);
     }
+
+    // Factory method for new items
+    public static CalendarItem Create(TimeSlot timeSlot, string title)
+    {
+        return new CalendarItem(timeSlot, title);
+    }
+
+    // Factory method for existing items
+    public static CalendarItem Load(Guid id, TimeSlot timeSlot, string title)
+    {
+        return new CalendarItem(timeSlot, title, id);
+    }
 }
