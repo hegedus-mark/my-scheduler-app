@@ -7,11 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Folder Include="Common\Exceptions\"/>
+        <Folder Include="Shared\"/>
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.11"/>
+      <ProjectReference Include="..\Calendar.Domain\Calendar.Domain.csproj" />
+      <ProjectReference Include="..\Scheduling.Domain\Scheduling.Domain.csproj" />
     </ItemGroup>
 
 </Project>

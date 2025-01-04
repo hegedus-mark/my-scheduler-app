@@ -11,6 +11,9 @@ public readonly record struct CalendarTimeWindow
     public DateOnly Date { get; }
     public TimeSlot TimeSlot { get; }
 
+    public DateTime EndDate => Date.ToDateTime(TimeSlot.End);
+    public DateTime StartDate => Date.ToDateTime(TimeSlot.Start);
+
     public static CalendarTimeWindow Create(DateOnly date, TimeSlot timeSlot)
     {
         return new CalendarTimeWindow(date, timeSlot);

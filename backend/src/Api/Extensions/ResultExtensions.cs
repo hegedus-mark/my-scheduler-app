@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using Scheduler.Shared.Enums;
-using Scheduler.Shared.Models;
+using SharedKernel.Common.Results;
 
 namespace Api.Extensions;
 

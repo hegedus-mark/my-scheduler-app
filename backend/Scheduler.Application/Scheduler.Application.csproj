@@ -7,8 +7,4 @@
         <RootNamespace>Scheduler.Application</RootNamespace>
     </PropertyGroup>
 
-    <ItemGroup>
-        <ProjectReference Include="..\Scheduler.Domain\Scheduler.Domain.csproj"/>
-    </ItemGroup>
-
 </Project>

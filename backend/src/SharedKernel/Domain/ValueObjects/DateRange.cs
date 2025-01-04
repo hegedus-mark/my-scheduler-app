@@ -18,6 +18,11 @@ public readonly record struct DateRange
 
     public TimeSpan Duration => End.ToDateTime().Subtract(Start.ToDateTime());
 
+    public static DateRange CreateFromDateTimes(DateTime start, DateTime end)
+    {
+        return new DateRange(start.ToDateOnly(), end.ToDateOnly());
+    }
+
     public static DateRange CreateFromDuration(DateOnly start, TimeSpan duration)
     {
         if (duration.TotalDays < 0)
