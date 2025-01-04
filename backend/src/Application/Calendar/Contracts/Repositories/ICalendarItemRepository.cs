@@ -1,5 +1,5 @@
+using Application.Shared.Contracts;
 using Domain.Calendar.Models.CalendarItems;
-using SharedKernel.Persistence;
 
 namespace Application.Calendar.Contracts.Repositories;
 

@@ -3,7 +3,7 @@ using Domain.Calendar.Models.CalendarDays;
 using Domain.Calendar.Models.CalendarItems;
 using Domain.Calendar.Models.Enums;
 using Domain.Calendar.ValueObjects;
-using SharedKernel.Domain.ValueObjects;
+using Domain.Shared.ValueObjects;
 using SharedKernel.Extensions;
 
 namespace Application.Calendar.DataTransfer.Mapping;

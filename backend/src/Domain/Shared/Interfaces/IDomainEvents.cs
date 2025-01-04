@@ -1,4 +1,4 @@
-namespace SharedKernel.Domain.Interfaces;
+namespace Domain.Shared.Interfaces;
 
 public interface IDomainEvent
 {

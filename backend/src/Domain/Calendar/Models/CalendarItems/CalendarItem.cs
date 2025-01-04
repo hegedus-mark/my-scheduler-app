@@ -1,6 +1,6 @@
 using SharedKernel.Common.Results;
-using SharedKernel.Domain.Base;
-using SharedKernel.Domain.ValueObjects;
+using EntityBase = Domain.Shared.Base.EntityBase;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarItems;
 

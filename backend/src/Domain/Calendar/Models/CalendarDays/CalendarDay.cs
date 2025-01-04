@@ -2,8 +2,8 @@ using Domain.Calendar.Events;
 using Domain.Calendar.Models.CalendarItems;
 using SharedKernel.Common.Errors;
 using SharedKernel.Common.Results;
-using SharedKernel.Domain.Base;
-using SharedKernel.Domain.ValueObjects;
+using AggregateRoot = Domain.Shared.Base.AggregateRoot;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarDays;
 

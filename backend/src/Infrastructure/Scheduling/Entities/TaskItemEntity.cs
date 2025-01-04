@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
+using Application.Shared.Contracts;
 using Domain.Scheduling.Models.Enums;
-using SharedKernel.Persistence;
 
 namespace Infrastructure.Scheduling.Entities;
 

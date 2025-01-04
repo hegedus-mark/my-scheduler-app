@@ -1,4 +1,4 @@
-namespace SharedKernel.Persistence;
+namespace Application.Shared.Contracts;
 
 public interface IEntity
 {

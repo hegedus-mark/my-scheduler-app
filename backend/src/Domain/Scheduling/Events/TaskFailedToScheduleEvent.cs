@@ -1,4 +1,4 @@
-using SharedKernel.Domain.Interfaces;
+using IDomainEvent = Domain.Shared.Interfaces.IDomainEvent;
 
 namespace Domain.Scheduling.Events;
 

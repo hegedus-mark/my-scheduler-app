@@ -1,7 +1,7 @@
 using Domain.Scheduling.Exceptions;
-using SharedKernel.Domain.ValueObjects;
+using Domain.Shared.ValueObjects;
 
-namespace Domain.Scheduling.Models.States;
+namespace Domain.Scheduling.Models.TaskStates;
 
 public class ScheduledState : TaskState
 {

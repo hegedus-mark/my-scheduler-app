@@ -1,6 +1,6 @@
 using Application.Scheduling.CalendarIntegration.DTOs;
+using Domain.Shared.ValueObjects;
 using SharedKernel.Common.Results;
-using SharedKernel.Domain.ValueObjects;
 
 namespace Application.Scheduling.CalendarIntegration;
 

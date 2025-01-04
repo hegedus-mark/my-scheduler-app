@@ -1,5 +1,5 @@
-using SharedKernel.Domain.Interfaces;
-using SharedKernel.Domain.ValueObjects;
+using IDomainEvent = Domain.Shared.Interfaces.IDomainEvent;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Events;
 

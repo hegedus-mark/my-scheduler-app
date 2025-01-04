@@ -1,6 +1,7 @@
 using Domain.Scheduling.Models;
 using Domain.Scheduling.Results;
-using SharedKernel.Domain.ValueObjects;
+using CalendarTimeWindow = Domain.Shared.ValueObjects.CalendarTimeWindow;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Scheduling.Services;
 

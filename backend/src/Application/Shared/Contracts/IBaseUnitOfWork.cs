@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace SharedKernel.Persistence;
+namespace Application.Shared.Contracts;
 
 public interface IBaseUnitOfWork : IDisposable
 {

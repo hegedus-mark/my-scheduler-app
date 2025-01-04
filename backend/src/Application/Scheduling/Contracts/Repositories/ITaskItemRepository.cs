@@ -1,5 +1,5 @@
+using Application.Shared.Contracts;
 using Domain.Scheduling.Models;
-using SharedKernel.Persistence;
 
 namespace Application.Scheduling.Contracts.Repositories;
 

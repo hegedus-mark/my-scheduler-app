@@ -1,6 +1,6 @@
-using SharedKernel.Domain.Interfaces;
+using Domain.Shared.Interfaces;
 
-namespace SharedKernel.Domain.Base;
+namespace Domain.Shared.Base;
 
 public class AggregateRoot : EntityBase, IHasDomainEvents
 {

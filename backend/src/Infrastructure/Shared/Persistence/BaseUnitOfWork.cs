@@ -1,6 +1,6 @@
+using Application.Shared.Contracts;
 using Infrastructure.Shared.Context;
 using Microsoft.EntityFrameworkCore.Storage;
-using SharedKernel.Persistence;
 
 namespace Infrastructure.Shared.Persistence;
 

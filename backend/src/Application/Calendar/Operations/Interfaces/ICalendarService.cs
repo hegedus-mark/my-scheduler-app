@@ -1,7 +1,7 @@
 using Application.Calendar.Operations.Commands;
 using Application.Calendar.Operations.Queries;
+using Domain.Shared.ValueObjects;
 using SharedKernel.Common.Results;
-using SharedKernel.Domain.ValueObjects;
 
 namespace Application.Calendar.Operations.Interfaces;
 

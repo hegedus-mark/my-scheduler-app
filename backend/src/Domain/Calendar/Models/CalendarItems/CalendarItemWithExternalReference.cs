@@ -1,5 +1,5 @@
 using Domain.Calendar.Models.Enums;
-using SharedKernel.Domain.ValueObjects;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarItems;
 

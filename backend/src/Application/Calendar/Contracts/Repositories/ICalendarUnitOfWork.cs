@@ -1,4 +1,4 @@
-using SharedKernel.Persistence;
+using Application.Shared.Contracts;
 
 namespace Application.Calendar.Contracts.Repositories;
 

@@ -1,6 +1,6 @@
+using Application.Shared.Contracts;
+using Domain.Shared.Base;
 using Microsoft.EntityFrameworkCore;
-using SharedKernel.Domain.Base;
-using SharedKernel.Persistence;
 
 namespace Infrastructure.Shared.Persistence;
 

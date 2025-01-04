@@ -1,6 +1,6 @@
 using SharedKernel.Extensions;
 
-namespace SharedKernel.Domain.ValueObjects;
+namespace Domain.Shared.ValueObjects;
 
 public readonly record struct DateRange
 {

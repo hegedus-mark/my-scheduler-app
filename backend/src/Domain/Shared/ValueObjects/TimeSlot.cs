@@ -1,4 +1,4 @@
-namespace SharedKernel.Domain.ValueObjects;
+namespace Domain.Shared.ValueObjects;
 
 /// <summary>
 ///     Represents an immutable time period with a start and end time.

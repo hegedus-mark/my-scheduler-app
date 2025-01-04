@@ -1,6 +1,6 @@
-using SharedKernel.Domain.Base;
+using Domain.Shared.Base;
 
-namespace SharedKernel.Persistence;
+namespace Application.Shared.Contracts;
 
 public interface IBaseRepository<TDomain>
     where TDomain : EntityBase
