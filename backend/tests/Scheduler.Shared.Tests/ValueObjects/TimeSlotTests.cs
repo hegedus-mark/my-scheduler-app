@@ -1,4 +1,4 @@
-using Scheduler.Shared.ValueObjects;
+using SharedKernel.Domain.ValueObjects;
 
 namespace Scheduler.Shared.Tests.ValueObjects;
 

@@ -21,7 +21,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Scheduler.Shared\Scheduler.Shared.csproj"/>
+        <ProjectReference Include="..\..\src\SharedKernel\SharedKernel.csproj"/>
     </ItemGroup>
-
+    
 </Project>

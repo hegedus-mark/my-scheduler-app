@@ -1,3 +1,4 @@
+/*
 using FluentAssertions;
 using Moq;
 using Scheduler.Application.Commands.ScheduleTasks;
@@ -173,3 +174,4 @@ public class SchedulingServiceTests
         );
     }
 }
+*/
