@@ -9,8 +9,14 @@ public class CalendarItemDto
     public DateTime StartTime { get; init; }
     public DateTime EndTime { get; init; }
     public string Title { get; init; }
-    public RecurrencePatternDto? RecurrencePattern { get; init; }
 
+    //Recurrence Pattern
+    public RecurrenceType? RecurrenceType { get; init; }
+    public int? RecurrenceInterval { get; init; }
+    public DateTime? RecurrenceEndDate { get; init; }
+    public DaysOfWeek? RecurrenceSelectedDays { get; init; }
+
+    //External Reference
     public Guid? ExternalId { get; init; }
     public ExternalItemType? ExternalItemType { get; init; }
 }
