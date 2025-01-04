@@ -1,5 +1,5 @@
-using Scheduling.Domain.Enums;
 using Scheduling.Domain.Models;
+using Scheduling.Domain.Models.Enums;
 
 namespace Scheduling.Domain.Services;
 

@@ -1,4 +1,4 @@
-using Application.Calendar.DataTransfer.DTOs.Enums;
+using Calendar.Domain.Models.Enums;
 
 namespace Application.Calendar.DataTransfer.DTOs;
 
@@ -12,5 +12,5 @@ public class CalendarItemDto
     public RecurrencePatternDto? RecurrencePattern { get; init; }
 
     public Guid? ExternalId { get; init; }
-    public ExternalItemTypeDto? ExternalItemType { get; init; }
+    public ExternalItemType? ExternalItemType { get; init; }
 }

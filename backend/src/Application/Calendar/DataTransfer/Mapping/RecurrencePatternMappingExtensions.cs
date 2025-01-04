@@ -1,5 +1,5 @@
 using Application.Calendar.DataTransfer.DTOs;
-using Calendar.Domain.Enums;
+using Calendar.Domain.Models.Enums;
 using Calendar.Domain.ValueObjects;
 
 namespace Application.Calendar.DataTransfer.Mapping;

@@ -1,5 +1,5 @@
-using Scheduling.Domain.Enums;
 using Scheduling.Domain.Events;
+using Scheduling.Domain.Models.Enums;
 using Scheduling.Domain.Services;
 using SharedKernel.Common.Guard;
 using SharedKernel.Common.Results;

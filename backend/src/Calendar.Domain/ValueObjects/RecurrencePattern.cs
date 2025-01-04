@@ -1,5 +1,4 @@
-using Calendar.Domain.Enums;
-using SharedKernel.Domain.Enums;
+using Calendar.Domain.Models.Enums;
 
 namespace Calendar.Domain.ValueObjects;
 

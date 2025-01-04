@@ -1,9 +1,7 @@
 using Application.Calendar.DataTransfer.DTOs;
-using Application.Calendar.DataTransfer.DTOs.Enums;
-using Calendar.Domain.Enums;
 using Calendar.Domain.Models.CalendarDays;
 using Calendar.Domain.Models.CalendarItems;
-using Calendar.Domain.Models.ExternalReferenceItem;
+using Calendar.Domain.Models.Enums;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 
@@ -32,7 +30,7 @@ public static class CalendarItemMappingExtensions
             RecurrencePattern = calendarItem is RecurringCalendarItem e
                 ? e.RecurrencePattern.ToDto()
                 : null,
-            ExternalItemType = (ExternalItemTypeDto)externalType,
+            ExternalItemType = externalType,
             ExternalId = externalId,
         };
     }
@@ -44,7 +42,7 @@ public static class CalendarItemMappingExtensions
             { ExternalId: not null, ExternalItemType: not null } =>
                 CalendarItemWithExternalReference.Load(
                     dto.ExternalId.Value,
-                    (ExternalItemType)dto.ExternalItemType.Value,
+                    dto.ExternalItemType.Value,
                     TimeSlot.Create(dto.StartTime.ToTimeOnly(), dto.EndTime.ToTimeOnly()),
                     dto.Title,
                     dto.Id

@@ -1,8 +1,7 @@
-using Calendar.Domain.Enums;
-using Calendar.Domain.Models.CalendarItems;
+using Calendar.Domain.Models.Enums;
 using SharedKernel.Domain.ValueObjects;
 
-namespace Calendar.Domain.Models.ExternalReferenceItem;
+namespace Calendar.Domain.Models.CalendarItems;
 
 public class CalendarItemWithExternalReference : CalendarItem
 {
