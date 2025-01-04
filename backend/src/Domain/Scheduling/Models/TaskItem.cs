@@ -1,8 +1,8 @@
 using Domain.Scheduling.Events;
 using Domain.Scheduling.Models.Enums;
+using Domain.Scheduling.Models.States;
 using Domain.Scheduling.Services;
 using SharedKernel.Common.Guard;
-using SharedKernel.Common.Results;
 using SharedKernel.Domain.Base;
 using SharedKernel.Domain.ValueObjects;
 
@@ -87,121 +87,40 @@ public class TaskItem : AggregateRoot
         return scoringStrategy.CalculateScore(this);
     }
 
-    public Result Schedule(CalendarTimeWindow scheduleTimeWindow)
+    public void Schedule(CalendarTimeWindow scheduleTimeWindow)
     {
-        return State.Schedule(scheduleTimeWindow);
+        State.Schedule(scheduleTimeWindow);
     }
 
-    public Result MarkAsFailedToSchedule(string reason)
+    public void MarkAsFailedToSchedule(string reason)
     {
-        return State.MarkAsFailed(reason);
+        State.MarkAsFailed(reason);
     }
 
-    public Result RetryScheduling()
+    public void RetryScheduling()
     {
-        return State.RetryScheduling();
+        State.RetryScheduling();
     }
 
     // Internal state transition methods called by the state classes
-    private void TransitionToScheduled(CalendarTimeWindow scheduledTimeWindow)
+    internal void TransitionToScheduled(CalendarTimeWindow scheduledTimeWindow)
     {
         ScheduledTime = scheduledTimeWindow;
         State = new ScheduledState(this);
         AddDomainEvent(new TaskScheduledEvent(Id, scheduledTimeWindow));
     }
 
-    private void TransitionToFailed(string reason)
+    internal void TransitionToFailed(string reason)
     {
         FailureReason = reason;
         State = new FailedToScheduleState(this);
         AddDomainEvent(new TaskFailedToScheduleEvent(Id, reason));
     }
 
-    private void TransitionToDraft()
+    internal void TransitionToDraft()
     {
         FailureReason = null;
         State = new DraftState(this);
         AddDomainEvent(new TaskSchedulingRetryRequestedEvent(Id));
-    }
-
-    private abstract class TaskState
-    {
-        protected readonly TaskItem Task;
-
-        protected TaskState(TaskItem task)
-        {
-            Task = task;
-        }
-
-        public abstract Result Schedule(CalendarTimeWindow scheduleTimeWindow);
-        public abstract Result MarkAsFailed(string reason);
-        public abstract Result RetryScheduling();
-    }
-
-    private class DraftState : TaskState
-    {
-        public DraftState(TaskItem task)
-            : base(task) { }
-
-        public override Result Schedule(CalendarTimeWindow scheduleTimeWindow)
-        {
-            Task.TransitionToScheduled(scheduleTimeWindow);
-            return Result.Success();
-        }
-
-        public override Result MarkAsFailed(string reason)
-        {
-            Task.TransitionToFailed(reason);
-            return Result.Success();
-        }
-
-        public override Result RetryScheduling()
-        {
-            return Result.Failure("Task is already in draft state");
-        }
-    }
-
-    private class ScheduledState : TaskState
-    {
-        public ScheduledState(TaskItem task)
-            : base(task) { }
-
-        public override Result Schedule(CalendarTimeWindow scheduledTimeWindow)
-        {
-            return Result.Failure("Task is already scheduled");
-        }
-
-        public override Result MarkAsFailed(string reason)
-        {
-            Task.TransitionToFailed(reason);
-            return Result.Success();
-        }
-
-        public override Result RetryScheduling()
-        {
-            return Result.Failure("Cannot retry - task is already scheduled");
-        }
-    }
-
-    private class FailedToScheduleState : TaskState
-    {
-        public FailedToScheduleState(TaskItem task)
-            : base(task) { }
-
-        public override Result Schedule(CalendarTimeWindow scheduledTimeWindow)
-        {
-            return Result.Failure("Failed task must be reset to draft state before scheduling");
-        }
-
-        public override Result MarkAsFailed(string reason)
-        {
-            return Result.Failure("Task is already marked as failed");
-        }
-
-        public override Result RetryScheduling()
-        {
-            Task.TransitionToDraft();
-            return Result.Success();
-        }
     }
 }

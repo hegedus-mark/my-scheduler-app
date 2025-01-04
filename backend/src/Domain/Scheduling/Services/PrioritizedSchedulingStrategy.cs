@@ -85,10 +85,9 @@ public class PrioritizedSchedulingStrategy : ISchedulingStrategy
             );
 
             // Try to schedule the task in this window
-            var scheduleResult = task.Schedule(taskWindow);
+            task.Schedule(taskWindow);
 
-            if (scheduleResult.IsSuccess)
-                return true;
+            return true;
         }
 
         return false;
