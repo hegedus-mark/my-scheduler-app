@@ -1,4 +1,4 @@
-using Scheduling.Domain.Models.Enums;
+using Domain.Scheduling.Models.Enums;
 
 namespace Api.Models.Scheduling.Requests;
 

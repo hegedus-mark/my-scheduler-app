@@ -11,7 +11,7 @@ public class CalendarMappingProfile : Profile
     {
         CreateMap<ReserveCalendarSlotRequest, ReserveTaskSlotCommand>()
             .ConstructUsing(
-                (src, ctx) =>
+                (src, _) =>
                     new ReserveTaskSlotCommand(src.Title, src.TaskId, src.StartTime, src.EndTime)
             );
 

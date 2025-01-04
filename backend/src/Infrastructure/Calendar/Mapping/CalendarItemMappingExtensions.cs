@@ -1,4 +1,4 @@
-using Calendar.Domain.Models.CalendarItems;
+using Domain.Calendar.Models.CalendarItems;
 using Infrastructure.Calendar.Entities;
 
 namespace Infrastructure.Calendar.Mapping;

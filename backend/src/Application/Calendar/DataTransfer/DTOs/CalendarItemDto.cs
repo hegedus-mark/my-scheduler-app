@@ -1,4 +1,4 @@
-using Calendar.Domain.Models.Enums;
+using Domain.Calendar.Models.Enums;
 
 namespace Application.Calendar.DataTransfer.DTOs;
 

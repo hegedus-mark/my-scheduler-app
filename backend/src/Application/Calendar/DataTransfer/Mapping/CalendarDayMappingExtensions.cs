@@ -1,5 +1,5 @@
 using Application.Calendar.DataTransfer.DTOs;
-using Calendar.Domain.Models.CalendarDays;
+using Domain.Calendar.Models.CalendarDays;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 

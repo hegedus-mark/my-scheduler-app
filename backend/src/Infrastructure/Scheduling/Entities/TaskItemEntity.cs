@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using Scheduling.Domain.Models.Enums;
+using Domain.Scheduling.Models.Enums;
 using SharedKernel.Persistence;
 
 namespace Infrastructure.Scheduling.Entities;

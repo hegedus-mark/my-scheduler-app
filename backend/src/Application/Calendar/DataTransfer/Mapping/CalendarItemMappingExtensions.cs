@@ -1,8 +1,8 @@
 using Application.Calendar.DataTransfer.DTOs;
-using Calendar.Domain.Models.CalendarDays;
-using Calendar.Domain.Models.CalendarItems;
-using Calendar.Domain.Models.Enums;
-using Calendar.Domain.ValueObjects;
+using Domain.Calendar.Models.CalendarDays;
+using Domain.Calendar.Models.CalendarItems;
+using Domain.Calendar.Models.Enums;
+using Domain.Calendar.ValueObjects;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 

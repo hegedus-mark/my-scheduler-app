@@ -1,11 +1,10 @@
-using Calendar.Domain.Models.Enums;
+using Domain.Calendar.Models.Enums;
 using SharedKernel.Persistence;
 
 namespace Infrastructure.Calendar.Entities;
 
 public class CalendarItemEntity : IEntity
 {
-    public Guid Id { get; init; }
     public Guid CalendarDayId { get; init; }
     public DateTime StartTime { get; init; }
     public DateTime EndTime { get; init; }
@@ -18,4 +17,5 @@ public class CalendarItemEntity : IEntity
 
     public Guid? ExternalId { get; init; }
     public ExternalItemType? ExternalItemType { get; init; }
+    public Guid Id { get; init; }
 }
