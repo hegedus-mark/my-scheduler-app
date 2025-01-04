@@ -1,9 +1,8 @@
 using Application.Calendar.DataTransfer.DTOs;
-using Application.Calendar.DataTransfer.DTOs.Enums;
-using Calendar.Domain.Enums;
 using Calendar.Domain.Models.CalendarDays;
 using Calendar.Domain.Models.CalendarItems;
-using Calendar.Domain.Models.ExternalReferenceItem;
+using Calendar.Domain.Models.Enums;
+using Calendar.Domain.ValueObjects;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 
@@ -11,28 +10,62 @@ namespace Application.Calendar.DataTransfer.Mapping;
 
 public static class CalendarItemMappingExtensions
 {
-    public static CalendarItemDto ToDto(this CalendarItem calendarItem, CalendarDay day)
+    private static RecurrencePattern CreateRecurrencePattern(
+        RecurrenceType recurrenceType,
+        int interval,
+        DateTime? endDate,
+        DaysOfWeek? selectedDays
+    )
+    {
+        return recurrenceType switch
+        {
+            RecurrenceType.Daily => RecurrencePattern.CreateDaily(interval, endDate),
+            RecurrenceType.Weekly => RecurrencePattern.CreateWeekly(
+                interval,
+                selectedDays
+                    ?? throw new ArgumentException("Selected days required for weekly recurrence"),
+                endDate
+            ),
+            _ => throw new NotSupportedException($"Unsupported recurrence type: {recurrenceType}"),
+        };
+    }
+
+    public static CalendarItemDto ToDto(this CalendarItem item, CalendarDay day)
     {
         ExternalItemType? externalType = null;
         Guid? externalId = null;
 
-        if (calendarItem is CalendarItemWithExternalReference externalItem)
+        if (item is CalendarItemWithExternalReference externalItem)
         {
             externalId = externalItem.ExternalId;
             externalType = externalItem.ExternalItemType;
         }
 
+        RecurrenceType? recurrenceType = null;
+        int? recurrenceInterval = null;
+        DateTime? recurrenceEndDate = null;
+        DaysOfWeek? recurrenceSelectedDays = null;
+
+        if (item is RecurringCalendarItem recurringItem)
+        {
+            recurrenceType = recurringItem.RecurrencePattern.Type;
+            recurrenceInterval = recurringItem.RecurrencePattern.Interval;
+            recurrenceEndDate = recurringItem.RecurrencePattern.EndDate;
+            recurrenceSelectedDays = recurringItem.RecurrencePattern.SelectedDays;
+        }
+
         return new CalendarItemDto
         {
-            Id = calendarItem.Id,
+            Id = item.Id,
             CalendarDayId = day.Id,
-            StartTime = calendarItem.TimeSlot.Start.ToDateTime(day.Date),
-            EndTime = calendarItem.TimeSlot.End.ToDateTime(day.Date),
-            Title = calendarItem.Title,
-            RecurrencePattern = calendarItem is RecurringCalendarItem e
-                ? e.RecurrencePattern.ToDto()
-                : null,
-            ExternalItemType = (ExternalItemTypeDto)externalType,
+            StartTime = item.TimeSlot.Start.ToDateTime(day.Date),
+            EndTime = item.TimeSlot.End.ToDateTime(day.Date),
+            Title = item.Title,
+            RecurrenceType = recurrenceType,
+            RecurrenceInterval = recurrenceInterval,
+            RecurrenceEndDate = recurrenceEndDate,
+            RecurrenceSelectedDays = recurrenceSelectedDays,
+            ExternalItemType = externalType,
             ExternalId = externalId,
         };
     }
@@ -44,16 +77,25 @@ public static class CalendarItemMappingExtensions
             { ExternalId: not null, ExternalItemType: not null } =>
                 CalendarItemWithExternalReference.Load(
                     dto.ExternalId.Value,
-                    (ExternalItemType)dto.ExternalItemType.Value,
+                    dto.ExternalItemType.Value,
                     TimeSlot.Create(dto.StartTime.ToTimeOnly(), dto.EndTime.ToTimeOnly()),
                     dto.Title,
                     dto.Id
                 ),
-            { RecurrencePattern: not null } => RecurringCalendarItem.Load(
+            { RecurrenceType: not null } => RecurringCalendarItem.Load(
                 dto.Id,
                 TimeSlot.Create(dto.StartTime.ToTimeOnly(), dto.EndTime.ToTimeOnly()),
                 dto.Title,
-                dto.RecurrencePattern.ToDomain()
+                CreateRecurrencePattern(
+                    dto.RecurrenceType
+                        ?? throw new ArgumentException(
+                            "RecurrenceType can't be null for RecurringCalendarItem"
+                        ),
+                    dto.RecurrenceInterval
+                        ?? throw new ArgumentException("RecurrenceInterval can't be null"),
+                    dto.RecurrenceEndDate,
+                    dto.RecurrenceSelectedDays
+                )
             ),
             _ => CalendarItem.Load(
                 dto.Id,

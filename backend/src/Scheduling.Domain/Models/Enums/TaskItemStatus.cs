@@ -1,4 +1,4 @@
-namespace Scheduling.Domain.Enums;
+namespace Scheduling.Domain.Models.Enums;
 
 public enum TaskItemStatus
 {

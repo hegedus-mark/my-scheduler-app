@@ -1,8 +1,9 @@
 using Calendar.Domain.Models.Enums;
+using SharedKernel.Persistence;
 
-namespace Application.Calendar.DataTransfer.DTOs;
+namespace Infrastructure.Calendar.Entities;
 
-public class CalendarItemDto
+public class CalendarItemEntity : IEntity
 {
     public Guid Id { get; init; }
     public Guid CalendarDayId { get; init; }
@@ -10,13 +11,11 @@ public class CalendarItemDto
     public DateTime EndTime { get; init; }
     public string Title { get; init; }
 
-    //Recurrence Pattern
-    public RecurrenceType? RecurrenceType { get; init; }
+    public string? RecurrenceType { get; init; }
     public int? RecurrenceInterval { get; init; }
     public DateTime? RecurrenceEndDate { get; init; }
     public DaysOfWeek? RecurrenceSelectedDays { get; init; }
 
-    //External Reference
     public Guid? ExternalId { get; init; }
     public ExternalItemType? ExternalItemType { get; init; }
 }

@@ -1,6 +1,6 @@
-using Application.Calendar.DataTransfer.DTOs;
+using Calendar.Domain.Models.CalendarDays;
 using SharedKernel.Persistence;
 
 namespace Application.Calendar.Contracts.Repositories;
 
-public interface ICalendarDayRepository : IBaseRepository<CalendarDayDto>;
+public interface ICalendarDayRepository : IBaseRepository<CalendarDay>;

@@ -1,7 +1,6 @@
 using Application.Scheduling.DataTransfer.DTOs;
-using Application.Scheduling.DataTransfer.DTOs.Enums;
-using Scheduling.Domain.Enums;
 using Scheduling.Domain.Models;
+using Scheduling.Domain.Models.Enums;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 
@@ -19,8 +18,8 @@ public static class TaskItemMappingExtensions
             StartDate = item.IsScheduled ? item.ScheduledTime!.Value.StartDate : null,
             FailureReason = item.HasFailed ? item.FailureReason : null,
             Name = item.Name,
-            PriorityLevel = (PriorityLevelDto)item.Priority,
-            TaskItemStatus = (TaskItemStatusDto)item.Status,
+            PriorityLevel = item.Priority,
+            TaskItemStatus = item.Status,
             Id = item.Id,
         };
     }
@@ -34,22 +33,17 @@ public static class TaskItemMappingExtensions
                 dto.Name,
                 dto.DueDate,
                 dto.Duration,
-                (PriorityLevel)dto.PriorityLevel,
+                dto.PriorityLevel,
                 dto.Id.Value
             );
         else
-            task = TaskItem.Create(
-                dto.Name,
-                dto.DueDate,
-                dto.Duration,
-                (PriorityLevel)dto.PriorityLevel
-            );
+            task = TaskItem.Create(dto.Name, dto.DueDate, dto.Duration, dto.PriorityLevel);
 
         switch (dto.TaskItemStatus)
         {
-            case TaskItemStatusDto.Draft:
+            case TaskItemStatus.Draft:
                 break;
-            case TaskItemStatusDto.Scheduled:
+            case TaskItemStatus.Scheduled:
                 var window = CalendarTimeWindow.Create(
                     dto.StartDate!.Value.ToDateOnly(),
                     TimeSlot.Create(
@@ -59,7 +53,7 @@ public static class TaskItemMappingExtensions
                 );
                 task.Schedule(window);
                 break;
-            case TaskItemStatusDto.Unscheduled:
+            case TaskItemStatus.Unscheduled:
                 task.MarkAsFailedToSchedule(dto.FailureReason!);
                 break;
             default:

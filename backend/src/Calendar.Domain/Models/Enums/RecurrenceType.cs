@@ -1,4 +1,4 @@
-namespace Calendar.Domain.Enums;
+namespace Calendar.Domain.Models.Enums;
 
 public enum RecurrenceType
 {

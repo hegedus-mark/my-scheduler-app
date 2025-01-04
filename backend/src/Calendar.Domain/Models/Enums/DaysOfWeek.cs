@@ -1,4 +1,4 @@
-namespace SharedKernel.Domain.Enums;
+namespace Calendar.Domain.Models.Enums;
 
 [Flags]
 public enum DaysOfWeek

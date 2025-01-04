@@ -1,4 +1,4 @@
-using SharedKernel.Domain.Enums;
+using Calendar.Domain.Models.Enums;
 
 namespace Calendar.Domain.Models.Configuration;
 

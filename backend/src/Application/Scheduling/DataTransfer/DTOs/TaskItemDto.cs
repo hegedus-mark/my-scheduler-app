@@ -1,4 +1,4 @@
-using Application.Scheduling.DataTransfer.DTOs.Enums;
+using Scheduling.Domain.Models.Enums;
 
 namespace Application.Scheduling.DataTransfer.DTOs;
 
@@ -12,9 +12,9 @@ public class TaskItemDto
 
     public required TimeSpan Duration { get; init; }
 
-    public required PriorityLevelDto PriorityLevel { get; init; }
+    public required PriorityLevel PriorityLevel { get; init; }
 
-    public required TaskItemStatusDto TaskItemStatus { get; init; }
+    public required TaskItemStatus TaskItemStatus { get; init; }
 
     // For scheduled state
     public DateTime? StartDate { get; init; } = null;
