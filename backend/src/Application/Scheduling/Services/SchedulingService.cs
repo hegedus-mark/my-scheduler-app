@@ -10,6 +10,7 @@ using SharedKernel.Common.Results;
 
 namespace Application.Scheduling.Services;
 
+//TODO: Finish this implementation, we have to implement two-phase scheduling (plan and finalize)
 public class SchedulingService : ISchedulingService
 {
     private readonly ISchedulingCalendarOperations _calendarApi;
@@ -29,6 +30,7 @@ public class SchedulingService : ISchedulingService
 
     public async Task<Result<SchedulingResultDto>> ScheduleTaskAsync(ScheduleTasksCommand command)
     {
+        throw new NotImplementedException();
         var window = GetWindow(
             command.WindowStart,
             command.WindowEnd,
