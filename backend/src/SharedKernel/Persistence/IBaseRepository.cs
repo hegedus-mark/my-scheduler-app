@@ -1,22 +1,16 @@
-using System.Linq.Expressions;
+using SharedKernel.Domain.Base;
 
 namespace SharedKernel.Persistence;
 
-public interface IBaseRepository<TEntity>
-    where TEntity : class
+public interface IBaseRepository<TDomain>
+    where TDomain : EntityBase
 {
-    Task<TEntity?> GetByIdAsync(Guid id);
-    Task<IReadOnlyList<TEntity>> GetAllAsync();
-    Task<IReadOnlyList<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
-    Task<TEntity?> SingleOrDefaultAsync(Expression<Func<TEntity, bool>> predicate);
-
-    void Add(TEntity entity);
-    void AddRange(IEnumerable<TEntity> entities);
-    Task AddRangeAsync(IEnumerable<TEntity> entities);
-
-    void Update(TEntity entity);
-    void UpdateRange(IEnumerable<TEntity> entities);
-
-    void Remove(TEntity entity);
-    void RemoveRange(IEnumerable<TEntity> entities);
+    Task<TDomain?> GetByIdAsync(Guid id);
+    Task<IReadOnlyList<TDomain>> GetAllAsync();
+    Task AddAsync(TDomain domain);
+    Task AddRangeAsync(IEnumerable<TDomain> domains);
+    Task UpdateAsync(TDomain domain);
+    Task UpdateRangeAsync(IEnumerable<TDomain> domains);
+    Task RemoveAsync(TDomain domain);
+    Task RemoveRangeAsync(IEnumerable<TDomain> domains);
 }

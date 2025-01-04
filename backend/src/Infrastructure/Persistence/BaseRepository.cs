@@ -1,11 +1,12 @@
-using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel.Domain.Base;
 using SharedKernel.Persistence;
 
 namespace Infrastructure.Persistence;
 
-internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
-    where TEntity : class
+internal abstract class BaseRepository<TDomain, TEntity> : IBaseRepository<TDomain>
+    where TEntity : class, IEntity
+    where TDomain : EntityBase
 {
     protected readonly DbContext Context;
     protected readonly DbSet<TEntity> DbSet;
@@ -16,62 +17,58 @@ internal abstract class BaseRepository<TEntity> : IBaseRepository<TEntity>
         DbSet = context.Set<TEntity>();
     }
 
-    public virtual async Task<TEntity?> GetByIdAsync(Guid id)
+    public async Task<TDomain?> GetByIdAsync(Guid id)
     {
-        return await DbSet.FindAsync(id);
+        var entity = await DbSet.FindAsync(id);
+        return entity != null ? MapToDomain(entity) : null;
     }
 
-    public virtual async Task<IReadOnlyList<TEntity>> GetAllAsync()
+    public async Task<IReadOnlyList<TDomain>> GetAllAsync()
     {
-        return await DbSet.ToListAsync();
+        var entities = await DbSet.ToListAsync();
+        return entities.Select(MapToDomain).ToList();
     }
 
-    public virtual async Task<IReadOnlyList<TEntity>> FindAsync(
-        Expression<Func<TEntity, bool>> predicate
-    )
+    public async Task AddAsync(TDomain domain)
     {
-        return await DbSet.Where(predicate).ToListAsync();
+        var entity = MapToEntity(domain);
+        await DbSet.AddAsync(entity);
     }
 
-    public virtual async Task<TEntity?> SingleOrDefaultAsync(
-        Expression<Func<TEntity, bool>> predicate
-    )
+    public async Task AddRangeAsync(IEnumerable<TDomain> domains)
     {
-        return await DbSet.SingleOrDefaultAsync(predicate);
-    }
-
-    public virtual void Add(TEntity entity)
-    {
-        DbSet.Add(entity);
-    }
-
-    public virtual void AddRange(IEnumerable<TEntity> entities)
-    {
-        DbSet.AddRange(entities);
-    }
-
-    public async Task AddRangeAsync(IEnumerable<TEntity> entities)
-    {
+        var entities = domains.Select(MapToEntity);
         await DbSet.AddRangeAsync(entities);
     }
 
-    public virtual void Update(TEntity entity)
+    public async Task UpdateAsync(TDomain domain)
     {
+        var entity = MapToEntity(domain);
         DbSet.Update(entity);
+        await Task.CompletedTask;
     }
 
-    public virtual void UpdateRange(IEnumerable<TEntity> entities)
+    public async Task UpdateRangeAsync(IEnumerable<TDomain> domains)
     {
+        var entities = domains.Select(MapToEntity);
         DbSet.UpdateRange(entities);
+        await Task.CompletedTask;
     }
 
-    public virtual void Remove(TEntity entity)
+    public async Task RemoveAsync(TDomain domain)
     {
+        var entity = MapToEntity(domain);
         DbSet.Remove(entity);
+        await Task.CompletedTask;
     }
 
-    public virtual void RemoveRange(IEnumerable<TEntity> entities)
+    public async Task RemoveRangeAsync(IEnumerable<TDomain> domains)
     {
+        var entities = domains.Select(MapToEntity);
         DbSet.RemoveRange(entities);
+        await Task.CompletedTask;
     }
+
+    protected abstract TDomain MapToDomain(TEntity entity);
+    protected abstract TEntity MapToEntity(TDomain domain);
 }
