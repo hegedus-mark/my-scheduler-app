@@ -1,10 +1,10 @@
 using Application.Calendar.Contracts.Repositories;
 using Application.Scheduling.Contracts.Repositories;
 using Infrastructure.Calendar.Repositories;
-using Infrastructure.Context;
 using Infrastructure.Scheduling.Repositories;
+using Infrastructure.Shared.Context;
 
-namespace Infrastructure.Persistence;
+namespace Infrastructure.Shared.Persistence;
 
 public class SharedUnitOfWork : BaseUnitOfWork, ICalendarUnitOfWork, ISchedulingUnitOfWork
 {

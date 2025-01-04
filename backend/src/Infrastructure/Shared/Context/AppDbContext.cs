@@ -2,7 +2,7 @@ using Application.Calendar.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.DTOs;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Context;
+namespace Infrastructure.Shared.Context;
 
 public class AppDbContext : DbContext
 {

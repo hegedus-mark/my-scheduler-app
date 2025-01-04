@@ -9,6 +9,7 @@
     <ItemGroup>
         <Folder Include="Calendar\Configurations\"/>
         <Folder Include="Scheduling\Configurations\"/>
+        <Folder Include="Shared\" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,8 +1,8 @@
-using Infrastructure.Context;
+using Infrastructure.Shared.Context;
 using Microsoft.EntityFrameworkCore.Storage;
 using SharedKernel.Persistence;
 
-namespace Infrastructure.Persistence;
+namespace Infrastructure.Shared.Persistence;
 
 public class BaseUnitOfWork : IBaseUnitOfWork
 {

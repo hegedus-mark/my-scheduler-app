@@ -1,7 +1,7 @@
 using Application.Calendar.Contracts.Repositories;
 using Domain.Calendar.Models.CalendarDays;
 using Infrastructure.Calendar.Entities;
-using Infrastructure.Persistence;
+using Infrastructure.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Calendar.Repositories;

@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using SharedKernel.Domain.Base;
 using SharedKernel.Persistence;
 
-namespace Infrastructure.Persistence;
+namespace Infrastructure.Shared.Persistence;
 
 internal abstract class BaseRepository<TDomain, TEntity> : IBaseRepository<TDomain>
     where TEntity : class, IEntity

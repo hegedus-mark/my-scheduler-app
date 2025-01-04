@@ -1,8 +1,8 @@
 using Application.Scheduling.Contracts.Repositories;
 using Domain.Scheduling.Models;
-using Infrastructure.Persistence;
 using Infrastructure.Scheduling.Entities;
 using Infrastructure.Scheduling.Mapping;
+using Infrastructure.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Scheduling.Repositories;
