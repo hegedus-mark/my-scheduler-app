@@ -2,7 +2,7 @@ using Api.Models.Scheduling.Requests;
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.Operations.Commands;
 using AutoMapper;
-using Scheduling.Domain.Models.Enums;
+using Domain.Scheduling.Models.Enums;
 
 namespace Api.Infrastructure.Mapping.Scheduling;
 

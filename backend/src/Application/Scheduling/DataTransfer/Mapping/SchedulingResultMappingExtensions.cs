@@ -1,5 +1,5 @@
 using Application.Scheduling.DataTransfer.DTOs;
-using Scheduling.Domain.Results;
+using Domain.Scheduling.Results;
 
 namespace Application.Scheduling.DataTransfer.Mapping;
 

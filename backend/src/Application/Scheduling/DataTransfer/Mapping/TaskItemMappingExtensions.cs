@@ -1,6 +1,6 @@
 using Application.Scheduling.DataTransfer.DTOs;
-using Scheduling.Domain.Models;
-using Scheduling.Domain.Models.Enums;
+using Domain.Scheduling.Models;
+using Domain.Scheduling.Models.Enums;
 using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 

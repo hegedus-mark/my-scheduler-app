@@ -90,13 +90,13 @@ public static class Guard
     {
         AgainstNull(value, parameterName);
 
-        if (value.Cast<object>().Any())
+        if (value!.Cast<object>().Any())
             throw new ArgumentException(
                 message ?? $"Parameter {parameterName} cannot be empty",
                 parameterName
             );
 
-        return value;
+        return value!;
     }
 
     /// <summary>

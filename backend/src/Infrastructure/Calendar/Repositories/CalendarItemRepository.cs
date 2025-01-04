@@ -1,5 +1,5 @@
 using Application.Calendar.Contracts.Repositories;
-using Calendar.Domain.Models.CalendarItems;
+using Domain.Calendar.Models.CalendarItems;
 using Infrastructure.Calendar.Entities;
 using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;

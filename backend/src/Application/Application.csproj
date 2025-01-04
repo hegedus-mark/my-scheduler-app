@@ -7,8 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\Calendar.Domain\Calendar.Domain.csproj"/>
-        <ProjectReference Include="..\Scheduling.Domain\Scheduling.Domain.csproj"/>
+        <ProjectReference Include="..\Domain\Domain.csproj"/>
     </ItemGroup>
 
 </Project>

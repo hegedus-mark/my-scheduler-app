@@ -13,7 +13,7 @@ using Scheduler.Domain.Services;
 using Scheduler.Shared.Enums;
 using Scheduler.Shared.ValueObjects;
 
-namespace Scheduler.Application.Tests.Services;
+namespace Application.Tests.Services;
 
 public class SchedulingServiceTests
 {
