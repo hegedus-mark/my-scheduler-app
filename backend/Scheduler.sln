@@ -14,11 +14,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Api", "src\Api\Api.csproj",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel", "src\SharedKernel\SharedKernel.csproj", "{490BAFF4-42EC-4430-9269-39CDF1AC37A8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Shared.Tests", "tests\Scheduler.Shared.Tests\Scheduler.Shared.Tests.csproj", "{49D9FDAE-74D8-4E9D-AB39-28C6EBA8DA22}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedKernel.Tests", "tests\SharedKernel.Tests\SharedKernel.Tests.csproj", "{49D9FDAE-74D8-4E9D-AB39-28C6EBA8DA22}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Domain.Tests", "tests\Scheduler.Domain.Tests\Scheduler.Domain.Tests.csproj", "{E257D8C0-1415-45C6-96C2-8CFD04085419}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain.Tests", "tests\Domain.Tests\Domain.Tests.csproj", "{E257D8C0-1415-45C6-96C2-8CFD04085419}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Scheduler.Application.Tests", "tests\Scheduler.Application.Tests\Scheduler.Application.Tests.csproj", "{1C5C7EAB-D8CC-4EA9-855E-845EE15D0A29}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application.Tests", "tests\Application.Tests\Application.Tests.csproj", "{1C5C7EAB-D8CC-4EA9-855E-845EE15D0A29}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Application", "src\Application\Application.csproj", "{126E90AF-67F3-4F81-9E96-9F26D77C1D43}"
 EndProject
