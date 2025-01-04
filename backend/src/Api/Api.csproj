@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <RootNamespace>Api</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="AutoMapper" Version="13.0.1"/>
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Content Include="..\.dockerignore">
+            <Link>.dockerignore</Link>
+        </Content>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <Folder Include="Configuration\"/>
+        <Folder Include="Controllers\Calendar\"/>
+        <Folder Include="Models\Calendar\Requests\"/>
+        <Folder Include="Models\Calendar\Responses\"/>
+        <Folder Include="Models\Scheduling\Responses\"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+        <ProjectReference Include="..\Application\Application.csproj"/>
+        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
+        <ProjectReference Include="..\SharedKernel\SharedKernel.csproj"/>
+    </ItemGroup>
+
+</Project>

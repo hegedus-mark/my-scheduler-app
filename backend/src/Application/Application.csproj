@@ -1,0 +1,18 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Folder Include="Shared\"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Calendar.Domain\Calendar.Domain.csproj" />
+      <ProjectReference Include="..\Scheduling.Domain\Scheduling.Domain.csproj" />
+    </ItemGroup>
+
+</Project>
