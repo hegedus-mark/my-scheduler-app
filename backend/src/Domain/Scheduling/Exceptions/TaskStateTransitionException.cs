@@ -1,6 +1,8 @@
+using Domain.Shared.Exceptions;
+
 namespace Domain.Scheduling.Exceptions;
 
-public class TaskStateTransitionException : Exception
+public class TaskStateTransitionException : DomainException
 {
     public TaskStateTransitionException(string state, string attemptedAction)
         : base($"Invalid transition in state {state}: {attemptedAction}")
