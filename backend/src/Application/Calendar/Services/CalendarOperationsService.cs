@@ -2,7 +2,7 @@ using Application.Calendar.Operations.Interfaces;
 using Application.Scheduling.CalendarIntegration;
 using Application.Scheduling.CalendarIntegration.DTOs;
 using Domain.Shared.ValueObjects;
-using SharedKernel.Common.Results;
+using SharedKernel.Results;
 
 namespace Application.Calendar.Services;
 

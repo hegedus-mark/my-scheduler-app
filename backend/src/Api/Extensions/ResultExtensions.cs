@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using SharedKernel.Common.Results;
+using SharedKernel.Results;
 
 namespace Api.Extensions;
 

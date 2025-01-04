@@ -6,7 +6,7 @@ using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Operations.Commands;
 using Application.Scheduling.Operations.Interfaces;
 using Domain.Scheduling.Services;
-using SharedKernel.Common.Results;
+using SharedKernel.Results;
 
 namespace Application.Scheduling.Services;
 

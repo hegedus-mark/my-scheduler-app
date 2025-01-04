@@ -1,6 +1,6 @@
-using SharedKernel.Common.Errors;
+using SharedKernel.Errors;
 
-namespace SharedKernel.Common.Results;
+namespace SharedKernel.Results;
 
 //TODO: probably shouldn't couple it with APi request status codes. let the api manage that
 

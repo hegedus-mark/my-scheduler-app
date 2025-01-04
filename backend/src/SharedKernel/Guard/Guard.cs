@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Runtime.CompilerServices;
 
-namespace SharedKernel.Common.Guard;
+namespace SharedKernel.Guard;
 
 /// <summary>
 ///     Provides guard clause methods for parameter validation.

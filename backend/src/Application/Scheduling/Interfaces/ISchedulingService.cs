@@ -1,6 +1,6 @@
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.Operations.Commands;
-using SharedKernel.Common.Results;
+using SharedKernel.Results;
 
 namespace Application.Scheduling.Operations.Interfaces;
 

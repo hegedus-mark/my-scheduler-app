@@ -1,4 +1,4 @@
-using SharedKernel.Common.Results;
+using SharedKernel.Results;
 using EntityBase = Domain.Shared.Base.EntityBase;
 using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
