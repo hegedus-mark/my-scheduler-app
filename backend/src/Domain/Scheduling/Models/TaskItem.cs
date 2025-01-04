@@ -2,9 +2,9 @@ using Domain.Scheduling.Events;
 using Domain.Scheduling.Models.Enums;
 using Domain.Scheduling.Models.TaskStates;
 using Domain.Scheduling.Services;
+using Domain.Shared.Base;
+using Domain.Shared.ValueObjects;
 using SharedKernel.Common.Guard;
-using AggregateRoot = Domain.Shared.Base.AggregateRoot;
-using CalendarTimeWindow = Domain.Shared.ValueObjects.CalendarTimeWindow;
 
 namespace Domain.Scheduling.Models;
 
