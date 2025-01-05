@@ -1,4 +1,4 @@
-using Api.Exceptions;
+using Application.Shared.Exceptions;
 using Application.Shared.Messaging;
 using SharedKernel.Results;
 
@@ -24,7 +24,7 @@ public class Mediator : IMediator
         var handler = _provider.GetService(handlerType);
 
         if (handler == null)
-            throw new MissingServiceException(handlerType.Name);
+            throw new MissingCommandHandlerException(handlerType.Name);
 
         var method = handlerType.GetMethod(
             nameof(ICommandHandler<ICommand<TResult>, TResult>.HandleAsync)
