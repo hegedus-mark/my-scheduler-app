@@ -28,6 +28,7 @@ public static class DependencyInjection
                         && (
                             i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
                             || i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)
+                            || i.GetGenericTypeDefinition() == typeof(ICommandHandler<>)
                         )
                     )
             );
@@ -41,6 +42,7 @@ public static class DependencyInjection
                     && (
                         i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
                         || i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)
+                        || i.GetGenericTypeDefinition() == typeof(ICommandHandler<>)
                     )
                 );
 

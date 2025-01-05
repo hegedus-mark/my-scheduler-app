@@ -5,6 +5,7 @@ using Application.Scheduling.Queries;
 using Application.Shared.Messaging;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using SharedKernel.Results;
 
 namespace Api.Controllers.Scheduling;
 
@@ -52,5 +53,14 @@ public class TaskController : BaseController
         var result = await _mediator.SendAsync(query);
 
         return Ok(result.Value);
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<Result>> DeleteTask(Guid id)
+    {
+        var command = new DeleteTaskCommand(id);
+
+        var result = await _mediator.SendAsync(command);
+        return Ok(result);
     }
 }
