@@ -2,12 +2,13 @@ using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Interfaces.Repositories;
+using Application.Shared.Messaging;
 using Domain.Scheduling.Models;
 using SharedKernel.Results;
 
 namespace Application.Scheduling.Handlers;
 
-public class CreateTaskCommandHandler
+public class CreateTaskCommandHandler : ICommandHandler<CreateTaskCommand, TaskItemDto>
 {
     private readonly ISchedulingUnitOfWork _unitOfWork;
 
