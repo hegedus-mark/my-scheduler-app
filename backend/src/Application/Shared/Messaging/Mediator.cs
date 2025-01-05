@@ -23,10 +23,33 @@ public class Mediator : IMediator
         var handler = _provider.GetService(handlerType);
 
         if (handler == null)
-            throw new MissingCommandHandlerException(handlerType.Name);
+            throw new MissingHandlerException(handlerType.Name);
 
         var method = handlerType.GetMethod(
             nameof(ICommandHandler<ICommand<TResult>, TResult>.HandleAsync)
+        );
+
+        var result = await (Task<Result<TResult>>)
+            method!.Invoke(handler, new object[] { command, cancellationToken })!;
+
+        return result;
+    }
+
+    public async Task<Result<TResult>> SendAsync<TResult>(
+        IQuery<TResult> command,
+        CancellationToken cancellationToken = default
+    )
+    {
+        var commandType = command.GetType();
+        var handlerType = typeof(IQueryHandler<,>).MakeGenericType(commandType, typeof(TResult));
+
+        var handler = _provider.GetService(handlerType);
+
+        if (handler == null)
+            throw new MissingHandlerException(handlerType.Name);
+
+        var method = handlerType.GetMethod(
+            nameof(IQueryHandler<IQuery<TResult>, TResult>.HandleAsync)
         );
 
         var result = await (Task<Result<TResult>>)

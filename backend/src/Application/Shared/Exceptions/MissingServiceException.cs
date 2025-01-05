@@ -1,6 +1,6 @@
 namespace Application.Shared.Exceptions;
 
-public class MissingCommandHandlerException(string handlerTypeName)
+public class MissingHandlerException(string handlerTypeName)
     : ApplicationException(
-        $"Command handler of type '{handlerTypeName}' is not registered in the service container"
+        $"Handler of type '{handlerTypeName}' is not registered in the service container"
     ) { }

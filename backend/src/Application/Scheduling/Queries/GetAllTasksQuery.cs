@@ -1,3 +1,3 @@
 namespace Application.Scheduling.Queries;
 
-public class GetTasksQuery { }
+public class GetAllTasksQuery { }

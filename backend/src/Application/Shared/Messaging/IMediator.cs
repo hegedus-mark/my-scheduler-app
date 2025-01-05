@@ -8,4 +8,9 @@ public interface IMediator
         ICommand<TResult> command,
         CancellationToken cancellationToken = default
     );
+
+    Task<Result<TResult>> SendAsync<TResult>(
+        IQuery<TResult> query,
+        CancellationToken cancellationToken = default
+    );
 }
