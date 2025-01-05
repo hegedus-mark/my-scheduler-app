@@ -1,6 +1,8 @@
+using Application.Scheduling.DataTransfer.DTOs;
+using Application.Shared.Messaging;
 using Domain.Scheduling.Models.Enums;
 
-namespace Application.Scheduling.Operations.Commands;
+namespace Application.Scheduling.Commands;
 
 public record UpdateTaskNameCommand(Guid TaskId, string NewName);
 

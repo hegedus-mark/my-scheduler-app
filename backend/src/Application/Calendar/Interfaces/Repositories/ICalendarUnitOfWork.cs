@@ -1,6 +1,6 @@
 using Application.Shared.Contracts;
 
-namespace Application.Calendar.Contracts.Repositories;
+namespace Application.Calendar.Interfaces.Repositories;
 
 public interface ICalendarUnitOfWork : IBaseUnitOfWork
 {

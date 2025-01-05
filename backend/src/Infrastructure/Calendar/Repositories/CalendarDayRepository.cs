@@ -1,4 +1,4 @@
-using Application.Calendar.Contracts.Repositories;
+using Application.Calendar.Interfaces.Repositories;
 using Domain.Calendar.Models.CalendarDays;
 using Infrastructure.Calendar.Entities;
 using Infrastructure.Shared.Persistence;

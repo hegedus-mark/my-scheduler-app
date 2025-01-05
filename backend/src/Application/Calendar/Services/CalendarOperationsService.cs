@@ -1,4 +1,4 @@
-using Application.Calendar.Operations.Interfaces;
+using Application.Calendar.Interfaces;
 using Application.Scheduling.CalendarIntegration;
 using Application.Scheduling.CalendarIntegration.DTOs;
 using Domain.Shared.ValueObjects;

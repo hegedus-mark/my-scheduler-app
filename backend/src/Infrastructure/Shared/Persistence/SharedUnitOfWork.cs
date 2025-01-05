@@ -1,5 +1,5 @@
-using Application.Calendar.Contracts.Repositories;
-using Application.Scheduling.Contracts.Repositories;
+using Application.Calendar.Interfaces.Repositories;
+using Application.Scheduling.Interfaces.Repositories;
 using Infrastructure.Calendar.Repositories;
 using Infrastructure.Scheduling.Repositories;
 using Infrastructure.Shared.Context;

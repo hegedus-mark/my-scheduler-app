@@ -1,6 +1,6 @@
 using Api.Models.Scheduling.Requests;
+using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
-using Application.Scheduling.Operations.Commands;
 using AutoMapper;
 using Domain.Scheduling.Models.Enums;
 

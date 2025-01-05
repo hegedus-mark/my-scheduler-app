@@ -1,10 +1,10 @@
 using Application.Scheduling.CalendarIntegration;
 using Application.Scheduling.CalendarIntegration.DTOs;
-using Application.Scheduling.Contracts.Repositories;
+using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.Mapping;
-using Application.Scheduling.Operations.Commands;
-using Application.Scheduling.Operations.Interfaces;
+using Application.Scheduling.Interfaces;
+using Application.Scheduling.Interfaces.Repositories;
 using Domain.Scheduling.Services;
 using SharedKernel.Results;
 

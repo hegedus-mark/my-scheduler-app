@@ -1,6 +1,6 @@
 using Application.Scheduling.DataTransfer.DTOs;
 
-namespace Application.Scheduling.Operations.Commands;
+namespace Application.Scheduling.Commands;
 
 public class ScheduleTasksCommand
 {

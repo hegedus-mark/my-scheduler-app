@@ -1,6 +1,6 @@
-using Application.Calendar.Operations.Commands;
-using Application.Calendar.Operations.Interfaces;
-using Application.Calendar.Operations.Queries;
+using Application.Calendar.Commands;
+using Application.Calendar.Interfaces;
+using Application.Calendar.Queries;
 using Domain.Shared.ValueObjects;
 using SharedKernel.Results;
 

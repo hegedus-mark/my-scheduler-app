@@ -1,5 +1,5 @@
-using Application.Calendar.Operations.Commands;
-using Application.Calendar.Operations.Queries;
+using Application.Calendar.Commands;
+using Application.Calendar.Queries;
 using Application.Scheduling.CalendarIntegration.DTOs;
 using AutoMapper;
 

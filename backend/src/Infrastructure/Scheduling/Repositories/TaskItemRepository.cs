@@ -1,4 +1,4 @@
-using Application.Scheduling.Contracts.Repositories;
+using Application.Scheduling.Interfaces.Repositories;
 using Domain.Scheduling.Models;
 using Infrastructure.Scheduling.Entities;
 using Infrastructure.Scheduling.Mapping;

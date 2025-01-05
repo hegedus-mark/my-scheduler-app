@@ -1,6 +1,6 @@
 using Application.Shared.Contracts;
 
-namespace Application.Scheduling.Contracts.Repositories;
+namespace Application.Scheduling.Interfaces.Repositories;
 
 public interface ISchedulingUnitOfWork : IBaseUnitOfWork
 {

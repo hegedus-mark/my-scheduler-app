@@ -1,4 +1,4 @@
-namespace Application.Calendar.Operations.Queries;
+namespace Application.Calendar.Queries;
 
 public class GetAvailableSlotsQuery
 {

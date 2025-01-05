@@ -1,8 +1,8 @@
+using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
-using Application.Scheduling.Operations.Commands;
 using SharedKernel.Results;
 
-namespace Application.Scheduling.Operations.Interfaces;
+namespace Application.Scheduling.Interfaces;
 
 public interface ISchedulingService
 {

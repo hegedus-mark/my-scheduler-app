@@ -1,9 +1,9 @@
-using Application.Calendar.Operations.Commands;
-using Application.Calendar.Operations.Queries;
+using Application.Calendar.Commands;
+using Application.Calendar.Queries;
 using Domain.Shared.ValueObjects;
 using SharedKernel.Results;
 
-namespace Application.Calendar.Operations.Interfaces;
+namespace Application.Calendar.Interfaces;
 
 public interface ICalendarService
 {
