@@ -3,6 +3,7 @@ using Domain.Scheduling.Models.Enums;
 using Domain.Scheduling.Models.TaskStates;
 using Domain.Scheduling.Services;
 using Domain.Shared.Base;
+using Domain.Shared.Exceptions;
 using Domain.Shared.ValueObjects;
 using SharedKernel.Guard;
 
@@ -33,10 +34,10 @@ public class TaskItem : AggregateRoot
 
     public CalendarTimeWindow? ScheduledTime { get; private set; }
 
-    public string Name { get; }
-    public DateTime DueDate { get; }
-    public TimeSpan Duration { get; }
-    public PriorityLevel Priority { get; }
+    public string Name { get; private set; }
+    public DateTime DueDate { get; private set; }
+    public TimeSpan Duration { get; private set; }
+    public PriorityLevel Priority { get; private set; }
 
     private TaskState State { get; set; }
     public string? FailureReason { get; private set; }
@@ -80,6 +81,37 @@ public class TaskItem : AggregateRoot
             return TaskItemStatus.Scheduled;
 
         throw new InvalidOperationException("Unknown TaskItemState");
+    }
+
+    public void UpdateDuration(TimeSpan newDuration)
+    {
+        if (newDuration <= TimeSpan.Zero)
+            throw new DomainException("Duration must be positive");
+
+        Duration = newDuration;
+        AddDomainEvent(new TaskUpdatedEvent(Id, nameof(newDuration), newDuration));
+    }
+
+    public void UpdatePriority(PriorityLevel newPriority)
+    {
+        Priority = newPriority;
+        AddDomainEvent(new TaskUpdatedEvent(Id, nameof(Priority), newPriority));
+    }
+
+    public void UpdateDueDate(DateTime newDueDate)
+    {
+        if (newDueDate <= DateTime.Now)
+            throw new ArgumentException("Due date must be in the future");
+
+        DueDate = newDueDate;
+        AddDomainEvent(new TaskUpdatedEvent(Id, nameof(newDueDate), newDueDate));
+    }
+
+    public void UpdateName(string newName)
+    {
+        Guard.AgainstNullOrWhiteSpace(newName, nameof(newName));
+        Name = newName;
+        AddDomainEvent(new TaskUpdatedEvent(Id, nameof(Name), newName));
     }
 
     public int CalculateScore(IScoringStrategy scoringStrategy)
