@@ -7,15 +7,15 @@ namespace Infrastructure.Shared.Context;
 
 public class AppDbContext : DbContext
 {
-    //Calendar Entities
-    public DbSet<CalendarDayDto> CalendarDays;
-    public DbSet<CalendarItemDto> CalendarItems;
-
-    //Schedule Entities
-    public DbSet<TaskItemDto> TaskItems;
-
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
+
+    //Calendar Entities
+    public DbSet<CalendarDayDto> CalendarDays { get; set; }
+    public DbSet<CalendarItemDto> CalendarItems { get; set; }
+
+    //Schedule Entities
+    public DbSet<TaskItemDto> TaskItems { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
