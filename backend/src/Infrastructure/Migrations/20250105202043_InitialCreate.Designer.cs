@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250105183123_InitialCreate")]
+    [Migration("20250105202043_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -25,7 +25,7 @@ namespace Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Application.Calendar.DataTransfer.DTOs.CalendarDayDto", b =>
+            modelBuilder.Entity("Infrastructure.Calendar.Entities.CalendarDayEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -48,13 +48,13 @@ namespace Infrastructure.Migrations
                     b.ToTable("CalendarDays");
                 });
 
-            modelBuilder.Entity("Application.Calendar.DataTransfer.DTOs.CalendarItemDto", b =>
+            modelBuilder.Entity("Infrastructure.Calendar.Entities.CalendarItemEntity", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("CalendarDayDtoId")
+                    b.Property<Guid?>("CalendarDayEntityId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CalendarDayId")
@@ -78,8 +78,8 @@ namespace Infrastructure.Migrations
                     b.Property<int?>("RecurrenceSelectedDays")
                         .HasColumnType("int");
 
-                    b.Property<int?>("RecurrenceType")
-                        .HasColumnType("int");
+                    b.Property<string>("RecurrenceType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("StartTime")
                         .HasColumnType("datetime2");
@@ -90,45 +90,9 @@ namespace Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CalendarDayDtoId");
+                    b.HasIndex("CalendarDayEntityId");
 
                     b.ToTable("CalendarItems");
-                });
-
-            modelBuilder.Entity("Application.Scheduling.DataTransfer.DTOs.TaskItemDto", b =>
-                {
-                    b.Property<Guid?>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("DueDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("FailureReason")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PriorityLevel")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("StartDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TaskItemStatus")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TaskItems");
                 });
 
             modelBuilder.Entity("Infrastructure.Scheduling.Entities.TaskItemEntity", b =>
@@ -175,17 +139,17 @@ namespace Infrastructure.Migrations
                     b.HasIndex("StartDate", "EndDate")
                         .HasFilter("[StartDate] IS NOT NULL AND [EndDate] IS NOT NULL");
 
-                    b.ToTable("TaskItemEntity");
+                    b.ToTable("TaskItems");
                 });
 
-            modelBuilder.Entity("Application.Calendar.DataTransfer.DTOs.CalendarItemDto", b =>
+            modelBuilder.Entity("Infrastructure.Calendar.Entities.CalendarItemEntity", b =>
                 {
-                    b.HasOne("Application.Calendar.DataTransfer.DTOs.CalendarDayDto", null)
+                    b.HasOne("Infrastructure.Calendar.Entities.CalendarDayEntity", null)
                         .WithMany("Reservations")
-                        .HasForeignKey("CalendarDayDtoId");
+                        .HasForeignKey("CalendarDayEntityId");
                 });
 
-            modelBuilder.Entity("Application.Calendar.DataTransfer.DTOs.CalendarDayDto", b =>
+            modelBuilder.Entity("Infrastructure.Calendar.Entities.CalendarDayEntity", b =>
                 {
                     b.Navigation("Reservations");
                 });

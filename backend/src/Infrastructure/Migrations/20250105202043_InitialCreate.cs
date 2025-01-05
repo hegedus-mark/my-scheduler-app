@@ -27,7 +27,7 @@ namespace Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TaskItemEntity",
+                name: "TaskItems",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -39,25 +39,6 @@ namespace Infrastructure.Migrations
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     FailureReason = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TaskItemEntity", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TaskItems",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DueDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Duration = table.Column<TimeSpan>(type: "time", nullable: false),
-                    PriorityLevel = table.Column<int>(type: "int", nullable: false),
-                    TaskItemStatus = table.Column<int>(type: "int", nullable: false),
-                    StartDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    EndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    FailureReason = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -73,43 +54,43 @@ namespace Infrastructure.Migrations
                     StartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     EndTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    RecurrenceType = table.Column<int>(type: "int", nullable: true),
+                    RecurrenceType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     RecurrenceInterval = table.Column<int>(type: "int", nullable: true),
                     RecurrenceEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     RecurrenceSelectedDays = table.Column<int>(type: "int", nullable: true),
                     ExternalId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     ExternalItemType = table.Column<int>(type: "int", nullable: true),
-                    CalendarDayDtoId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    CalendarDayEntityId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_CalendarItems", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_CalendarItems_CalendarDays_CalendarDayDtoId",
-                        column: x => x.CalendarDayDtoId,
+                        name: "FK_CalendarItems_CalendarDays_CalendarDayEntityId",
+                        column: x => x.CalendarDayEntityId,
                         principalTable: "CalendarDays",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_CalendarItems_CalendarDayDtoId",
+                name: "IX_CalendarItems_CalendarDayEntityId",
                 table: "CalendarItems",
-                column: "CalendarDayDtoId");
+                column: "CalendarDayEntityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskItemEntity_DueDate",
-                table: "TaskItemEntity",
+                name: "IX_TaskItems_DueDate",
+                table: "TaskItems",
                 column: "DueDate");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskItemEntity_StartDate_EndDate",
-                table: "TaskItemEntity",
+                name: "IX_TaskItems_StartDate_EndDate",
+                table: "TaskItems",
                 columns: new[] { "StartDate", "EndDate" },
                 filter: "[StartDate] IS NOT NULL AND [EndDate] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TaskItemEntity_TaskItemStatus",
-                table: "TaskItemEntity",
+                name: "IX_TaskItems_TaskItemStatus",
+                table: "TaskItems",
                 column: "TaskItemStatus");
         }
 
@@ -118,9 +99,6 @@ namespace Infrastructure.Migrations
         {
             migrationBuilder.DropTable(
                 name: "CalendarItems");
-
-            migrationBuilder.DropTable(
-                name: "TaskItemEntity");
 
             migrationBuilder.DropTable(
                 name: "TaskItems");
