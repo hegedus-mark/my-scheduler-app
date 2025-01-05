@@ -6,11 +6,11 @@ namespace Infrastructure.Shared.Context;
 
 public class AppDbContext : DbContext
 {
-    //Calendar Dtos
+    //Calendar Entities
     public DbSet<CalendarDayDto> CalendarDays;
     public DbSet<CalendarItemDto> CalendarItems;
 
-    //Schedule Dtos
+    //Schedule Entities
     public DbSet<TaskItemDto> TaskItems;
 
     public AppDbContext(DbContextOptions<AppDbContext> options)
