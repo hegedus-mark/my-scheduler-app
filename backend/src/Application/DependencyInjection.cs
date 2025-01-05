@@ -14,11 +14,12 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddHandlers(this IServiceCollection services)
+    private static IServiceCollection AddHandlers(this IServiceCollection services)
     {
-        // Get all handler implementations
-        var handlerTypes = typeof(DependencyInjection)
-            .Assembly.GetTypes()
+        var assembly = typeof(DependencyInjection).Assembly;
+
+        var handlerTypes = assembly
+            .GetTypes()
             .Where(t =>
                 t is { IsAbstract: false, IsInterface: false }
                 && t.GetInterfaces()
