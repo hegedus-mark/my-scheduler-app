@@ -1,8 +1,7 @@
 using Application.Shared.Exceptions;
-using Application.Shared.Messaging;
 using SharedKernel.Results;
 
-namespace Api.Messaging;
+namespace Application.Shared.Messaging;
 
 public class Mediator : IMediator
 {

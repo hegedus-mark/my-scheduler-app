@@ -1,4 +1,3 @@
-using Api.Messaging;
 using Application.Shared.Messaging;
 using Microsoft.Extensions.DependencyInjection;
 
