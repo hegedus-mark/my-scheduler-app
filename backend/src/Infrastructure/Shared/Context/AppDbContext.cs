@@ -1,5 +1,6 @@
 using Application.Calendar.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.DTOs;
+using Infrastructure.Scheduling.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Shared.Context;
@@ -16,5 +17,8 @@ public class AppDbContext : DbContext
     public AppDbContext(DbContextOptions<AppDbContext> options)
         : base(options) { }
 
-    protected override void OnModelCreating(ModelBuilder modelBuilder) { }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.ApplyConfiguration(new TaskItemConfiguration());
+    }
 }

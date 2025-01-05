@@ -8,7 +8,6 @@
 
     <ItemGroup>
         <Folder Include="Calendar\Configurations\"/>
-        <Folder Include="Scheduling\Configurations\"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -28,5 +27,5 @@
         <ProjectReference Include="..\Application\Application.csproj"/>
     </ItemGroup>
 
-  
+
 </Project>
