@@ -1,6 +1,7 @@
 using Api.Models.Scheduling.Requests;
 using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
+using Application.Scheduling.Queries;
 using Application.Shared.Messaging;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -41,6 +42,15 @@ public class TaskController : BaseController
     {
         var command = _mapper.Map<CreateTaskCommand>(request);
         var result = await _mediator.SendAsync(command);
+        return Ok(result.Value);
+    }
+
+    [HttpGet("all")]
+    public async Task<ActionResult<IEnumerable<TaskItemDto>>> GetAllTasks()
+    {
+        var query = new GetAllTasksQuery();
+        var result = await _mediator.SendAsync(query);
+
         return Ok(result.Value);
     }
 }

@@ -25,7 +25,10 @@ public static class DependencyInjection
                 && t.GetInterfaces()
                     .Any(i =>
                         i.IsGenericType
-                        && i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
+                        && (
+                            i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
+                            || i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)
+                        )
                     )
             );
 
@@ -34,7 +37,11 @@ public static class DependencyInjection
             var handlerInterface = handlerType
                 .GetInterfaces()
                 .First(i =>
-                    i.IsGenericType && i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
+                    i.IsGenericType
+                    && (
+                        i.GetGenericTypeDefinition() == typeof(ICommandHandler<,>)
+                        || i.GetGenericTypeDefinition() == typeof(IQueryHandler<,>)
+                    )
                 );
 
             services.AddScoped(handlerInterface, handlerType);
