@@ -12,10 +12,3 @@ public record UpdateTaskDurationCommand(Guid TaskId, TimeSpan NewDuration) : IUp
 
 public record UpdateTaskPriorityCommand(Guid TaskId, PriorityLevel NewPriority)
     : IUpdateTaskCommand;
-
-public record CreateTaskCommand(
-    string Name,
-    DateTime DueDate,
-    TimeSpan Duration,
-    PriorityLevel Priority
-) : ICommand<TaskItemDto>;

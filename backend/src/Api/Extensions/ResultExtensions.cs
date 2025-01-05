@@ -11,7 +11,7 @@ public static class ResultExtensions
         return (int)status;
     }
 
-    public static IActionResult ToProblemDetails<T>(this Result<T> result, HttpContext httpContext)
+    public static ObjectResult ToProblemDetails<T>(this Result<T> result, HttpContext httpContext)
     {
         if (result.IsSuccess)
             throw new InvalidOperationException(
@@ -25,13 +25,8 @@ public static class ResultExtensions
         var problemDetails = problemDetailsFactory.CreateProblemDetails(
             httpContext,
             statusCode,
-            detail: result.Errors.FirstOrDefault()?.Message
+            detail: result.Error?.Message
         );
-
-        if (problemDetails.Extensions is null)
-            problemDetails.Extensions = new Dictionary<string, object?>();
-
-        problemDetails.Extensions["errors"] = result.Errors.Select(e => new { e.Code, e.Message });
 
         return new ObjectResult(problemDetails) { StatusCode = statusCode };
     }
