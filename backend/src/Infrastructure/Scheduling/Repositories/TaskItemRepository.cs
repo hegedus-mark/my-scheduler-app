@@ -12,6 +12,11 @@ internal class TaskItemRepository : BaseRepository<TaskItem, TaskItemEntity>, IT
     public TaskItemRepository(DbContext context)
         : base(context) { }
 
+    public void FastDeleteById(Guid id)
+    {
+        DbSet.Where(e => e.Id == id).ExecuteDelete();
+    }
+
     protected override TaskItem MapToDomain(TaskItemEntity entity)
     {
         return entity.ToDomain();
