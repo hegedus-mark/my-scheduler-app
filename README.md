@@ -60,7 +60,7 @@ This project follows Clean Architecture principles with Domain-Driven Design (DD
 - Manages database context and migrations
 - Handles technical concerns (logging, caching, etc.)
 
-## Bounded Contexts
+### Bounded Contexts
 
 The application is divided into two main bounded contexts:
 
