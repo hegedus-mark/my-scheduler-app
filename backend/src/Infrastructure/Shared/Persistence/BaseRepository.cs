@@ -29,37 +29,6 @@ internal abstract class BaseRepository<TDomain, TEntity> : IBaseRepository<TDoma
         await DbSet.AddRangeAsync(entities);
     }
 
-    public async Task UpdateAsync(TDomain domain)
-    {
-        var trackedEntry = Context
-            .ChangeTracker.Entries<TEntity>()
-            .FirstOrDefault(e => e.Entity.Id == domain.Id);
-
-        if (trackedEntry != null)
-            MapToExistingEntity(domain, trackedEntry.Entity);
-        else
-            DbSet.Update(MapToEntity(domain));
-        await Task.CompletedTask;
-    }
-
-    public async Task UpdateRangeAsync(IEnumerable<TDomain> domains)
-    {
-        var domainList = domains.ToList();
-        var domainIds = domainList.Select(d => d.Id).ToList();
-
-        var trackedEntities = Context
-            .ChangeTracker.Entries<TEntity>()
-            .Where(e => domainIds.Contains(e.Entity.Id))
-            .ToDictionary(e => e.Entity.Id, e => e.Entity);
-
-        foreach (var domain in domainList)
-            if (trackedEntities.TryGetValue(domain.Id, out var trackedEntity))
-                MapToExistingEntity(domain, trackedEntity);
-            else
-                DbSet.Update(MapToEntity(domain));
-        await Task.CompletedTask;
-    }
-
     public async Task RemoveAsync(TDomain domain)
     {
         var entity = await DbSet.FindAsync(domain.Id);
@@ -96,6 +65,35 @@ internal abstract class BaseRepository<TDomain, TEntity> : IBaseRepository<TDoma
         var query = asNoTracking ? DbSet.AsNoTracking() : DbSet;
         var entities = await query.ToListAsync();
         return entities.Select(MapToDomain).ToList();
+    }
+
+    public void UpdateRange(IEnumerable<TDomain> domains)
+    {
+        var domainList = domains.ToList();
+        var domainIds = domainList.Select(d => d.Id).ToList();
+
+        var trackedEntities = Context
+            .ChangeTracker.Entries<TEntity>()
+            .Where(e => domainIds.Contains(e.Entity.Id))
+            .ToDictionary(e => e.Entity.Id, e => e.Entity);
+
+        foreach (var domain in domainList)
+            if (trackedEntities.TryGetValue(domain.Id, out var trackedEntity))
+                MapToExistingEntity(domain, trackedEntity);
+            else
+                DbSet.Update(MapToEntity(domain));
+    }
+
+    public void Update(TDomain domain)
+    {
+        var trackedEntry = Context
+            .ChangeTracker.Entries<TEntity>()
+            .FirstOrDefault(e => e.Entity.Id == domain.Id);
+
+        if (trackedEntry != null)
+            MapToExistingEntity(domain, trackedEntry.Entity);
+        else
+            DbSet.Update(MapToEntity(domain));
     }
 
     protected abstract TDomain MapToDomain(TEntity entity);

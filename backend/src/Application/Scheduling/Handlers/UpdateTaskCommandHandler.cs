@@ -41,7 +41,7 @@ public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskCommand, TaskI
         if (command.Priority.HasValue)
             task.UpdatePriority(command.Priority.Value);
 
-        await _unitOfWork.TaskItems.UpdateAsync(task);
+        _unitOfWork.TaskItems.Update(task);
         await _unitOfWork.SaveChangesAsync();
 
         return Result<TaskItemDto>.Success(task.ToDto());

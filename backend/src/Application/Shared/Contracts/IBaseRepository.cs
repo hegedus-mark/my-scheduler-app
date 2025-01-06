@@ -9,8 +9,8 @@ public interface IBaseRepository<TDomain>
     Task<IReadOnlyList<TDomain>> GetAllAsync(bool asNoTracking = false);
     Task AddAsync(TDomain domain);
     Task AddRangeAsync(IEnumerable<TDomain> domains);
-    Task UpdateAsync(TDomain domain);
-    Task UpdateRangeAsync(IEnumerable<TDomain> domains);
+    void Update(TDomain domain);
+    void UpdateRange(IEnumerable<TDomain> domains);
     Task RemoveAsync(TDomain domain);
     Task RemoveRangeAsync(IEnumerable<TDomain> domains);
 }
