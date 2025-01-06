@@ -21,4 +21,16 @@ internal class TaskItemRepository : BaseRepository<TaskItem, TaskItemEntity>, IT
     {
         return domain.ToEntity();
     }
+
+    protected override void MapToExistingEntity(TaskItem domain, TaskItemEntity entity)
+    {
+        entity.Name = domain.Name;
+        entity.DueDate = domain.DueDate;
+        entity.Duration = domain.Duration;
+        entity.PriorityLevel = domain.Priority;
+        entity.TaskItemStatus = domain.Status;
+        entity.StartDate = domain.IsScheduled ? domain.ScheduledTime?.StartDate : null;
+        entity.EndDate = domain.IsScheduled ? domain.ScheduledTime?.EndDate : null;
+        entity.FailureReason = domain.HasFailed ? domain.FailureReason : null;
+    }
 }

@@ -16,11 +16,11 @@ public class TaskItemEntity : IEntity
     public TaskItemStatus TaskItemStatus { get; set; }
 
     // For scheduled state
-    public DateTime? StartDate { get; init; } = null;
-    public DateTime? EndDate { get; init; } = null;
+    public DateTime? StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
 
     // For failed state
-    public string? FailureReason { get; init; }
+    public string? FailureReason { get; set; }
 
     public Guid Id { get; init; }
 }

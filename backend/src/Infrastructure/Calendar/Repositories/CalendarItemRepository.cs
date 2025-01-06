@@ -22,4 +22,9 @@ internal class CalendarItemRepository
     {
         throw new NotImplementedException();
     }
+
+    protected override void MapToExistingEntity(CalendarItem domain, CalendarItemEntity entity)
+    {
+        throw new NotImplementedException();
+    }
 }

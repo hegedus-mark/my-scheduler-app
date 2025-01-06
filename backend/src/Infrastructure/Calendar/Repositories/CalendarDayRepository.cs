@@ -22,4 +22,9 @@ internal class CalendarDayRepository
     {
         throw new NotImplementedException();
     }
+
+    protected override void MapToExistingEntity(CalendarDay domain, CalendarDayEntity entity)
+    {
+        throw new NotImplementedException();
+    }
 }

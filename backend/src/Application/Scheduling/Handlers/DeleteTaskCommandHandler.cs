@@ -26,6 +26,7 @@ public class DeleteTaskCommandHandler : ICommandHandler<DeleteTaskCommand>
             return Result.Failure(Error.NotFound($"task with id: {command.TaskId} not found"));
 
         await _unitOfWork.TaskItems.RemoveAsync(task);
+        await _unitOfWork.SaveChangesAsync();
 
         return Result.Success();
     }
