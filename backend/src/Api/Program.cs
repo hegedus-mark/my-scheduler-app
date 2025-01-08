@@ -2,7 +2,12 @@ using Api.Configuration;
 using Api.Configuration.Filters;
 using Api.Configuration.Mapping;
 using Application;
+using dotenv.net;
 using Infrastructure;
+using Infrastructure.Shared.Context;
+using Microsoft.EntityFrameworkCore;
+
+DotEnv.Load();
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +34,12 @@ var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+        dbContext.Database.Migrate();
+    }
+
     app.UseSwagger();
     app.UseSwaggerUI();
 }
