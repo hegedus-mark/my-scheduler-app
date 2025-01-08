@@ -1,15 +1,28 @@
-using Api.Extensions;
+using Api.Configuration;
+using Api.Configuration.Filters;
+using Api.Configuration.Mapping;
+using Application;
+using Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ResultActionFilter>();
+});
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.ConfigureSwagger();
 builder.Services.ConfigureProblemDetails();
+
+//Add Layers
+builder.Services.AddApplication();
+builder.Services.AddInfrastructure(builder.Configuration);
+
+//AutoMapper
+builder.Services.AddAutoMapper(typeof(SchedulingMappingProfile).Assembly);
 
 var app = builder.Build();
 

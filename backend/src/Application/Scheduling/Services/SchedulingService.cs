@@ -1,12 +1,11 @@
 using Application.Scheduling.CalendarIntegration;
 using Application.Scheduling.CalendarIntegration.DTOs;
-using Application.Scheduling.Contracts.Repositories;
+using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.Mapping;
-using Application.Scheduling.Operations.Commands;
-using Application.Scheduling.Operations.Interfaces;
+using Application.Scheduling.Interfaces;
+using Application.Scheduling.Interfaces.Repositories;
 using Domain.Scheduling.Services;
-using SharedKernel.Common.Results;
 
 namespace Application.Scheduling.Services;
 
@@ -28,7 +27,7 @@ public class SchedulingService : ISchedulingService
         _schedulingStrategy = schedulingStrategy;
     }
 
-    public async Task<Result<SchedulingResultDto>> ScheduleTaskAsync(ScheduleTasksCommand command)
+    public async Task<SchedulingResultDto> ScheduleTaskAsync(ScheduleTasksCommand command)
     {
         throw new NotImplementedException();
         var window = GetWindow(

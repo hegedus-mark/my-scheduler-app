@@ -1,7 +1,7 @@
 using Domain.Scheduling.Models;
 using Domain.Scheduling.Models.Enums;
+using Domain.Shared.ValueObjects;
 using Infrastructure.Scheduling.Entities;
-using SharedKernel.Domain.ValueObjects;
 using SharedKernel.Extensions;
 
 namespace Infrastructure.Scheduling.Mapping;

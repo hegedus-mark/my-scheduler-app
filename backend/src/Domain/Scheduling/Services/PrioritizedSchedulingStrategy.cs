@@ -1,6 +1,7 @@
 using Domain.Scheduling.Models;
 using Domain.Scheduling.Results;
-using SharedKernel.Domain.ValueObjects;
+using CalendarTimeWindow = Domain.Shared.ValueObjects.CalendarTimeWindow;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Scheduling.Services;
 
@@ -85,10 +86,9 @@ public class PrioritizedSchedulingStrategy : ISchedulingStrategy
             );
 
             // Try to schedule the task in this window
-            var scheduleResult = task.Schedule(taskWindow);
+            task.Schedule(taskWindow);
 
-            if (scheduleResult.IsSuccess)
-                return true;
+            return true;
         }
 
         return false;

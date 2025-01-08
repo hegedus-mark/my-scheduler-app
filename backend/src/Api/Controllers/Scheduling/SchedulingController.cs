@@ -1,6 +1,6 @@
 using Api.Models.Scheduling.Requests;
-using Application.Scheduling.Operations.Commands;
-using Application.Scheduling.Operations.Interfaces;
+using Application.Scheduling.Commands;
+using Application.Scheduling.Interfaces;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 

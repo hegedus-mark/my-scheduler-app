@@ -1,0 +1,26 @@
+using Application.Calendar.Interfaces.Repositories;
+using Application.Scheduling.Interfaces.Repositories;
+using Infrastructure.Calendar.Repositories;
+using Infrastructure.Scheduling.Repositories;
+using Infrastructure.Shared.Context;
+
+namespace Infrastructure.Shared.Persistence;
+
+public class SharedUnitOfWork : BaseUnitOfWork, ICalendarUnitOfWork, ISchedulingUnitOfWork
+{
+    private readonly Dictionary<Type, object> _repositories = new();
+    private ICalendarDayRepository? _calendarDayRepository;
+    private ICalendarItemRepository? _calendarItemRepository;
+    private ITaskItemRepository? _taskRepository;
+
+    public SharedUnitOfWork(AppDbContext context)
+        : base(context) { }
+
+    public ICalendarDayRepository CalendarDays =>
+        _calendarDayRepository ??= new CalendarDayRepository(Context);
+
+    public ICalendarItemRepository CalendarItems =>
+        _calendarItemRepository ??= new CalendarItemRepository(Context);
+
+    public ITaskItemRepository TaskItems => _taskRepository ??= new TaskItemRepository(Context);
+}

@@ -1,6 +1,5 @@
-using SharedKernel.Common.Results;
-using SharedKernel.Domain.Base;
-using SharedKernel.Domain.ValueObjects;
+using EntityBase = Domain.Shared.Base.EntityBase;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarItems;
 
@@ -16,10 +15,10 @@ public class CalendarItem : EntityBase
     public TimeSlot TimeSlot { get; protected set; }
     public string Title { get; }
 
-    protected internal virtual Result<CalendarItem> UpdateTimeSlot(TimeSlot newSlot)
+    protected internal virtual CalendarItem UpdateTimeSlot(TimeSlot newSlot)
     {
         TimeSlot = newSlot;
-        return Result<CalendarItem>.Success(this);
+        return this;
     }
 
     // Factory method for new items

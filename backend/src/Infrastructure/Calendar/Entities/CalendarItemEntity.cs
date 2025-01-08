@@ -1,5 +1,5 @@
+using Application.Shared.Contracts;
 using Domain.Calendar.Models.Enums;
-using SharedKernel.Persistence;
 
 namespace Infrastructure.Calendar.Entities;
 

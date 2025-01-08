@@ -1,14 +1,13 @@
-using Application.Calendar.Operations.Commands;
-using Application.Calendar.Operations.Interfaces;
-using Application.Calendar.Operations.Queries;
-using SharedKernel.Common.Results;
-using SharedKernel.Domain.ValueObjects;
+using Application.Calendar.Commands;
+using Application.Calendar.Interfaces;
+using Application.Calendar.Queries;
+using Domain.Shared.ValueObjects;
 
 namespace Application.Calendar.Services;
 
 public class CalendarService : ICalendarService
 {
-    public Task<Result> ReserveSlotForTask(ReserveTaskSlotCommand command)
+    public Task ReserveSlotForTask(ReserveTaskSlotCommand command)
     {
         throw new NotImplementedException();
     }

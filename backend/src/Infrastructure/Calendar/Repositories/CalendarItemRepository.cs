@@ -1,7 +1,7 @@
-using Application.Calendar.Contracts.Repositories;
+using Application.Calendar.Interfaces.Repositories;
 using Domain.Calendar.Models.CalendarItems;
 using Infrastructure.Calendar.Entities;
-using Infrastructure.Persistence;
+using Infrastructure.Shared.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Calendar.Repositories;
@@ -19,6 +19,11 @@ internal class CalendarItemRepository
     }
 
     protected override CalendarItemEntity MapToEntity(CalendarItem domain)
+    {
+        throw new NotImplementedException();
+    }
+
+    protected override void MapToExistingEntity(CalendarItem domain, CalendarItemEntity entity)
     {
         throw new NotImplementedException();
     }

@@ -1,0 +1,19 @@
+using Api.Models.Scheduling.Requests;
+using Application.Scheduling.Commands;
+using Application.Scheduling.DataTransfer.DTOs;
+using AutoMapper;
+using Domain.Scheduling.Models.Enums;
+
+namespace Api.Configuration.Mapping;
+
+public class SchedulingMappingProfile : Profile
+{
+    public SchedulingMappingProfile()
+    {
+        CreateMap<ScheduleTasksRequest, ScheduleTasksCommand>();
+        CreateMap<CreateTaskRequest, CreateTaskCommand>();
+
+        CreateMap<TaskRequest, TaskItemDto>()
+            .ForMember(dest => dest.TaskItemStatus, opt => opt.MapFrom(_ => TaskItemStatus.Draft));
+    }
+}

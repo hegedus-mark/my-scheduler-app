@@ -1,9 +1,8 @@
 using Domain.Calendar.Events;
+using Domain.Calendar.Exceptions;
 using Domain.Calendar.Models.CalendarItems;
-using SharedKernel.Common.Errors;
-using SharedKernel.Common.Results;
-using SharedKernel.Domain.Base;
-using SharedKernel.Domain.ValueObjects;
+using AggregateRoot = Domain.Shared.Base.AggregateRoot;
+using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarDays;
 
@@ -23,35 +22,25 @@ public abstract class CalendarDay : AggregateRoot
 
     public IReadOnlyCollection<CalendarItem> Items => _items.AsReadOnly();
 
-    public virtual Result<CalendarItem> AddItem(CalendarItem item)
+    public virtual void AddItem(CalendarItem item)
     {
         if (HasTimeConflict(item.TimeSlot))
-            return Result<CalendarItem>.Failure(
-                new Error("TimeConflict", "Item conflicts with existing items")
-            );
+            throw new TimeConflictException();
 
         _items.Add(item);
         AddDomainEvent(new CalendarItemAddedEvent(Id, item.Id));
-
-        return Result<CalendarItem>.Success(item);
     }
 
-    public virtual Result<CalendarItem> RescheduleItem(Guid itemId, TimeSlot newSlot)
+    public virtual CalendarItem RescheduleItem(Guid itemId, TimeSlot newSlot)
     {
         var item = _items.FirstOrDefault(i => i.Id == itemId);
         if (item == null)
-            return Result<CalendarItem>.Failure(
-                new Error("ItemNotFound", "Calendar item not found")
-            );
+            throw new CalendarItemNotFoundException(itemId);
 
         if (HasTimeConflict(newSlot, item))
-            return Result<CalendarItem>.Failure(
-                new Error("TimeConflict", "New time slot conflicts with existing items")
-            );
-
+            throw new TimeConflictException();
         var updateResult = item.UpdateTimeSlot(newSlot);
-        if (updateResult.IsSuccess)
-            AddDomainEvent(new CalendarItemRescheduledEvent(Id, item.Id, newSlot));
+        AddDomainEvent(new CalendarItemRescheduledEvent(Id, item.Id, newSlot));
 
         return updateResult;
     }
