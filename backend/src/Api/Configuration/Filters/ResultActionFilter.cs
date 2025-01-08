@@ -1,4 +1,4 @@
-using Api.Infrastructure.Attributes;
+using Api.Configuration.Attributes;
 using Api.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;

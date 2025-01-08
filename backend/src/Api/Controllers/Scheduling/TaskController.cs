@@ -1,4 +1,4 @@
-using Api.Infrastructure.Attributes;
+using Api.Configuration.Attributes;
 using Api.Models.Scheduling.Requests;
 using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
@@ -23,7 +23,7 @@ public class TaskController : BaseController
 
     [HttpPatch("{id}")]
     [ExpectedResults(ResultStatus.Ok, ResultStatus.NotFound)]
-    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesApiResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Result<TaskItemDto>>> UpdateTask(
         Guid id,
@@ -43,7 +43,7 @@ public class TaskController : BaseController
 
     [HttpPost]
     [ExpectedResults(ResultStatus.Ok)]
-    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesApiResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
     public async Task<ActionResult<Result<TaskItemDto>>> CreateTask(
         [FromBody] CreateTaskRequest request
     )
@@ -54,7 +54,7 @@ public class TaskController : BaseController
 
     [HttpGet("all")]
     [ExpectedResults(ResultStatus.Ok)]
-    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesApiResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
     public async Task<ActionResult<CollectionResult<TaskItemDto>>> GetAllTasks()
     {
         var query = new GetAllTasksQuery();
@@ -62,9 +62,8 @@ public class TaskController : BaseController
     }
 
     [HttpDelete("{id}")]
-    [ExpectedResults(ResultStatus.Ok, ResultStatus.NotFound)]
-    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ExpectedResults(ResultStatus.Ok)]
+    [ProducesApiResponseType(StatusCodes.Status200OK)]
     public async Task<ActionResult<Result>> DeleteTask(Guid id)
     {
         var command = new DeleteTaskCommand(id);
