@@ -92,7 +92,6 @@ This project follows Clean Architecture principles with Domain-Driven Design (DD
 - Entry point for all external requests
 - Handles HTTP requests/responses
 - Manages routing and basic request validation
-- Separated by feature contexts (Calendar, Scheduling)
 
 #### Application Layer
 - Orchestrates flow between API and Domain layers
@@ -107,10 +106,9 @@ This project follows Clean Architecture principles with Domain-Driven Design (DD
 - Completely independent of other layers
 
 #### Infrastructure Layer
-- Implements persistence and external service integration
 - Contains concrete implementations of repository interfaces
+- Implements UnitOfWork pattern
 - Manages database context and migrations
-- Handles technical concerns (logging, caching, etc.)
 
 ### Bounded Contexts
 
