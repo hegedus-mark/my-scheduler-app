@@ -25,10 +25,6 @@ This project is a web-based evolution of the scheduling algorithm originally cre
 - Smart conflict resolution
 - [More soon]
 
-## Project Status
-
-🚧 This project is currently under development. 
-
 ## Project Installation Guide
 
 ### Prerequisites
