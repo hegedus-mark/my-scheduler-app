@@ -1,0 +1,34 @@
+{
+  "name": "myschedulerapp",
+  "version": "1.0.0",
+  "description": "A full-stack scheduling application that helps users efficiently plan their time by automatically organizing tasks based on priorities, deadlines, and available time slots.",
+  "scripts": {
+    "start": "npm run start:frontend",
+    "start:frontend": "cd frontend && ng serve",
+    "build": "npm run build:api-client && npm run build:frontend",
+    "build:frontend": "cd frontend && ng build",
+    "build:api-client": "cd api-client && npm run build",
+    "lint": "npm run lint:frontend",
+    "lint:frontend": "cd frontend && npm run lint:check",
+    "format": "npm run format:frontend",
+    "format:frontend": "cd frontend && npm run format",
+    "fix": "npm run fix:frontend",
+    "fix:frontend": "cd frontend && npm run fix",
+    "clean": "npm run clean:frontend && npm run clean:api-client && rimraf node_modules",
+    "clean:frontend": "cd frontend && rimraf dist node_modules",
+    "clean:api-client": "cd api-client && rimraf dist node_modules",
+    "dev": "concurrently \"npm run start:frontend\" \"cd backend && dotnet watch run --no-hot-reload --project src/Api\"",
+    "generate:api-client": "cd api-client && npm run generate"
+  },
+  "author": "hegedus-mark",
+  "license": "MIT",
+  "workspaces": [
+    "frontend",
+    "api-client"
+  ],
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "rimraf": "^6.0.1"
+  }
+}
