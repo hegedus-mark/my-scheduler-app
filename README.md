@@ -35,10 +35,7 @@ This project is a web-based evolution of the scheduling algorithm originally cre
 - .NET Core SDK 8.11
 - Node.js ≥18.19.1 (recommended: 22.0.0)
 - Angular CLI 19.x (npm install -g @angular/cli@19)
-- SQL Server (one of the following):
-  - Local installation
-  - Docker container
-  - Azure SQL Database
+- SQL Server
 
 ### Backend Setup
 
