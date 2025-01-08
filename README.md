@@ -29,6 +29,65 @@ This project is a web-based evolution of the scheduling algorithm originally cre
 
 🚧 This project is currently under development. 
 
+## Project Installation Guide
+
+### Prerequisites
+- .NET Core SDK 8.11
+- Node.js ≥18.19.1 (recommended: 22.0.0)
+- Angular CLI 19.x (npm install -g @angular/cli@19)
+- SQL Server (one of the following):
+  - Local installation
+  - Docker container
+  - Azure SQL Database
+
+### Backend Setup
+
+#### 1. Database Configuration
+1. Navigate to the backend directory:
+   ```bash
+   cd backend/src/Api
+   ```
+
+2. Create environment configuration:
+   - Copy `Sample.env` to create a new `.env` file
+   - Update the database connection string in `.env` according to your SQL Server setup
+
+#### 2. Starting the Backend
+1. Ensure your SQL Server instance is running and accessible
+
+2. From the `src/Api` directory, start the application:
+   ```bash
+   dotnet run
+   ```
+   Note: Database migrations will be applied automatically on startup
+
+3. Verify the backend is running:
+   - Open http://localhost:5169/swagger/index.html in your browser
+   - You should see the Swagger UI documentation
+
+### Frontend Setup
+
+#### 1. Installing Dependencies
+1. Navigate to the frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install required packages:
+   ```bash
+   npm install
+   ```
+
+#### 2. Starting the Frontend
+1. Start the development server:
+   ```bash
+   ng serve
+   ```
+
+2. Access the application:
+   - Open http://localhost:4200 in your browser
+   - You should see the frontend application running
+
 
 ## Project Architecture
 
