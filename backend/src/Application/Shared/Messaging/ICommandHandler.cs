@@ -1,4 +1,4 @@
-using SharedKernel.Results;
+using Application.Shared.Results;
 
 namespace Application.Shared.Messaging;
 

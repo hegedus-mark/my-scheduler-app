@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace Api.Extensions;
+namespace Api.Configuration;
 
 public static class ProblemDetailsConfiguration
 {

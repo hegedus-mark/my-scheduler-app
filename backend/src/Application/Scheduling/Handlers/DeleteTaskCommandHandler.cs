@@ -1,7 +1,7 @@
 using Application.Scheduling.Commands;
 using Application.Scheduling.Interfaces.Repositories;
 using Application.Shared.Messaging;
-using SharedKernel.Results;
+using Application.Shared.Results;
 
 namespace Application.Scheduling.Handlers;
 

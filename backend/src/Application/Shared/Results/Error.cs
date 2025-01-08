@@ -1,6 +1,4 @@
-using SharedKernel.Results;
-
-namespace SharedKernel.Errors;
+namespace Application.Shared.Results;
 
 public record Error(ResultStatus Status, string Code, string Message)
 {

@@ -1,7 +1,6 @@
 using Domain.Calendar.Events;
 using Domain.Calendar.Exceptions;
 using Domain.Calendar.Models.CalendarItems;
-using SharedKernel.Results;
 using AggregateRoot = Domain.Shared.Base.AggregateRoot;
 using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
@@ -32,7 +31,7 @@ public abstract class CalendarDay : AggregateRoot
         AddDomainEvent(new CalendarItemAddedEvent(Id, item.Id));
     }
 
-    public virtual Result<CalendarItem> RescheduleItem(Guid itemId, TimeSlot newSlot)
+    public virtual CalendarItem RescheduleItem(Guid itemId, TimeSlot newSlot)
     {
         var item = _items.FirstOrDefault(i => i.Id == itemId);
         if (item == null)
@@ -41,8 +40,7 @@ public abstract class CalendarDay : AggregateRoot
         if (HasTimeConflict(newSlot, item))
             throw new TimeConflictException();
         var updateResult = item.UpdateTimeSlot(newSlot);
-        if (updateResult.IsSuccess)
-            AddDomainEvent(new CalendarItemRescheduledEvent(Id, item.Id, newSlot));
+        AddDomainEvent(new CalendarItemRescheduledEvent(Id, item.Id, newSlot));
 
         return updateResult;
     }

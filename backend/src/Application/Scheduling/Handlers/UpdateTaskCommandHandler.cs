@@ -3,8 +3,8 @@ using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Interfaces.Repositories;
 using Application.Shared.Messaging;
-using SharedKernel.Errors;
-using SharedKernel.Results;
+using Application.Shared.Results;
+using Error = Application.Shared.Results.Error;
 
 namespace Application.Scheduling.Handlers;
 

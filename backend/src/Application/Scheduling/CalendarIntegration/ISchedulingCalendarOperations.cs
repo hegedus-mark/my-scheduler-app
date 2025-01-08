@@ -1,6 +1,5 @@
 using Application.Scheduling.CalendarIntegration.DTOs;
 using Domain.Shared.ValueObjects;
-using SharedKernel.Results;
 
 namespace Application.Scheduling.CalendarIntegration;
 
@@ -10,5 +9,5 @@ public interface ISchedulingCalendarOperations
         GetAvailableSlotsRequest request
     );
 
-    Task<Result> CreateReservations(ReserveCalendarSlotRequest request);
+    Task CreateReservations(ReserveCalendarSlotRequest request);
 }

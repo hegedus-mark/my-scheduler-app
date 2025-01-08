@@ -1,11 +1,12 @@
+using Api.Infrastructure.Attributes;
 using Api.Models.Scheduling.Requests;
 using Application.Scheduling.Commands;
 using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.Queries;
 using Application.Shared.Messaging;
+using Application.Shared.Results;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using SharedKernel.Results;
 
 namespace Api.Controllers.Scheduling;
 
@@ -21,7 +22,10 @@ public class TaskController : BaseController
     }
 
     [HttpPatch("{id}")]
-    public async Task<ActionResult<TaskItemDto>> UpdateTask(
+    [ExpectedResults(ResultStatus.Ok, ResultStatus.NotFound)]
+    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    public async Task<ActionResult<Result<TaskItemDto>>> UpdateTask(
         Guid id,
         [FromBody] UpdateTaskRequest request
     )
@@ -34,33 +38,37 @@ public class TaskController : BaseController
             request.Priority
         );
 
-        var result = await _mediator.SendAsync(command);
-        return Ok(result.Value);
+        return await _mediator.SendAsync(command);
     }
 
     [HttpPost]
-    public async Task<ActionResult<TaskItemDto>> CreateTask([FromBody] CreateTaskRequest request)
+    [ExpectedResults(ResultStatus.Ok)]
+    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    public async Task<ActionResult<Result<TaskItemDto>>> CreateTask(
+        [FromBody] CreateTaskRequest request
+    )
     {
         var command = _mapper.Map<CreateTaskCommand>(request);
-        var result = await _mediator.SendAsync(command);
-        return Ok(result.Value);
+        return await _mediator.SendAsync(command);
     }
 
     [HttpGet("all")]
-    public async Task<ActionResult<IEnumerable<TaskItemDto>>> GetAllTasks()
+    [ExpectedResults(ResultStatus.Ok)]
+    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    public async Task<ActionResult<CollectionResult<TaskItemDto>>> GetAllTasks()
     {
         var query = new GetAllTasksQuery();
-        var result = await _mediator.SendAsync(query);
-
-        return Ok(result.Value);
+        return await _mediator.SendAsync(query);
     }
 
     [HttpDelete("{id}")]
+    [ExpectedResults(ResultStatus.Ok, ResultStatus.NotFound)]
+    [ProducesResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
     public async Task<ActionResult<Result>> DeleteTask(Guid id)
     {
         var command = new DeleteTaskCommand(id);
 
-        var result = await _mediator.SendAsync(command);
-        return Ok(result);
+        return await _mediator.SendAsync(command);
     }
 }

@@ -25,11 +25,7 @@
 
 
     <ItemGroup>
-        <Folder Include="Configuration\"/>
         <Folder Include="Controllers\Calendar\"/>
-        <Folder Include="Models\Calendar\Requests\"/>
-        <Folder Include="Models\Calendar\Responses\"/>
-        <Folder Include="Models\Scheduling\Responses\"/>
     </ItemGroup>
 
 

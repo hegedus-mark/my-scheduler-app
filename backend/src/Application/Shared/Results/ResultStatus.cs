@@ -1,4 +1,4 @@
-namespace SharedKernel.Results;
+namespace Application.Shared.Results;
 
 public enum ResultStatus
 {

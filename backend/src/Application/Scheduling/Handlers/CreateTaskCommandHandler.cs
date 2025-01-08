@@ -3,8 +3,8 @@ using Application.Scheduling.DataTransfer.DTOs;
 using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Interfaces.Repositories;
 using Application.Shared.Messaging;
+using Application.Shared.Results;
 using Domain.Scheduling.Models;
-using SharedKernel.Results;
 
 namespace Application.Scheduling.Handlers;
 

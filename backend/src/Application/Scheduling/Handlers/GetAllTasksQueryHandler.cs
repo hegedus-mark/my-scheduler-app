@@ -3,12 +3,12 @@ using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Interfaces.Repositories;
 using Application.Scheduling.Queries;
 using Application.Shared.Messaging;
-using SharedKernel.Results;
+using Application.Shared.Results;
 
 namespace Application.Scheduling.Handlers;
 
 public class GetAllTasksQueryHandler
-    : IQueryHandler<GetAllTasksQuery, IReadOnlyCollection<TaskItemDto>>
+    : IQueryHandler<GetAllTasksQuery, CollectionResult<TaskItemDto>>
 {
     private readonly ISchedulingUnitOfWork _unitOfWork;
 
@@ -17,13 +17,13 @@ public class GetAllTasksQueryHandler
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<Result<IReadOnlyCollection<TaskItemDto>>> HandleAsync(
+    public async Task<CollectionResult<TaskItemDto>> HandleAsync(
         GetAllTasksQuery query,
         CancellationToken cancellationToken = default
     )
     {
         var result = await _unitOfWork.TaskItems.GetAllAsync();
         var dtos = result.Select(t => t.ToDto()).ToList();
-        return Result<IReadOnlyCollection<TaskItemDto>>.Success(dtos);
+        return CollectionResult<TaskItemDto>.Success(dtos);
     }
 }

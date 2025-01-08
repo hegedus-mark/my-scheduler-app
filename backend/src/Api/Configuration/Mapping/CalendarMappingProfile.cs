@@ -3,7 +3,7 @@ using Application.Calendar.Queries;
 using Application.Scheduling.CalendarIntegration.DTOs;
 using AutoMapper;
 
-namespace Api.Infrastructure.Mapping.Calendar;
+namespace Api.Configuration.Mapping;
 
 public class CalendarMappingProfile : Profile
 {

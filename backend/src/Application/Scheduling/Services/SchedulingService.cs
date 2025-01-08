@@ -6,7 +6,6 @@ using Application.Scheduling.DataTransfer.Mapping;
 using Application.Scheduling.Interfaces;
 using Application.Scheduling.Interfaces.Repositories;
 using Domain.Scheduling.Services;
-using SharedKernel.Results;
 
 namespace Application.Scheduling.Services;
 
@@ -28,7 +27,7 @@ public class SchedulingService : ISchedulingService
         _schedulingStrategy = schedulingStrategy;
     }
 
-    public async Task<Result<SchedulingResultDto>> ScheduleTaskAsync(ScheduleTasksCommand command)
+    public async Task<SchedulingResultDto> ScheduleTaskAsync(ScheduleTasksCommand command)
     {
         throw new NotImplementedException();
         var window = GetWindow(

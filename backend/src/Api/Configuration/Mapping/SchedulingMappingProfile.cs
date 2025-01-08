@@ -4,7 +4,7 @@ using Application.Scheduling.DataTransfer.DTOs;
 using AutoMapper;
 using Domain.Scheduling.Models.Enums;
 
-namespace Api.Infrastructure.Mapping.Scheduling;
+namespace Api.Configuration.Mapping;
 
 public class SchedulingMappingProfile : Profile
 {

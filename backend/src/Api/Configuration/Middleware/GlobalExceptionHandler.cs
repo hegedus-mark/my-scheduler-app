@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 
-namespace Api.Middleware;
+namespace Api.Configuration.Middleware;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {

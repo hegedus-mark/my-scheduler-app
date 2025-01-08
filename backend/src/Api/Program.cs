@@ -1,5 +1,6 @@
-using Api.Extensions;
-using Api.Infrastructure.Mapping.Scheduling;
+using Api.Configuration;
+using Api.Configuration.Filters;
+using Api.Configuration.Mapping;
 using Application;
 using Infrastructure;
 
@@ -7,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<ResultActionFilter>();
+});
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
