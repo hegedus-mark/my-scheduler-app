@@ -1,5 +1,5 @@
 import { Component } from "@angular/core";
-import { ThemeService } from "@core/services/theme.service";
+import { ThemeService } from "@core/theme/theme.service";
 import { AsyncPipe } from "@angular/common";
 import { THEMES_CONFIG } from "@core/config/themes.config";
 
