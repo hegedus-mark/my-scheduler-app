@@ -28,21 +28,13 @@ public static class TaskItemMappingExtensions
     {
         TaskItem task;
 
-        if (dto.Id.HasValue)
-            task = TaskItem.Load(
-                dto.Name,
-                dto.DueDate,
-                dto.Duration.ToTimeSpan(),
-                dto.PriorityLevel,
-                dto.Id.Value
-            );
-        else
-            task = TaskItem.Create(
-                dto.Name,
-                dto.DueDate,
-                dto.Duration.ToTimeSpan(),
-                dto.PriorityLevel
-            );
+        task = TaskItem.Load(
+            dto.Name,
+            dto.DueDate,
+            dto.Duration.ToTimeSpan(),
+            dto.PriorityLevel,
+            dto.Id
+        );
 
         switch (dto.TaskItemStatus)
         {
