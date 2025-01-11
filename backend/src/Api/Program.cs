@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Api.Configuration;
 using Api.Configuration.Filters;
 using Api.Configuration.Mapping;
@@ -13,10 +14,15 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
-{
-    options.Filters.Add<ResultActionFilter>();
-});
+builder
+    .Services.AddControllers(options =>
+    {
+        options.Filters.Add<ResultActionFilter>();
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.ConfigureSwagger();
