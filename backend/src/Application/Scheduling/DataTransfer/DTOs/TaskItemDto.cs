@@ -10,7 +10,7 @@ public class TaskItemDto
 
     public required DateTime DueDate { get; init; }
 
-    public required TimeSpan Duration { get; init; }
+    public required TimeSpanDto Duration { get; init; }
 
     public required PriorityLevel PriorityLevel { get; init; }
 

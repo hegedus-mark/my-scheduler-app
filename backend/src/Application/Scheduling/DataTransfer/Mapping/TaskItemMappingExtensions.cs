@@ -13,7 +13,7 @@ public static class TaskItemMappingExtensions
         return new TaskItemDto
         {
             DueDate = item.DueDate,
-            Duration = item.Duration,
+            Duration = TimeSpanDto.FromTimeSpan(item.Duration),
             EndDate = item.IsScheduled ? item.ScheduledTime!.Value.EndDate : null,
             StartDate = item.IsScheduled ? item.ScheduledTime!.Value.StartDate : null,
             FailureReason = item.HasFailed ? item.FailureReason : null,
@@ -32,12 +32,17 @@ public static class TaskItemMappingExtensions
             task = TaskItem.Load(
                 dto.Name,
                 dto.DueDate,
-                dto.Duration,
+                dto.Duration.ToTimeSpan(),
                 dto.PriorityLevel,
                 dto.Id.Value
             );
         else
-            task = TaskItem.Create(dto.Name, dto.DueDate, dto.Duration, dto.PriorityLevel);
+            task = TaskItem.Create(
+                dto.Name,
+                dto.DueDate,
+                dto.Duration.ToTimeSpan(),
+                dto.PriorityLevel
+            );
 
         switch (dto.TaskItemStatus)
         {
