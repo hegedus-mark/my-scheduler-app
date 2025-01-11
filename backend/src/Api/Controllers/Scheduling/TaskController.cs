@@ -54,7 +54,7 @@ public class TaskController : BaseController
 
     [HttpGet("all")]
     [ExpectedResults(ResultStatus.Ok)]
-    [ProducesApiResponseType(typeof(TaskItemDto), StatusCodes.Status200OK)]
+    [ProducesApiResponseType(typeof(IEnumerable<TaskItemDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<CollectionResult<TaskItemDto>>> GetAllTasks()
     {
         var query = new GetAllTasksQuery();
