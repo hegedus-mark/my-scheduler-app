@@ -1,52 +1,76 @@
 <div class="p-6 max-w-7xl mx-auto">
-  <h1 class="text-2xl font-bold mb-6">Schedule Tasks</h1>
+  <!-- Search and Filters -->
+  <div class="flex gap-3 items-center mb-6">
+    <div class="form-control w-full max-w-md">
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        class="input input-bordered w-full"
+        [(ngModel)]="searchQuery"
+      />
+    </div>
 
-  <div class="flex gap-6">
-    <div class="w-1/2">
-      <div class="bg-base-200 rounded-lg shadow p-4">
-        <div class="flex justify-between items-center mb-4">
-          <h2 class="text-lg font-semibold">Draft Tasks</h2>
-          <button class="btn btn-primary">
-            <lucide-angular [img]="Plus"></lucide-angular>
-            Add Tasks
+    <!-- Filters -->
+    <div class="flex gap-2">
+      @for (priority of priorities; track priority) {
+        <button
+          class="btn btn-sm btn-outline"
+          [class.btn-active]="selectedPriorities().includes(priority)"
+          (click)="togglePriorityFilter(priority)"
+        >
+          {{ priority }}
+        </button>
+      }
+
+      <button
+        class="btn btn-sm btn-outline"
+        [class.btn-active]="showDraftsOnly"
+        (click)="toggleDraftFilter()"
+      >
+        Drafts
+      </button>
+    </div>
+  </div>
+
+  <!-- Task List -->
+  <div class="join join-vertical w-full">
+    @for (task of filteredTasks(); track task.id) {
+      <div class="collapse collapse-arrow join-item border border-base-300">
+        <input
+          type="radio"
+          name="tasks-accordion"
+          [checked]="expandedTaskId === task.id"
+          (change)="expandTask(task.id)"
+        />
+        <div class="collapse-title flex items-center gap-4">
+          <input
+            type="checkbox"
+            class="checkbox"
+            [checked]="task.selected"
+            (change)="toggleTaskSelection(task.id)"
+          />
+          <div class="flex-1">
+            <div class="flex justify-between items-center">
+              <h3 class="font-medium">{{ task.name }}</h3>
+              @if (task.status === "Draft") {
+                <span class="badge badge-outline">Draft</span>
+              }
+            </div>
+            <div class="text-sm opacity-70 flex gap-2 mt-1">
+              <span class="badge" [class]="getPriorityClass(task.priority)">
+                {{ task.priority }}
+              </span>
+              <span>Due: {{ task.dueDate }}</span>
+            </div>
+          </div>
+        </div>
+        <!-- Actions -->
+        <div class="mt-4 flex gap-2">
+          <button class="btn btn-sm btn-outline" (click)="editTask(task)">
+            Edit Task
           </button>
         </div>
       </div>
-      <div class="space-y-3">
-        @for (task of tasks(); track task.id) {
-          <div
-            class="flex items-center justify-between p-3 bg-base-300 rounded-lg"
-          >
-            <div>
-              <h3 class="font-medium">{{ task.name }}</h3>
-              <div class="flex gap-3 text-sm text-neutral mt-1">
-                <span class="flex items-center gap-1">
-                  <lucide-angular [img]="Clock" size="14" />
-                  {{ task.duration.toString() }}
-                </span>
-                <span
-                  class="badge"
-                  [class.bg-red:500]="task.priority === 'High'"
-                  [class.bg-yellow:500]="task.priority === 'Medium'"
-                  [class.bg-green:500]="task.priority === 'Low'"
-                >
-                  {{ task.priority }}
-                </span>
-              </div>
-              <div>
-                <input
-                  class="checkbox checkbox-primary w-5 h-5"
-                  type="checkbox"
-                />
-              </div>
-            </div>
-          </div>
-        }
-        <button class="btn btn-wide btn-primary">
-          <lucide-angular [img]="Calendar" size="20"></lucide-angular>
-          Schedule Selected Tasks
-        </button>
-      </div>
-    </div>
+    }
   </div>
 </div>
