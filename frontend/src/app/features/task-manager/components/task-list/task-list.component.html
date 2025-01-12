@@ -1,0 +1,52 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <h1 class="text-2xl font-bold mb-6">Schedule Tasks</h1>
+
+  <div class="flex gap-6">
+    <div class="w-1/2">
+      <div class="bg-base-200 rounded-lg shadow p-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-lg font-semibold">Draft Tasks</h2>
+          <button class="btn btn-primary">
+            <lucide-angular [img]="Plus"></lucide-angular>
+            Add Tasks
+          </button>
+        </div>
+      </div>
+      <div class="space-y-3">
+        @for (task of tasks(); track task.id) {
+          <div
+            class="flex items-center justify-between p-3 bg-base-300 rounded-lg"
+          >
+            <div>
+              <h3 class="font-medium">{{ task.name }}</h3>
+              <div class="flex gap-3 text-sm text-neutral mt-1">
+                <span class="flex items-center gap-1">
+                  <lucide-angular [img]="Clock" size="14" />
+                  {{ task.duration.toString() }}
+                </span>
+                <span
+                  class="badge"
+                  [class.bg-red:500]="task.priority === 'High'"
+                  [class.bg-yellow:500]="task.priority === 'Medium'"
+                  [class.bg-green:500]="task.priority === 'Low'"
+                >
+                  {{ task.priority }}
+                </span>
+              </div>
+              <div>
+                <input
+                  class="checkbox checkbox-primary w-5 h-5"
+                  type="checkbox"
+                />
+              </div>
+            </div>
+          </div>
+        }
+        <button class="btn btn-wide btn-primary">
+          <lucide-angular [img]="Calendar" size="20"></lucide-angular>
+          Schedule Selected Tasks
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

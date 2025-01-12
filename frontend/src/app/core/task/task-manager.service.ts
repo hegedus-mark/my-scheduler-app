@@ -5,7 +5,7 @@ import {
   CreateTaskRequest,
   TaskService,
   UpdateTaskRequest,
-} from "@myschedulerapp/api-client/src";
+} from "@myschedulerapp/api-client";
 import { TaskAdapter } from "@core/task/task.adapter";
 
 @Injectable({
