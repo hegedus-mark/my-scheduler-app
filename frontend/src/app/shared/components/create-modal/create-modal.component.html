@@ -2,31 +2,34 @@
   <div class="modal-box">
     <!-- Header -->
     <div class="flex items-center justify-between mb-4">
-      <div class="join">
-        <button
-          class="join-item btn btn-sm"
-          [class.btn-active]="modalType() === 'task'"
-          (click)="this.modalService.changeType('task')"
-        >
-          Task
-        </button>
-        <button
-          class="join-item btn btn-sm"
-          [class.btn-active]="modalType() === 'event'"
-          (click)="this.modalService.changeType('event')"
-        >
-          Event
-        </button>
+      <div class="flex-1">
+        @if (allowEventCreation()) {
+          <div class="join">
+            <button
+              class="join-item btn btn-sm"
+              [class.btn-active]="modalType() === 'task'"
+              (click)="this.modalService.changeType('task')"
+            >
+              Task
+            </button>
+            <button
+              class="join-item btn btn-sm"
+              [class.btn-active]="modalType() === 'event'"
+              (click)="this.modalService.changeType('event')"
+            >
+              Event
+            </button>
+          </div>
+        }
       </div>
       <button class="btn btn-ghost btn-sm" (click)="this.modalService.close()">
         <lucide-icon [img]="X" class="w-5 h-5" />
       </button>
     </div>
-
     <!-- Task Form -->
     @if (isTaskForm()) {
       <app-task-form />
-    } @else {
+    } @else if (allowEventCreation()) {
       <app-event-form />
     }
   </div>

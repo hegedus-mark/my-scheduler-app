@@ -1,4 +1,10 @@
-import { Component, computed, inject } from "@angular/core";
+import {
+  booleanAttribute,
+  Component,
+  computed,
+  inject,
+  input,
+} from "@angular/core";
 import { LucideAngularModule, X } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
 import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
@@ -18,6 +24,8 @@ import { CreateModalService } from "@shared/components/create-modal/service/crea
 })
 export class CreateModalComponent {
   modalService = inject(CreateModalService);
+
+  allowEventCreation = input(false, { transform: booleanAttribute });
 
   modalOpen = this.modalService.isOpen;
   modalType = this.modalService.type;

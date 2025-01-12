@@ -1,5 +1,5 @@
 <div class="p-6 max-w-7xl mx-auto">
-  <!-- Search and Filters -->
+  <!-- Action bar -->
   <div class="flex gap-3 items-center mb-6">
     <div class="form-control w-full max-w-md">
       <input
@@ -30,11 +30,19 @@
         Drafts
       </button>
     </div>
+
+    <!-- Create button-->
+    <div>
+      <button class="btn btn-primary btn-sm" (click)="openModal()">
+        Create
+        <lucide-icon [img]="Plus" class="w-5 h-5" />
+      </button>
+    </div>
   </div>
 
   <!-- Task List -->
   <div class="join join-vertical w-full">
-    @for (task of filteredTasks(); track task.id) {
+    @for (task of tasksWithSelection(); track task.id) {
       <div class="collapse collapse-arrow join-item border border-base-300">
         <input
           type="radio"
@@ -73,4 +81,5 @@
       </div>
     }
   </div>
+  <app-create-modal allowEventCreation="false" />
 </div>

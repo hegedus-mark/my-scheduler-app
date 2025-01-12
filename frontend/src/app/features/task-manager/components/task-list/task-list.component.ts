@@ -1,8 +1,11 @@
 /* eslint-disable */
 import { Component, computed, inject, signal } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { BaseTask } from "@core/task/task.model";
+import { BaseTask, Task } from "@core/task/task.model";
 import { TaskFilterService } from "@features/task-manager/services/task-filter.service";
+import { LucideAngularModule, Plus } from "lucide-angular";
+import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
+import { CreateModalComponent } from "@shared/components/create-modal/create-modal.component";
 
 type priority = "High" | "Medium" | "Low";
 
@@ -13,12 +16,15 @@ interface ListTask extends BaseTask {
 
 @Component({
   selector: "app-task-list",
-  imports: [FormsModule],
+  imports: [FormsModule, LucideAngularModule, CreateModalComponent],
   templateUrl: "./task-list.component.html",
   styleUrl: "./task-list.component.scss",
 })
 export class TaskListComponent {
   private taskFilterService = inject(TaskFilterService);
+  private createModalService = inject(CreateModalService);
+
+  public priorities: priority[] = ["High", "Medium", "Low"] as const;
 
   expandedTaskId: any;
   showDraftsOnly: any;
@@ -26,7 +32,14 @@ export class TaskListComponent {
   filteredTasks = this.taskFilterService.filteredTasks;
   searchQuery: any;
 
-  public priorities: priority[] = ["High", "Medium", "Low"] as const;
+  selectedTasks = signal(new Map<string, Task>());
+  tasksWithSelection = computed(() => {
+    const filtered = this.filteredTasks();
+    return filtered.map((task) => ({
+      ...task,
+      selected: this.selectedTasks().has(task.id),
+    }));
+  });
 
   editTask(task: any) {}
 
@@ -48,4 +61,10 @@ export class TaskListComponent {
   toggleDraftFilter() {}
 
   togglePriorityFilter(priority: priority) {}
+
+  protected readonly Plus = Plus;
+
+  openModal() {
+    this.createModalService.open("task");
+  }
 }

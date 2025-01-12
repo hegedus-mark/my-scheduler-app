@@ -36,19 +36,3 @@ export interface WeekGridDay {
   isToday: boolean;
   slots: WeekCalendarCell[];
 }
-
-export type ModalType = "task" | "event";
-
-export interface TaskForm {
-  name: string;
-  deadline: Date;
-  estimatedHours: number;
-  priority: "low" | "medium" | "high";
-}
-
-export interface EventForm {
-  name: string;
-  date: Date;
-  length: number; // in hours
-  color: string;
-}
