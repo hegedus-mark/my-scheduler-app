@@ -3,7 +3,7 @@ import {
   EventForm,
   ModalType,
   TaskForm,
-} from "@features/calendar/types/calendar.types";
+} from "@shared/components/create-modal/create-modal.models";
 
 @Injectable({
   providedIn: "root",

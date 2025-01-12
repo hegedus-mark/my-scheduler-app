@@ -9,7 +9,7 @@ import {
   getCurrentTimePosition,
 } from "@features/calendar/utils/time.utils";
 import { generateWeekGrid } from "@features/calendar/utils/week-grid.utils";
-import { CreateModalService } from "@features/calendar/services/create-modal/create-modal.service";
+import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
 
 @Component({
   selector: "app-week-calendar-calendar",

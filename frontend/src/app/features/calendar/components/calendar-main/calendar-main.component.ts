@@ -12,8 +12,8 @@ import {
 import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { CalendarView } from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
-import { CreateModalComponent } from "@features/calendar/components/create-modal/create-modal.component";
-import { CreateModalService } from "@features/calendar/services/create-modal/create-modal.service";
+import { CreateModalComponent } from "@shared/components/create-modal/create-modal.component";
+import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
 
 @Component({
   selector: "app-calendar-main",

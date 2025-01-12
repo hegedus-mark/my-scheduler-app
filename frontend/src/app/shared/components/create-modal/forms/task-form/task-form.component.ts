@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { TaskForm } from "@features/calendar/types/calendar.types";
 import { TitleCasePipe } from "@angular/common";
+import { TaskForm } from "@shared/components/create-modal/create-modal.models";
 
 @Component({
   selector: "app-task-form",

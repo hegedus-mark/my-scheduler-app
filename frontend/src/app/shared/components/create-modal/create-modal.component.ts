@@ -1,9 +1,9 @@
 import { Component, computed, inject } from "@angular/core";
 import { LucideAngularModule, X } from "lucide-angular";
 import { FormsModule } from "@angular/forms";
-import { TaskFormComponent } from "@features/calendar/components/task-form/task-form.component";
-import { EventFormComponent } from "@features/calendar/components/event-form/event-form.component";
-import { CreateModalService } from "@features/calendar/services/create-modal/create-modal.service";
+import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
+import { EventFormComponent } from "@shared/components/create-modal/forms/event-form/event-form.component";
+import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
 
 @Component({
   selector: "app-create-modal",
