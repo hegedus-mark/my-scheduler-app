@@ -27,7 +27,8 @@
       "@shared/*": ["shared/*"],
       "@core/*": ["core/*"],
       "@features/*": ["features/*"],
-      "@environments": ["../environments/environment"]
+      "@environments": ["../environments/environment"],
+      "@myschedulerapp/api-client": ["../../../api-client/src"]
     }
   },
   "angularCompilerOptions": {

@@ -12,7 +12,7 @@
     "format": "prettier \"src/**/*.{ts,html,scss,css,md,json}\" --write",
     "format:check": "prettier \"src/**/*.{ts,html,scss,css,md,json}\" --check",
     "lint:check": "eslint \"src/**/*.{ts,html}\"",
-    "fix": "npm run format && npm run lint",
+    "fix": "pnpm format && pnpm lint",
     "prepare": "cd .. && husky frontend/.husky"
   },
   "lint-staged": {
@@ -37,7 +37,7 @@
     "lucide-angular": "^0.469.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
-    "@myschedulerapp/api-client": "0.0.1"
+    "@myschedulerapp/api-client": "workspace:*"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^19.0.6",
