@@ -12,6 +12,8 @@ import {
 } from "@angular/common/http";
 import { provideAnimationsAsync } from "@angular/platform-browser/animations/async";
 import { errorInterceptor } from "@core/interceptors/error-interceptor.interceptor";
+import { ApiModule, Configuration } from "@myschedulerapp/api-client";
+import { ApiConfigService } from "@core/config/api.config";
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,5 +21,12 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch(), withInterceptors([errorInterceptor])),
     provideExperimentalZonelessChangeDetection(),
     provideAnimationsAsync(),
+    ApiModule,
+    {
+      provide: Configuration,
+      useFactory: (apiConfigService: ApiConfigService) =>
+        apiConfigService.createConfiguration(),
+      deps: [ApiConfigService],
+    },
   ],
 };
