@@ -42,43 +42,21 @@
 
   <!-- Task List -->
   <div class="join join-vertical w-full">
-    @for (task of tasksWithSelection(); track task.id) {
-      <div class="collapse collapse-arrow join-item border border-base-300">
-        <input
-          type="radio"
-          name="tasks-accordion"
-          [checked]="expandedTaskId === task.id"
-          (change)="expandTask(task.id)"
+    @if (taskManager.isLoading()) {
+      <div class="loading loading-spinner loading-md"></div>
+    } @else if (taskManager.error()) {
+      <div>Something happened</div>
+    } @else {
+      @for (taskListItem of tasksWithSelection(); track taskListItem.task.id) {
+        <app-task-item
+          [task]="taskListItem.task"
+          [expanded]="expandedTaskId === taskListItem.task.id"
+          [selected]="taskListItem.selected"
+          (expand)="expandTask($event)"
+          (select)="toggleTaskSelection($event)"
+          (edit)="editTask($event)"
         />
-        <div class="collapse-title flex items-center gap-4">
-          <input
-            type="checkbox"
-            class="checkbox"
-            [checked]="task.selected"
-            (change)="toggleTaskSelection(task.id)"
-          />
-          <div class="flex-1">
-            <div class="flex justify-between items-center">
-              <h3 class="font-medium">{{ task.name }}</h3>
-              @if (task.status === "Draft") {
-                <span class="badge badge-outline">Draft</span>
-              }
-            </div>
-            <div class="text-sm opacity-70 flex gap-2 mt-1">
-              <span class="badge" [class]="getPriorityClass(task.priority)">
-                {{ task.priority }}
-              </span>
-              <span>Due: {{ task.dueDate }}</span>
-            </div>
-          </div>
-        </div>
-        <!-- Actions -->
-        <div class="mt-4 flex gap-2">
-          <button class="btn btn-sm btn-outline" (click)="editTask(task)">
-            Edit Task
-          </button>
-        </div>
-      </div>
+      }
     }
   </div>
   <app-create-modal allowEventCreation="false" />

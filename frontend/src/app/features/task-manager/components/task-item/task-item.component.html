@@ -1,0 +1,36 @@
+<div class="border border-base-300">
+  <!--  <input-->
+  <!--    type="radio"-->
+  <!--    name="tasks-accordion"-->
+  <!--    [checked]="expanded()"-->
+  <!--    (change)="expand.emit(task().id)"-->
+  <!--  />-->
+  <div class="collapse-title flex items-center gap-4">
+    <input
+      type="checkbox"
+      class="checkbox"
+      [checked]="selected()"
+      (change)="select.emit(task().id)"
+    />
+    <div class="flex-1">
+      <div class="flex justify-between items-center">
+        <h3 class="font-medium">{{ task().name }}</h3>
+        @if (task().status === "Draft") {
+          <span class="badge badge-outline">Draft</span>
+        }
+      </div>
+      <div class="text-sm opacity-70 flex gap-2 mt-1">
+        <span class="badge" [class]="getPriorityClass(task().priority)">
+          {{ task().priority }}
+        </span>
+        <span>Due: {{ task().dueDate | date }}</span>
+      </div>
+    </div>
+  </div>
+  <!-- Actions -->
+  <div class="mt-4 flex gap-2">
+    <button class="btn btn-sm btn-outline" (click)="edit.emit(task())">
+      Edit Task
+    </button>
+  </div>
+</div>
