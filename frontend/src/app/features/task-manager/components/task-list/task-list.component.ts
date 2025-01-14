@@ -22,6 +22,7 @@ import {
 import { TaskItemComponent } from "@features/task-manager/components/task-item/task-item.component";
 import { PriorityLevel } from "@myschedulerapp/api-client";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
+import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
 
 @Component({
   selector: "app-task-list",
@@ -30,6 +31,7 @@ import { AccordionService } from "@features/task-manager/services/accordion.serv
     LucideAngularModule,
     CreateModalComponent,
     TaskItemComponent,
+    TaskFormComponent,
   ],
   templateUrl: "./task-list.component.html",
   styleUrl: "./task-list.component.scss",

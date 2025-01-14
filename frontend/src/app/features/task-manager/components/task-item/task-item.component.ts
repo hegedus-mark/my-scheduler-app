@@ -11,16 +11,19 @@ import { Task } from "@core/task/task.model";
 import { PriorityLevel } from "@myschedulerapp/api-client";
 import { DatePipe } from "@angular/common";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
+import { LucideAngularModule, Trash } from "lucide-angular";
+import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
 
 @Component({
   selector: "app-task-item",
-  imports: [DatePipe],
+  imports: [DatePipe, LucideAngularModule],
   templateUrl: "./task-item.component.html",
   styleUrl: "./task-item.component.scss",
 })
 export class TaskItemComponent {
   accordionService = inject(AccordionService);
   private elementRef = inject(ElementRef);
+  private createModalService = inject(CreateModalService);
 
   task = input.required<Task>();
   selected = input(false, { transform: booleanAttribute });
@@ -55,4 +58,6 @@ export class TaskItemComponent {
         return "badge bg-yellow-500 text-white";
     }
   }
+
+  protected readonly Trash = Trash;
 }

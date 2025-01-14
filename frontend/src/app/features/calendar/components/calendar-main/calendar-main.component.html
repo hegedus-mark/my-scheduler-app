@@ -54,9 +54,36 @@
     </div>
   </div>
 
-  <!-- Router Outlet for Calendar Views -->
   <div class="flex-1">
-    <app-create-modal allowEventCreation="true" />
+    <!--  Modal-->
+    <app-create-modal>
+      <div modal-header>
+        <div class="join">
+          <button
+            class="join-item btn btn-sm"
+            [class.btn-active]="modalType() === 'task'"
+            (click)="modalService.changeType('task')"
+          >
+            Task
+          </button>
+          <button
+            class="join-item btn btn-sm"
+            [class.btn-active]="modalType() === 'event'"
+            (click)="modalService.changeType('event')"
+          >
+            Event
+          </button>
+        </div>
+      </div>
+
+      @if (isTaskForm()) {
+        <app-task-form />
+      } @else {
+        <app-event-form />
+      }
+    </app-create-modal>
+
+    <!-- Router Outlet for Calendar Views -->
     <router-outlet></router-outlet>
   </div>
 </div>
