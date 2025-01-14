@@ -101,9 +101,6 @@ namespace Infrastructure.Migrations
                     b.Property<DateTime>("DueDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<TimeSpan>("Duration")
-                        .HasColumnType("time");
-
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -144,6 +141,37 @@ namespace Infrastructure.Migrations
                     b.HasOne("Infrastructure.Calendar.Entities.CalendarDayEntity", null)
                         .WithMany("Reservations")
                         .HasForeignKey("CalendarDayEntityId");
+                });
+
+            modelBuilder.Entity("Infrastructure.Scheduling.Entities.TaskItemEntity", b =>
+                {
+                    b.OwnsOne("Infrastructure.Scheduling.Entities.TimeRange", "Duration", b1 =>
+                        {
+                            b1.Property<Guid>("TaskItemEntityId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Days")
+                                .HasColumnType("int")
+                                .HasColumnName("DurationDays");
+
+                            b1.Property<int>("Hours")
+                                .HasColumnType("int")
+                                .HasColumnName("DurationHours");
+
+                            b1.Property<int>("Minutes")
+                                .HasColumnType("int")
+                                .HasColumnName("DurationMinutes");
+
+                            b1.HasKey("TaskItemEntityId");
+
+                            b1.ToTable("TaskItems");
+
+                            b1.WithOwner()
+                                .HasForeignKey("TaskItemEntityId");
+                        });
+
+                    b.Navigation("Duration")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Infrastructure.Calendar.Entities.CalendarDayEntity", b =>
