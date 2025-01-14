@@ -1,4 +1,12 @@
-import { Component, inject } from "@angular/core";
+import {
+  Component,
+  effect,
+  EffectRef,
+  inject,
+  input,
+  OnDestroy,
+  signal,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { TaskForm } from "@shared/components/create-modal/create-modal.models";
 import { CreateTaskRequest, PriorityLevel } from "@myschedulerapp/api-client";
@@ -12,29 +20,47 @@ import { TimeSpan } from "@shared/models/timespan.model";
   templateUrl: "./task-form.component.html",
   styleUrl: "./task-form.component.scss",
 })
-export class TaskFormComponent {
-  taskManagerService = inject(TaskManagerService);
-  //we might not want to tie it to the createModal in the future, in that case this component should emit a submit event
-  createModalService = inject(CreateModalService);
+export class TaskFormComponent implements OnDestroy {
+  private taskManagerService = inject(TaskManagerService);
+  private createModalService = inject(CreateModalService);
 
-  durationString = "00:00";
-  taskForm: TaskForm = {
+  private effectRef: EffectRef;
+
+  constructor() {
+    this.effectRef = effect(() => {
+      this.formState.set(this.inputTaskForm());
+    });
+  }
+
+  ngOnDestroy() {
+    this.effectRef.destroy();
+  }
+
+  // Input signal for initial values
+  inputTaskForm = input<TaskForm>({
     name: "",
-    dueDate: new Date(),
+    dueDate: new Date(Date.now()),
     duration: new TimeSpan(),
-    priority: "Medium",
-  };
+    priority: "Medium" as PriorityLevel,
+  });
 
+  // Internal form state
+  formState = signal<TaskForm>(this.inputTaskForm());
+
+  durationString = signal("00:00");
   readonly priorities: PriorityLevel[] = ["Low", "Medium", "High"] as const;
 
   async onSubmit() {
-    console.log(this.taskForm);
+    const dueDate = new Date(this.formState().dueDate);
+    console.log(this.formState());
     const createRequest: CreateTaskRequest = {
-      duration: this.taskForm.duration.toString(),
-      dueDate: this.taskForm.dueDate.toString(),
-      name: this.taskForm.name,
-      priority: this.taskForm.priority,
+      duration: this.formState().duration.toString(),
+      dueDate: dueDate.toISOString(),
+      name: this.formState().name,
+      priority: this.formState().priority,
     };
+
+    console.log(createRequest);
     await this.taskManagerService.createTask(createRequest);
     this.createModalService.close();
   }
@@ -50,8 +76,11 @@ export class TaskFormComponent {
   onDurationChange(value: string) {
     if (this.validateDuration(value)) {
       const [hours, minutes] = value.split(":").map(Number);
-      this.taskForm.duration = new TimeSpan({ hours, minutes });
-      this.durationString = value;
+      this.formState.update((prev) => ({
+        ...prev,
+        duration: new TimeSpan({ hours, minutes }),
+      }));
+      this.durationString.set(value);
     }
   }
 }
