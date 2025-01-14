@@ -51,9 +51,9 @@
         <app-task-item
           [task]="taskListItem.task"
           [selected]="taskListItem.selected"
-          (expand)="expandTask($event)"
           (select)="toggleTaskSelection($event)"
           (edit)="editTask($event)"
+          (delete)="deleteTask($event)"
         />
       }
     }

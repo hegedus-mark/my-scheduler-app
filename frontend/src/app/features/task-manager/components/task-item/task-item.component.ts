@@ -31,6 +31,7 @@ export class TaskItemComponent {
   select = output<string>();
   expand = output<string>();
   edit = output<Task>();
+  delete = output<Task>();
 
   expanded = computed(
     () => this.accordionService.ExpandedItemId() === this.task().id,

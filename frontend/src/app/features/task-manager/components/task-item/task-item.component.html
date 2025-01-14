@@ -39,7 +39,9 @@
         <button class="btn btn-sm btn-outline" (click)="edit.emit(task())">
           Edit Task
         </button>
-        <button class="btn btn-sm btn-error">Delete Task</button>
+        <button class="btn btn-sm btn-error" (click)="delete.emit(task())">
+          Delete Task
+        </button>
       </div>
     </div>
   </div>
