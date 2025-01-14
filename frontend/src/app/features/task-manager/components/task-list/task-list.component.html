@@ -50,7 +50,6 @@
       @for (taskListItem of tasksWithSelection(); track taskListItem.task.id) {
         <app-task-item
           [task]="taskListItem.task"
-          [expanded]="expandedTaskId === taskListItem.task.id"
           [selected]="taskListItem.selected"
           (expand)="expandTask($event)"
           (select)="toggleTaskSelection($event)"
@@ -59,5 +58,6 @@
       }
     }
   </div>
+
   <app-create-modal allowEventCreation="false" />
 </div>

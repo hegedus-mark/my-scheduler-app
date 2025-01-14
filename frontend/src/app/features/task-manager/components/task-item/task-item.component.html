@@ -1,16 +1,15 @@
-<div class="card border border-base-300 bg-base-200 shadow-sm">
-  <!--  <input-->
-  <!--    type="radio"-->
-  <!--    name="tasks-accordion"-->
-  <!--    [checked]="expanded()"-->
-  <!--    (change)="expand.emit(task().id)"-->
-  <!--  />-->
+<!-- TODO: Put the checkbox to the side so it won't trigger accordion click by accident -->
+<div
+  class="card collapse border border-base-300 bg-base-200 shadow-sm"
+  [class.collapse-open]="expanded()"
+  (click)="toggleExpand()"
+>
   <div class="collapse-title flex items-center gap-4">
     <input
       type="checkbox"
       class="checkbox"
       [checked]="selected()"
-      (change)="select.emit(task().id)"
+      (click)="toggleSelect($event)"
     />
     <div class="flex-1">
       <div class="flex justify-between items-center">
@@ -27,8 +26,7 @@
       </div>
     </div>
   </div>
-  <!-- Actions -->
-  <div class="mt-4 flex gap-2">
+  <div class="collapse-content">
     <button class="btn btn-sm btn-outline" (click)="edit.emit(task())">
       Edit Task
     </button>

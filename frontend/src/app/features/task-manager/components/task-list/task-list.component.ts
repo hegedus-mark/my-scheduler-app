@@ -3,7 +3,9 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  HostListener,
   inject,
+  OnDestroy,
   signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -19,6 +21,7 @@ import {
 } from "@features/task-manager/models/task-manager.model";
 import { TaskItemComponent } from "@features/task-manager/components/task-item/task-item.component";
 import { PriorityLevel } from "@myschedulerapp/api-client";
+import { AccordionService } from "@features/task-manager/services/accordion.service";
 
 @Component({
   selector: "app-task-list",
@@ -32,10 +35,11 @@ import { PriorityLevel } from "@myschedulerapp/api-client";
   styleUrl: "./task-list.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskListComponent {
+export class TaskListComponent implements OnDestroy {
   taskManager = inject(TaskManagerService);
   private filterProvider = inject(TaskFilterProvider);
   private createModalService = inject(CreateModalService);
+  private accordionService = inject(AccordionService);
 
   public priorities: PriorityLevel[] = ["High", "Medium", "Low"] as const;
 
@@ -81,5 +85,14 @@ export class TaskListComponent {
 
   openModal() {
     this.createModalService.open("task");
+  }
+
+  @HostListener("document:click", ["$event"])
+  onDocumentClick(event: MouseEvent) {
+    this.accordionService.handleDocumentClick(event);
+  }
+
+  ngOnDestroy() {
+    this.accordionService.collapse();
   }
 }

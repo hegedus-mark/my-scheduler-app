@@ -14,6 +14,5 @@
   daisyui: {
     themes:true,
   },
-  important: true
 }
 
