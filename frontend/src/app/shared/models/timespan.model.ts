@@ -75,6 +75,43 @@ export class TimeSpan {
     return new TimeSpan(weeks * DERIVED_CONSTANTS.MILLISECONDS_IN_WEEK);
   }
 
+  static fromString(timeString: string): TimeSpan {
+    // Regular expressions for both formats
+    const fullFormatRegex = /^(\d+)\.(\d{2}):(\d{2}):(\d{2})$/; // dd.hh:mm:ss
+    const shortFormatRegex = /^(\d{2}):(\d{2}):(\d{2})$/; // hh:mm:ss
+
+    let days = 0,
+      hours = 0,
+      minutes = 0,
+      seconds = 0;
+
+    if (fullFormatRegex.test(timeString)) {
+      // Parse dd.hh:mm:ss format
+      const [, d, h, m, s] = timeString.match(fullFormatRegex)!;
+      days = parseInt(d, 10);
+      hours = parseInt(h, 10);
+      minutes = parseInt(m, 10);
+      seconds = parseInt(s, 10);
+    } else if (shortFormatRegex.test(timeString)) {
+      // Parse hh:mm:ss format
+      const [, h, m, s] = timeString.match(shortFormatRegex)!;
+      hours = parseInt(h, 10);
+      minutes = parseInt(m, 10);
+      seconds = parseInt(s, 10);
+    } else {
+      throw new Error(
+        'Invalid time format. Use either "hh:mm:ss" or "dd.hh:mm:ss"',
+      );
+    }
+
+    // Validate ranges
+    if (hours >= 24) throw new Error("Hours must be less than 24");
+    if (minutes >= 60) throw new Error("Minutes must be less than 60");
+    if (seconds >= 60) throw new Error("Seconds must be less than 60");
+
+    return new TimeSpan({ days, hours, minutes, seconds });
+  }
+
   // Instance methods
   set({
     days = 0,
@@ -199,13 +236,10 @@ export class TimeSpan {
 
   // Utility methods
   toString(): string {
-    const parts: string[] = [];
-    if (this.days) parts.push(`${this.days}d`);
-    if (this.hours) parts.push(`${this.hours}h`);
-    if (this.minutes) parts.push(`${this.minutes}m`);
-    if (this.seconds) parts.push(`${this.seconds}s`);
-    if (this.milliseconds) parts.push(`${this.milliseconds}ms`);
-    return parts.length ? parts.join(" ") : "0ms";
+    if (this.days > 0) {
+      return `${this.days}.${String(this.hours).padStart(2, "0")}:${String(this.minutes).padStart(2, "0")}:${String(this.seconds).padStart(2, "0")}`;
+    }
+    return `${String(this.hours).padStart(2, "0")}:${String(this.minutes).padStart(2, "0")}:${String(this.seconds).padStart(2, "0")}`;
   }
 
   toJSON(): TimeComponents {
