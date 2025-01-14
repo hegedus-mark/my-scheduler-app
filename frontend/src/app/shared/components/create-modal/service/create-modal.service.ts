@@ -1,9 +1,5 @@
 import { Injectable, signal } from "@angular/core";
-import {
-  EventForm,
-  ModalType,
-  TaskForm,
-} from "@shared/components/create-modal/create-modal.models";
+import { ModalType } from "@shared/components/create-modal/create-modal.models";
 
 @Injectable({
   providedIn: "root",
@@ -26,15 +22,5 @@ export class CreateModalService {
 
   changeType(type: ModalType) {
     this.modalTypeState.set(type);
-  }
-
-  handleTaskSubmission(task: TaskForm) {
-    console.log("Task submitted:", task);
-    this.close();
-  }
-
-  handleEventSubmission(event: EventForm) {
-    console.log("Event submitted:", event);
-    this.close();
   }
 }
