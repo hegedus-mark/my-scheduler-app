@@ -1,4 +1,4 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import {
   LucideAngularModule,
@@ -10,7 +10,10 @@ import {
   Calendar,
 } from "lucide-angular";
 import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
-import { CalendarView } from "@features/calendar/types/calendar.types";
+import {
+  CalendarView,
+  ModalType,
+} from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
 import { CreateModalComponent } from "@shared/components/create-modal/create-modal.component";
 import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
@@ -53,11 +56,11 @@ export class CalendarMainComponent {
   //Modal
   modalService = inject(CreateModalService);
 
-  modalType = this.modalService.type;
+  modalType = signal<ModalType>("task");
   isTaskForm = computed(() => this.modalType() === "task");
 
   openModal(): void {
-    this.modalService.open("task");
+    this.modalService.open();
   }
 
   //icons

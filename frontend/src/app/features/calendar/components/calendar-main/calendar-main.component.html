@@ -62,14 +62,14 @@
           <button
             class="join-item btn btn-sm"
             [class.btn-active]="modalType() === 'task'"
-            (click)="modalService.changeType('task')"
+            (click)="modalType.set('task')"
           >
             Task
           </button>
           <button
             class="join-item btn btn-sm"
             [class.btn-active]="modalType() === 'event'"
-            (click)="modalService.changeType('event')"
+            (click)="modalType.set('event')"
           >
             Event
           </button>

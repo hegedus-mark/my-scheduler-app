@@ -34,7 +34,7 @@ export class WeekCalendarComponent {
   readonly currentTimePosition = computed(() => getCurrentTimePosition());
 
   openModal(): void {
-    this.modalService.open("event");
+    this.modalService.open();
   }
 
   getTopPosition = calculateTopPosition;

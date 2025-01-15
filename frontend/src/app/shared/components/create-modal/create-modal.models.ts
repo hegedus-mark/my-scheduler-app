@@ -14,5 +14,3 @@ export interface EventForm {
   length: number; // in hours
   color: string;
 }
-
-export type ModalType = "task" | "event";

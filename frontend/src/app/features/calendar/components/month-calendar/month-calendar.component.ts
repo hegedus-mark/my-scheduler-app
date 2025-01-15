@@ -21,7 +21,7 @@ export class MonthCalendarComponent {
   );
 
   openModal(): void {
-    this.modalService.open("event");
+    this.modalService.open();
   }
 
   readonly Plus = Plus;

@@ -36,3 +36,5 @@ export interface WeekGridDay {
   isToday: boolean;
   slots: WeekCalendarCell[];
 }
+
+export type ModalType = "task" | "event";
