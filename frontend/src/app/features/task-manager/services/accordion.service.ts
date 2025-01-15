@@ -1,8 +1,6 @@
 import { ElementRef, Injectable, signal } from "@angular/core";
 
-@Injectable({
-  providedIn: "root",
-})
+@Injectable()
 export class AccordionService {
   private expandedItemId = signal<string | null>(null);
   private activeElement = signal<ElementRef | null>(null);

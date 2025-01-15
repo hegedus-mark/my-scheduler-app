@@ -38,6 +38,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
   ],
   templateUrl: "./task-list.component.html",
   styleUrl: "./task-list.component.scss",
+  providers: [AccordionService],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TaskListComponent implements OnDestroy, OnInit {
