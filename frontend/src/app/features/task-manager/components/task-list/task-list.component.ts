@@ -3,9 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   HostListener,
   inject,
   OnDestroy,
+  OnInit,
   signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
@@ -23,6 +25,7 @@ import { TaskItemComponent } from "@features/task-manager/components/task-item/t
 import { PriorityLevel } from "@myschedulerapp/api-client";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
 import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 
 @Component({
   selector: "app-task-list",
@@ -37,19 +40,30 @@ import { TaskFormComponent } from "@shared/components/create-modal/forms/task-fo
   styleUrl: "./task-list.component.scss",
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class TaskListComponent implements OnDestroy {
+export class TaskListComponent implements OnDestroy, OnInit {
   taskManager = inject(TaskManagerService);
   private filterProvider = inject(TaskFilterProvider);
   private createModalService = inject(CreateModalService);
   private accordionService = inject(AccordionService);
+  private destroyRef = inject(DestroyRef);
 
   public priorities: PriorityLevel[] = ["High", "Medium", "Low"] as const;
 
-  expandedTaskId: any;
   showDraftsOnly: any;
   selectedPriorities = signal<PriorityLevel[]>([]);
   private filters = signal<TaskFilters>({});
+
+  editedTask = signal<Task | null>(null);
+  deletedTask = signal<Task | null>(null);
   searchQuery: any;
+
+  ngOnInit(): void {
+    this.createModalService.onClose
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(() => {
+        this.handleModalClose();
+      });
+  }
 
   private filteredTasks = computed(() => {
     const tasks = this.taskManager.Tasks();
@@ -65,7 +79,6 @@ export class TaskListComponent implements OnDestroy {
     return filtered.map((task) => ({
       task: task,
       selected: this.selectedTasks().has(task.id),
-      expanded: this.expandedTaskId === task.id,
     }));
   });
 
@@ -73,20 +86,25 @@ export class TaskListComponent implements OnDestroy {
     this.filters.set(newFilters);
   }
 
-  editTask(task: any) {}
+  editTask(task: Task) {
+    this.editedTask.set(task);
+    this.openModal();
+  }
+
+  deleteTask(task: Task) {}
 
   toggleTaskSelection(id: string) {}
-
-  expandTask(id: string) {}
 
   toggleDraftFilter() {}
 
   togglePriorityFilter(priority: PriorityLevel) {}
 
-  protected readonly Plus = Plus;
-
   openModal() {
-    this.createModalService.open("task");
+    this.createModalService.open();
+  }
+
+  private handleModalClose() {
+    this.editedTask.set(null);
   }
 
   @HostListener("document:click", ["$event"])
@@ -97,4 +115,7 @@ export class TaskListComponent implements OnDestroy {
   ngOnDestroy() {
     this.accordionService.collapse();
   }
+
+  //icons
+  protected readonly Plus = Plus;
 }

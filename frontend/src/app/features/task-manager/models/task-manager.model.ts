@@ -12,5 +12,4 @@ export interface TaskFilters {
 export interface TaskListItem {
   task: Task;
   selected: boolean;
-  expanded: boolean;
 }

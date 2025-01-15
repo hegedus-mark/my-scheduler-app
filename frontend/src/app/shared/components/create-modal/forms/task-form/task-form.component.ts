@@ -14,6 +14,13 @@ import { TaskManagerService } from "@core/task/task-manager.service";
 import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
 import { TimeSpan } from "@shared/models/timespan.model";
 
+const defaultTaskForm: TaskForm = {
+  name: "",
+  dueDate: new Date(Date.now()),
+  duration: new TimeSpan(),
+  priority: "Medium" as PriorityLevel,
+};
+
 @Component({
   selector: "app-task-form",
   imports: [FormsModule],
@@ -37,11 +44,8 @@ export class TaskFormComponent implements OnDestroy {
   }
 
   // Input signal for initial values
-  inputTaskForm = input<TaskForm>({
-    name: "",
-    dueDate: new Date(Date.now()),
-    duration: new TimeSpan(),
-    priority: "Medium" as PriorityLevel,
+  inputTaskForm = input(defaultTaskForm, {
+    transform: (value: TaskForm | null) => value ?? defaultTaskForm,
   });
 
   // Internal form state
