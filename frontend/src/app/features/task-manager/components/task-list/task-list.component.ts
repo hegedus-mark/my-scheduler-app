@@ -50,15 +50,8 @@ export class TaskListComponent implements OnDestroy, OnInit {
   private accordionService = inject(AccordionService);
   private destroyRef = inject(DestroyRef);
 
-  public priorities: PriorityLevel[] = ["High", "Medium", "Low"] as const;
-
-  showDraftsOnly: any;
-  selectedPriorities = signal<PriorityLevel[]>([]);
-  private filters = signal<TaskFilters>({});
-
   editedTask = signal<Task | null>(null);
   deletedTask = signal<Task | null>(null);
-  searchQuery: any;
 
   ngOnInit(): void {
     this.createModalService.onClose
@@ -70,8 +63,7 @@ export class TaskListComponent implements OnDestroy, OnInit {
 
   private filteredTasks = computed(() => {
     const tasks = this.taskManager.Tasks();
-    const currentFilters = this.filters();
-    return this.filterProvider.applyFilters(tasks, currentFilters);
+    return this.filterProvider.applyFilters(tasks);
   });
 
   selectedTasks = signal(new Map<string, Task>());

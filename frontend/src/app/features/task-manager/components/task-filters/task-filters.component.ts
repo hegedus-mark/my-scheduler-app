@@ -1,7 +1,8 @@
-import { Component, output, signal } from "@angular/core";
+import { Component, inject, output } from "@angular/core";
 import { PriorityLevel, TaskItemStatus } from "@myschedulerapp/api-client";
 import { TaskFilters } from "@features/task-manager/models/task-manager.model";
 import { FormsModule } from "@angular/forms";
+import { TaskFilterProvider } from "@features/task-manager/services/task-filter-provider.service";
 
 @Component({
   selector: "app-task-filters",
@@ -10,26 +11,19 @@ import { FormsModule } from "@angular/forms";
   styleUrl: "./task-filters.component.scss",
 })
 export class TaskFiltersComponent {
+  private filterService = inject(TaskFilterProvider);
+
   priorities: PriorityLevel[] = ["High", "Medium", "Low"] as const;
   statuses: TaskItemStatus[] = ["Draft", "Scheduled"] as const;
 
   filtersChange = output<TaskFilters>({});
 
-  searchQuery = signal<string>("");
-  selectedStatus = signal<TaskItemStatus[]>([]);
-  selectedPriorities = signal<PriorityLevel[]>([]);
-
-  private emitFilters() {
-    this.filtersChange.emit({
-      searchQuery: this.searchQuery(),
-      priorities: this.selectedPriorities(),
-      statuses: this.selectedStatus(),
-    });
-  }
+  searchQuery = this.filterService.searchQuery;
+  selectedStatus = this.filterService.statuses;
+  selectedPriorities = this.filterService.priorities;
 
   onSearchChange(query: string) {
-    this.searchQuery.set(query);
-    this.emitFilters();
+    this.filterService.updateFilters({ searchQuery: query });
   }
 
   togglePriorityFilter(priority: PriorityLevel) {
@@ -37,23 +31,23 @@ export class TaskFiltersComponent {
     const index = current.indexOf(priority);
 
     if (index === -1) {
-      this.selectedPriorities.set([...current, priority]);
+      this.filterService.updateFilters({ priorities: [...current, priority] });
     } else {
-      this.selectedPriorities.set(current.filter((p) => p !== priority));
+      this.filterService.updateFilters({
+        priorities: current.filter((p) => p !== priority),
+      });
     }
-
-    this.emitFilters();
   }
 
   toggleStatusFilter(status: TaskItemStatus) {
     const current = this.selectedStatus();
     const index = current.indexOf(status);
     if (index === -1) {
-      this.selectedStatus.set([...current, status]);
+      this.filterService.updateFilters({ statuses: [...current, status] });
     } else {
-      this.selectedStatus.set(current.filter((p) => p !== status));
+      this.filterService.updateFilters({
+        statuses: current.filter((p) => p !== status),
+      });
     }
-
-    this.emitFilters();
   }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { computed, Injectable, signal } from "@angular/core";
 import { Task } from "@core/task/task.model";
 import { TaskFilters } from "@features/task-manager/models/task-manager.model";
 
@@ -6,12 +6,23 @@ import { TaskFilters } from "@features/task-manager/models/task-manager.model";
   providedIn: "root",
 })
 export class TaskFilterProvider {
-  private isSameDate(date1: Date, date2: Date): boolean {
-    return (
-      date1.getFullYear() === date2.getFullYear() &&
-      date1.getMonth() === date2.getMonth() &&
-      date1.getDate() === date2.getDate()
-    );
+  private readonly filterState = signal<TaskFilters>({
+    searchQuery: "",
+    priorities: [],
+    statuses: [],
+  });
+
+  readonly filters = this.filterState.asReadonly();
+
+  readonly searchQuery = computed(() => this.filterState().searchQuery);
+  readonly priorities = computed(() => this.filterState().priorities);
+  readonly statuses = computed(() => this.filterState().statuses);
+
+  updateFilters(filters: Partial<TaskFilters>) {
+    this.filterState.update((current) => ({
+      ...current,
+      ...filters,
+    }));
   }
 
   private isEmptyFilters(filters: TaskFilters): boolean {
@@ -20,19 +31,14 @@ export class TaskFilterProvider {
     );
   }
 
-  applyFilters(tasks: Task[], filters: TaskFilters): Task[] {
+  applyFilters(tasks: Task[]): Task[] {
+    const filters = this.filterState();
+
     if (this.isEmptyFilters(filters)) {
       return tasks;
     }
 
     return tasks.filter((task) => {
-      const matchesDueDate =
-        !filters.dueDates?.length ||
-        filters.dueDates.some((date) => this.isSameDate(task.dueDate, date));
-
-      const matchesLength =
-        !filters.durations?.length || filters.durations.includes(task.duration);
-
       const matchesPriority =
         !filters.priorities?.length ||
         filters.priorities.includes(task.priority);
@@ -40,9 +46,7 @@ export class TaskFilterProvider {
       const matchesStatus =
         !filters.statuses?.length || filters.statuses.includes(task.status);
 
-      return (
-        matchesDueDate && matchesLength && matchesPriority && matchesStatus
-      );
+      return matchesPriority && matchesStatus;
     });
   }
 }
