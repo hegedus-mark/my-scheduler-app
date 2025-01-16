@@ -9,6 +9,8 @@
     />
   </div>
 
+  <div class="divider divider-horizontal"></div>
+
   <!-- Priority Filters -->
   <div class="flex gap-2">
     @for (priority of priorities; track priority) {
@@ -20,13 +22,14 @@
         {{ priority }}
       </button>
     }
-
-    <button
-      class="btn btn-sm btn-outline"
-      [class.btn-active]="selectedStatus().includes('Draft')"
-      (click)="toggleStatusFilter('Draft')"
-    >
-      Drafts
-    </button>
+    @for (status of statuses; track status) {
+      <button
+        class="btn btn-sm btn-outline"
+        [class.btn-active]="selectedStatus().includes(status)"
+        (click)="toggleStatusFilter(status)"
+      >
+        {{ status }}
+      </button>
+    }
   </div>
 </div>

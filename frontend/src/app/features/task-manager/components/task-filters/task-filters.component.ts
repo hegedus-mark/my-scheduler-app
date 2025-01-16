@@ -11,7 +11,7 @@ import { FormsModule } from "@angular/forms";
 })
 export class TaskFiltersComponent {
   priorities: PriorityLevel[] = ["High", "Medium", "Low"] as const;
-  statuses: TaskItemStatus[] = ["Draft", "Scheduled", "Unscheduled"] as const;
+  statuses: TaskItemStatus[] = ["Draft", "Scheduled"] as const;
 
   filtersChange = output<TaskFilters>({});
 

@@ -1,8 +1,14 @@
 <div class="p-6 max-w-7xl mx-auto">
   <!-- Action bar -->
   <div class="flex items-center mb-6">
-    <app-task-filters />
-
+    <div class="flex items-center">
+      <input type="checkbox" class="checkbox w-8 h-8" />
+    </div>
+    <div class="divider divider-horizontal mx-2"></div>
+    <div class="flex-1">
+      <app-task-filters />
+    </div>
+    <div class="divider divider-horizontal"></div>
     <!-- Create button-->
     <div>
       <button class="btn btn-primary btn-sm" (click)="openModal()">
