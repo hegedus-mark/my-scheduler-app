@@ -1,0 +1,32 @@
+<div class="flex items-center gap-6">
+  <div class="form-control w-full max-w-md">
+    <input
+      type="text"
+      placeholder="Search tasks..."
+      class="input input-bordered w-full"
+      [(ngModel)]="searchQuery"
+      (ngModelChange)="onSearchChange($event)"
+    />
+  </div>
+
+  <!-- Priority Filters -->
+  <div class="flex gap-2">
+    @for (priority of priorities; track priority) {
+      <button
+        class="btn btn-sm btn-outline"
+        [class.btn-active]="selectedPriorities().includes(priority)"
+        (click)="togglePriorityFilter(priority)"
+      >
+        {{ priority }}
+      </button>
+    }
+
+    <button
+      class="btn btn-sm btn-outline"
+      [class.btn-active]="selectedStatus().includes('Draft')"
+      (click)="toggleStatusFilter('Draft')"
+    >
+      Drafts
+    </button>
+  </div>
+</div>

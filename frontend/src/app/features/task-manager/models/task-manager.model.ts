@@ -7,6 +7,7 @@ export interface TaskFilters {
   durations?: TimeSpan[];
   priorities?: PriorityLevel[];
   statuses?: TaskItemStatus[];
+  searchQuery?: string;
 }
 
 export interface TaskListItem {

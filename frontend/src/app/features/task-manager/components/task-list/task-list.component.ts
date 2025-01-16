@@ -26,6 +26,7 @@ import { PriorityLevel } from "@myschedulerapp/api-client";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
 import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
+import { TaskFiltersComponent } from "@features/task-manager/components/task-filters/task-filters.component";
 
 @Component({
   selector: "app-task-list",
@@ -35,6 +36,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
     CreateModalComponent,
     TaskItemComponent,
     TaskFormComponent,
+    TaskFiltersComponent,
   ],
   templateUrl: "./task-list.component.html",
   styleUrl: "./task-list.component.scss",
@@ -83,10 +85,6 @@ export class TaskListComponent implements OnDestroy, OnInit {
     }));
   });
 
-  updateFilters(newFilters: TaskFilters) {
-    this.filters.set(newFilters);
-  }
-
   editTask(task: Task) {
     this.editedTask.set(task);
     this.openModal();
@@ -95,10 +93,6 @@ export class TaskListComponent implements OnDestroy, OnInit {
   deleteTask(task: Task) {}
 
   toggleTaskSelection(id: string) {}
-
-  toggleDraftFilter() {}
-
-  togglePriorityFilter(priority: PriorityLevel) {}
 
   openModal() {
     this.createModalService.open();
