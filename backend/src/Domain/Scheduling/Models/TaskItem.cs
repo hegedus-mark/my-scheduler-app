@@ -22,9 +22,6 @@ public class TaskItem : AggregateRoot
     {
         Guard.AgainstNullOrEmpty(name, nameof(name));
 
-        if (dueDate <= DateTime.Now)
-            throw new ArgumentException("Due date must be in the future");
-
         Name = name;
         DueDate = dueDate;
         Duration = duration;
