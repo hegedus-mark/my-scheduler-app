@@ -52,6 +52,7 @@ export class TaskListComponent implements OnDestroy, OnInit {
 
   editedTask = signal<Task | null>(null);
   deletedTask = signal<Task | null>(null);
+  modalType = signal<"Delete" | "Task">("Task");
 
   ngOnInit(): void {
     this.createModalService.onClose
@@ -79,16 +80,32 @@ export class TaskListComponent implements OnDestroy, OnInit {
 
   editTask(task: Task) {
     this.editedTask.set(task);
-    this.openModal();
+    this.modalType.set("Task");
+    this.createModalService.open();
   }
 
-  async deleteTask(task: Task) {
-    await this.taskManager.deleteTask(task.id);
+  openDeleteModal(task: Task) {
+    this.deletedTask.set(task);
+    this.modalType.set("Delete");
+    this.createModalService.open();
+  }
+
+  closeModal() {
+    this.createModalService.close();
+  }
+
+  async deleteConfirmation() {
+    if (!this.deletedTask()?.id) {
+      throw new Error("Deleting task with id, cannot be done, id is undefined");
+    }
+    await this.taskManager.deleteTask(this.deletedTask()!.id);
+    this.createModalService.close();
   }
 
   toggleTaskSelection(id: string) {}
 
-  openModal() {
+  openCreateModal() {
+    this.modalType.set("Task");
     this.createModalService.open();
   }
 

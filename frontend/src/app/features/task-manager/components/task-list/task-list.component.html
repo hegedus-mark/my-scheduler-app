@@ -11,7 +11,7 @@
     <div class="divider divider-horizontal"></div>
     <!-- Create button-->
     <div>
-      <button class="btn btn-primary btn-sm" (click)="openModal()">
+      <button class="btn btn-primary btn-sm" (click)="openCreateModal()">
         Create
         <lucide-icon [img]="Plus" class="w-5 h-5" />
       </button>
@@ -31,13 +31,23 @@
           [selected]="taskListItem.selected"
           (select)="toggleTaskSelection($event)"
           (edit)="editTask($event)"
-          (delete)="deleteTask($event)"
+          (delete)="openDeleteModal($event)"
         />
       }
     }
   </div>
 
   <app-create-modal>
-    <app-task-form [inputTaskForm]="editedTask()" />
+    @if (modalType() === "Task") {
+      <app-task-form [inputTaskForm]="editedTask()" />
+    } @else if (modalType() === "Delete") {
+      <h1 class="text-xl font-bold">Delete {{ deletedTask()?.name }}?</h1>
+      <div class="flex gap-3 items-center justify-end">
+        <button (click)="closeModal()" class="btn btn-ghost">Cancel</button>
+        <button (click)="deleteConfirmation()" class="btn btn-error">
+          Delete
+        </button>
+      </div>
+    }
   </app-create-modal>
 </div>
