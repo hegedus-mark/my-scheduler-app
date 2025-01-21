@@ -82,7 +82,9 @@ export class TaskListComponent implements OnDestroy, OnInit {
     this.openModal();
   }
 
-  deleteTask(task: Task) {}
+  async deleteTask(task: Task) {
+    await this.taskManager.deleteTask(task.id);
+  }
 
   toggleTaskSelection(id: string) {}
 
