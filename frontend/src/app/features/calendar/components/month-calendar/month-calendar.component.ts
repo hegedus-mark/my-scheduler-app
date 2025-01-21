@@ -3,7 +3,7 @@ import { LucideAngularModule, Plus } from "lucide-angular";
 import { DAYS_OF_WEEK } from "@features/calendar/constants/calendar.constants";
 import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
 import { generateMonthViewGrid } from "@features/calendar/utils/month-grid.utils";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
+import { ModalService } from "@shared/components/modal/service/modal.service";
 
 @Component({
   selector: "app-month-calendar-calendar",
@@ -13,7 +13,7 @@ import { CreateModalService } from "@shared/components/create-modal/service/crea
 })
 export class MonthCalendarComponent {
   private readonly calendarService = inject(CalendarService);
-  private readonly modalService = inject(CreateModalService);
+  private readonly modalService = inject(ModalService);
 
   readonly currentDate = this.calendarService.currentDate;
   readonly currentDaysInMonth = computed(() =>

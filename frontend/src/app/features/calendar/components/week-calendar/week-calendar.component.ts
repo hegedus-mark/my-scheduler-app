@@ -9,7 +9,7 @@ import {
   getCurrentTimePosition,
 } from "@features/calendar/utils/time.utils";
 import { generateWeekGrid } from "@features/calendar/utils/week-grid.utils";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
+import { ModalService } from "@shared/components/modal/service/modal.service";
 
 @Component({
   selector: "app-week-calendar-calendar",
@@ -20,7 +20,7 @@ import { CreateModalService } from "@shared/components/create-modal/service/crea
 export class WeekCalendarComponent {
   //DI
   private readonly calendarService = inject(CalendarService);
-  private readonly modalService = inject(CreateModalService);
+  private readonly modalService = inject(ModalService);
 
   readonly currentDate = this.calendarService.currentDate;
   readonly currentWeekDays = computed(() => getWeekDays(this.currentDate()));

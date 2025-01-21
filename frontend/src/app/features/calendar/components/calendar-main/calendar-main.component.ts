@@ -15,17 +15,17 @@ import {
   ModalType,
 } from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
-import { CreateModalComponent } from "@shared/components/create-modal/create-modal.component";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
-import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
-import { EventFormComponent } from "@shared/components/create-modal/forms/event-form/event-form.component";
+import { ModalComponent } from "@shared/components/modal/modal.component";
+import { ModalService } from "@shared/components/modal/service/modal.service";
+import { TaskFormComponent } from "@shared/components/modal/forms/task-form/task-form.component";
+import { EventFormComponent } from "@shared/components/modal/forms/event-form/event-form.component";
 
 @Component({
   selector: "app-calendar-main",
   imports: [
     RouterOutlet,
     LucideAngularModule,
-    CreateModalComponent,
+    ModalComponent,
     TaskFormComponent,
     EventFormComponent,
   ],
@@ -54,7 +54,7 @@ export class CalendarMainComponent {
   };
 
   //Modal
-  modalService = inject(CreateModalService);
+  modalService = inject(ModalService);
 
   modalType = signal<ModalType>("task");
   isTaskForm = computed(() => this.modalType() === "task");

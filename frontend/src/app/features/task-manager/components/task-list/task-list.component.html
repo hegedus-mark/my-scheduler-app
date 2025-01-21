@@ -37,7 +37,7 @@
     }
   </div>
 
-  <app-create-modal>
+  <app-modal>
     @if (modalType() === "Task") {
       <app-task-form [inputTaskForm]="editedTask()" />
     } @else if (modalType() === "Delete") {
@@ -49,5 +49,5 @@
         </button>
       </div>
     }
-  </app-create-modal>
+  </app-modal>
 </div>

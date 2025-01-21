@@ -3,7 +3,7 @@ import { EventEmitter, Injectable, signal } from "@angular/core";
 @Injectable({
   providedIn: "root",
 })
-export class CreateModalService {
+export class ModalService {
   private modalOpenState = signal(false);
 
   readonly isOpen = this.modalOpenState.asReadonly();

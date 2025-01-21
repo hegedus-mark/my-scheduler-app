@@ -8,10 +8,10 @@ import {
   signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { TaskForm } from "@shared/components/create-modal/create-modal.models";
+import { TaskForm } from "@shared/components/modal/modal.models";
 import { CreateTaskRequest, PriorityLevel } from "@myschedulerapp/api-client";
 import { TaskManagerService } from "@core/task/task-manager.service";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
+import { ModalService } from "@shared/components/modal/service/modal.service";
 import { TimeSpan } from "@shared/models/timespan.model";
 
 const defaultTaskForm: TaskForm = {
@@ -29,7 +29,7 @@ const defaultTaskForm: TaskForm = {
 })
 export class TaskFormComponent implements OnDestroy {
   private taskManagerService = inject(TaskManagerService);
-  private createModalService = inject(CreateModalService);
+  private createModalService = inject(ModalService);
 
   private effectRef: EffectRef;
 

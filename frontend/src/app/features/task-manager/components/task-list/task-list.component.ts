@@ -14,8 +14,8 @@ import { FormsModule } from "@angular/forms";
 import { BaseTask, Task } from "@core/task/task.model";
 import { TaskFilterProvider } from "@features/task-manager/services/task-filter-provider.service";
 import { LucideAngularModule, Plus } from "lucide-angular";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
-import { CreateModalComponent } from "@shared/components/create-modal/create-modal.component";
+import { ModalService } from "@shared/components/modal/service/modal.service";
+import { ModalComponent } from "@shared/components/modal/modal.component";
 import { TaskManagerService } from "@core/task/task-manager.service";
 import {
   TaskFilters,
@@ -24,7 +24,7 @@ import {
 import { TaskItemComponent } from "@features/task-manager/components/task-item/task-item.component";
 import { PriorityLevel } from "@myschedulerapp/api-client";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
-import { TaskFormComponent } from "@shared/components/create-modal/forms/task-form/task-form.component";
+import { TaskFormComponent } from "@shared/components/modal/forms/task-form/task-form.component";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { TaskFiltersComponent } from "@features/task-manager/components/task-filters/task-filters.component";
 
@@ -33,7 +33,7 @@ import { TaskFiltersComponent } from "@features/task-manager/components/task-fil
   imports: [
     FormsModule,
     LucideAngularModule,
-    CreateModalComponent,
+    ModalComponent,
     TaskItemComponent,
     TaskFormComponent,
     TaskFiltersComponent,
@@ -46,7 +46,7 @@ import { TaskFiltersComponent } from "@features/task-manager/components/task-fil
 export class TaskListComponent implements OnDestroy, OnInit {
   taskManager = inject(TaskManagerService);
   private filterProvider = inject(TaskFilterProvider);
-  private createModalService = inject(CreateModalService);
+  private createModalService = inject(ModalService);
   private accordionService = inject(AccordionService);
   private destroyRef = inject(DestroyRef);
 

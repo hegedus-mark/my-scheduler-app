@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { EventForm } from "@shared/components/create-modal/create-modal.models";
+import { EventForm } from "@shared/components/modal/modal.models";
 
 @Component({
   selector: "app-event-form",

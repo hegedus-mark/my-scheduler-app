@@ -12,7 +12,7 @@ import { PriorityLevel } from "@myschedulerapp/api-client";
 import { DatePipe } from "@angular/common";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
 import { LucideAngularModule, Trash } from "lucide-angular";
-import { CreateModalService } from "@shared/components/create-modal/service/create-modal.service";
+import { ModalService } from "@shared/components/modal/service/modal.service";
 
 @Component({
   selector: "app-task-item",
@@ -23,7 +23,7 @@ import { CreateModalService } from "@shared/components/create-modal/service/crea
 export class TaskItemComponent {
   accordionService = inject(AccordionService);
   private elementRef = inject(ElementRef);
-  private createModalService = inject(CreateModalService);
+  private createModalService = inject(ModalService);
 
   task = input.required<Task>();
   selected = input(false, { transform: booleanAttribute });
