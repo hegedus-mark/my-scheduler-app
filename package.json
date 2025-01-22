@@ -5,6 +5,7 @@
   "scripts": {
     "start": "pnpm start:frontend",
     "start:frontend": "cd frontend && ng serve",
+    "start:backend": "cd backend && dotnet run --project src/Api",
     "build": "pnpm build:api-client && pnpm build:frontend",
     "build:frontend": "cd frontend && ng build",
     "build:api-client": "cd api-client && pnpm build",
