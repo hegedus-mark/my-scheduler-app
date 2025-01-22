@@ -8,11 +8,11 @@ import {
   signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { TaskForm } from "@shared/components/modal/modal.models";
 import { CreateTaskRequest, PriorityLevel } from "@myschedulerapp/api-client";
 import { TaskManagerService } from "@core/task/task-manager.service";
 import { ModalService } from "@shared/components/modal/service/modal.service";
 import { TimeSpan } from "@shared/models/timespan.model";
+import { TaskForm } from "@shared/components/forms/forms.models";
 
 const defaultTaskForm: TaskForm = {
   name: "",

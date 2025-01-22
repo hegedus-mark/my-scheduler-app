@@ -24,7 +24,7 @@ import {
 import { TaskItemComponent } from "@features/task-manager/components/task-item/task-item.component";
 import { PriorityLevel } from "@myschedulerapp/api-client";
 import { AccordionService } from "@features/task-manager/services/accordion.service";
-import { TaskFormComponent } from "@shared/components/modal/forms/task-form/task-form.component";
+import { TaskFormComponent } from "@shared/components/forms/task-form/task-form.component";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { TaskFiltersComponent } from "@features/task-manager/components/task-filters/task-filters.component";
 

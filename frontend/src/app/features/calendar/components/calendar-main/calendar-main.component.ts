@@ -17,8 +17,8 @@ import {
 import { formatHeader } from "@features/calendar/utils/header.utils";
 import { ModalComponent } from "@shared/components/modal/modal.component";
 import { ModalService } from "@shared/components/modal/service/modal.service";
-import { TaskFormComponent } from "@shared/components/modal/forms/task-form/task-form.component";
-import { EventFormComponent } from "@shared/components/modal/forms/event-form/event-form.component";
+import { TaskFormComponent } from "@shared/components/forms/task-form/task-form.component";
+import { EventFormComponent } from "@shared/components/forms/event-form/event-form.component";
 
 @Component({
   selector: "app-calendar-main",
