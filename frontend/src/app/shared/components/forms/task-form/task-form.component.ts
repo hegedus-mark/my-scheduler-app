@@ -12,6 +12,7 @@ import { CreateTaskRequest, PriorityLevel } from "@myschedulerapp/api-client";
 import { TaskManagerService } from "@core/task/task-manager.service";
 import { ModalService } from "@shared/components/modal/service/modal.service";
 import { TimeSpan } from "@shared/models/timespan.model";
+import { DatePickerComponent } from "@shared/components/date-picker/date-picker.component";
 import { TaskForm } from "@shared/components/forms/forms.models";
 
 const defaultTaskForm: TaskForm = {
@@ -23,7 +24,7 @@ const defaultTaskForm: TaskForm = {
 
 @Component({
   selector: "app-task-form",
-  imports: [FormsModule],
+  imports: [FormsModule, DatePickerComponent],
   templateUrl: "./task-form.component.html",
   styleUrl: "./task-form.component.scss",
 })

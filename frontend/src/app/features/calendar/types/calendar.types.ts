@@ -1,10 +1,5 @@
 export type CalendarView = "month" | "week";
 
-export interface MonthCalendarCell {
-  currentMonth: boolean;
-  date: Date;
-}
-
 export interface TimeSlot {
   hour: number;
   display: string;

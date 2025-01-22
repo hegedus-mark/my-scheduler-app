@@ -16,11 +16,10 @@
     <label class="label">
       <span class="label-text">Due Date</span>
     </label>
-    <input
-      type="datetime-local"
-      class="input input-bordered"
+    <app-date-picker
+      [placeholder]="'Select a Due Date'"
       [(ngModel)]="formState().dueDate"
-      name="deadline"
+      name="dueDate"
       required
     />
   </div>

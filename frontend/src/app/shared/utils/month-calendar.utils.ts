@@ -1,5 +1,5 @@
 import { DAY_CELLS_IN_MONTH } from "@features/calendar/constants/calendar.constants";
-import { MonthCalendarCell } from "@features/calendar/types/calendar.types";
+import { MonthCalendarCell } from "@shared/models/month-calendar.model";
 
 function getPreviousMonthDays(
   year: number,
