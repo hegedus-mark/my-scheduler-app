@@ -242,6 +242,10 @@ export class TimeSpan {
     return `${String(this.hours).padStart(2, "0")}:${String(this.minutes).padStart(2, "0")}:${String(this.seconds).padStart(2, "0")}`;
   }
 
+  toHourMinuteString(): string {
+    return `${String(this.hours + 24 * this.days).padStart(2, "0")}:${String(this.minutes).padStart(2, "0")}`;
+  }
+
   toJSON(): TimeComponents {
     return {
       days: this.days,

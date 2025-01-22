@@ -35,7 +35,16 @@ export class TaskFormComponent implements OnDestroy {
 
   constructor() {
     this.effectRef = effect(() => {
-      this.formState.set(this.inputTaskForm());
+      const input = this.inputTaskForm();
+      this.formState.update((current) => ({
+        ...current,
+        name: input.name,
+        dueDate: input.dueDate,
+        duration: input.duration,
+        priority: input.priority,
+      }));
+
+      this.durationString.set(input.duration.toHourMinuteString());
     });
   }
 
