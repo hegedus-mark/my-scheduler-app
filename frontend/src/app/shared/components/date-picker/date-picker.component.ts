@@ -3,6 +3,7 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { DatePipe } from "@angular/common";
 import { MonthCalendarCell } from "@shared/models/month-calendar.model";
 import { generateMonthViewGrid } from "@shared/utils/month-calendar.utils";
+import { isToday } from "@features/calendar/utils/date.utils";
 
 @Component({
   selector: "app-date-picker",
@@ -68,6 +69,7 @@ export class DatePickerComponent implements ControlValueAccessor {
     this.markAsTouched();
     this.selectedDate.set(value);
     this.onChange(value);
+    this.toggleCalendar();
   }
 
   markAsTouched() {
@@ -124,5 +126,15 @@ export class DatePickerComponent implements ControlValueAccessor {
     if (this.minDate() !== null && date < this.minDate()!) return true;
     if (this.maxDate() !== null && date > this.maxDate()!) return true;
     return false;
+  }
+
+  getCellClasses(date: Date): Record<string, boolean> {
+    return {
+      "text-accent-content": this.isSelected(date),
+      "bg-accent": this.isSelected(date),
+      "border": isToday(date),
+      "border-primary": isToday(date),
+      "disabled": this.isDisabled(date),
+    };
   }
 }
