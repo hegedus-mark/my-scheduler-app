@@ -15,13 +15,23 @@
   @if (showCalendar()) {
     <div class="dropdown-content dropdown-open card shadow-lg">
       <div class="calendar-header card-body p-2">
-        <button (click)="previousMonth()" class="btn btn-ghost btn-sm">
+        <button
+          (click)="previousMonth()"
+          type="button"
+          class="btn btn-ghost btn-sm"
+        >
           &lt;
         </button>
         <span class="month-year font-medium">
           {{ currentMonth() | date: "MMMM yyyy" }}
         </span>
-        <button (click)="nextMonth()" class="btn btn-ghost btn-sm">&gt;</button>
+        <button
+          (click)="nextMonth()"
+          type="button"
+          class="btn btn-ghost btn-sm"
+        >
+          &gt;
+        </button>
       </div>
 
       <div class="calendar-body p-2">
