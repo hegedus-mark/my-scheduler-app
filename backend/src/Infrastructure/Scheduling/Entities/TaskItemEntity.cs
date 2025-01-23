@@ -9,7 +9,7 @@ public class TaskItemEntity : IEntity
 
     public DateTime DueDate { get; set; }
 
-    public TimeSpan Duration { get; set; }
+    public TimeRange Duration { get; set; }
 
     public PriorityLevel PriorityLevel { get; set; }
 

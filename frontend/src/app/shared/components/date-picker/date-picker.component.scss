@@ -1,0 +1,19 @@
+.date-picker-container {
+  .calendar-body {
+    .weekdays {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: hsl(var(--bc) / 0.6);
+      margin-bottom: 0.5rem;
+    }
+
+    .calendar-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 2px;
+    }
+  }
+}

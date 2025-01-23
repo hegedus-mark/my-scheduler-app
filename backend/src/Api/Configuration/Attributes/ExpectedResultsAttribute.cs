@@ -1,6 +1,6 @@
 using Application.Shared.Results;
 
-namespace Api.Infrastructure.Attributes;
+namespace Api.Configuration.Attributes;
 
 [AttributeUsage(AttributeTargets.Method)]
 public class ExpectedResultsAttribute : Attribute

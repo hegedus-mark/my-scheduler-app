@@ -1,4 +1,4 @@
-import { Component, computed, inject } from "@angular/core";
+import { Component, computed, inject, signal } from "@angular/core";
 import { RouterOutlet } from "@angular/router";
 import {
   LucideAngularModule,
@@ -10,14 +10,25 @@ import {
   Calendar,
 } from "lucide-angular";
 import { CalendarService } from "@features/calendar/services/calendar-service/calendar.service";
-import { CalendarView } from "@features/calendar/types/calendar.types";
+import {
+  CalendarView,
+  ModalType,
+} from "@features/calendar/types/calendar.types";
 import { formatHeader } from "@features/calendar/utils/header.utils";
-import { CreateModalComponent } from "@features/calendar/components/create-modal/create-modal.component";
-import { CreateModalService } from "@features/calendar/services/create-modal/create-modal.service";
+import { ModalComponent } from "@shared/components/modal/modal.component";
+import { ModalService } from "@shared/components/modal/service/modal.service";
+import { TaskFormComponent } from "@shared/components/forms/task-form/task-form.component";
+import { EventFormComponent } from "@shared/components/forms/event-form/event-form.component";
 
 @Component({
   selector: "app-calendar-main",
-  imports: [RouterOutlet, LucideAngularModule, CreateModalComponent],
+  imports: [
+    RouterOutlet,
+    LucideAngularModule,
+    ModalComponent,
+    TaskFormComponent,
+    EventFormComponent,
+  ],
   templateUrl: "./calendar-main.component.html",
   styleUrl: "./calendar-main.component.scss",
   providers: [CalendarService],
@@ -25,7 +36,6 @@ import { CreateModalService } from "@features/calendar/services/create-modal/cre
 export class CalendarMainComponent {
   //injection
   private calendarService = inject(CalendarService);
-  private modalService = inject(CreateModalService);
 
   // View management
   readonly currentView = this.calendarService.currentView;
@@ -43,8 +53,14 @@ export class CalendarMainComponent {
     this.calendarService.handleDateChange(offset);
   };
 
+  //Modal
+  modalService = inject(ModalService);
+
+  modalType = signal<ModalType>("task");
+  isTaskForm = computed(() => this.modalType() === "task");
+
   openModal(): void {
-    this.modalService.open("task");
+    this.modalService.open();
   }
 
   //icons

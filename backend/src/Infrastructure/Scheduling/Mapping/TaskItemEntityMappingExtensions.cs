@@ -16,7 +16,7 @@ public static class TaskItemMappingExtensions
             Id = item.Id,
             Name = item.Name,
             DueDate = item.DueDate,
-            Duration = item.Duration,
+            Duration = item.Duration.ToTimeRange(),
             PriorityLevel = item.Priority,
             TaskItemStatus = item.Status,
 
@@ -42,7 +42,7 @@ public static class TaskItemMappingExtensions
         task = TaskItem.Load(
             entity.Name,
             entity.DueDate,
-            entity.Duration,
+            entity.Duration.ToTimeSpan(),
             entity.PriorityLevel,
             entity.Id
         );

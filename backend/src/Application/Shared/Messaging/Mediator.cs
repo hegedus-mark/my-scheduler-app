@@ -18,10 +18,8 @@ public class Mediator : IMediator
         CancellationToken cancellationToken = default
     )
     {
-        // Get the concrete command type
         var commandType = command.GetType();
 
-        // Construct handler type for void commands
         var handlerType = typeof(ICommandHandler<>).MakeGenericType(commandType);
 
         var handler = _provider.GetService(handlerType);
@@ -42,7 +40,6 @@ public class Mediator : IMediator
     {
         var commandType = command.GetType();
 
-        // Construct handler type for commands with results
         var handlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TResult));
 
         var handler = _provider.GetService(handlerType);
@@ -65,7 +62,6 @@ public class Mediator : IMediator
     {
         var queryType = query.GetType();
 
-        // Construct handler type for queries
         var handlerType = typeof(IQueryHandler<,>).MakeGenericType(queryType, typeof(TResult));
 
         var handler = _provider.GetService(handlerType);

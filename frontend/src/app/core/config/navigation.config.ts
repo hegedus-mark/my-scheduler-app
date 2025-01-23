@@ -32,4 +32,14 @@ export const navigationConfig: NavItem[] = [
         ),
     },
   },
+  {
+    name: "Tasks",
+    path: "/tasks",
+    icon: "tasks-icon",
+    route: {
+      path: "tasks",
+      loadChildren: () =>
+        import("@features/task-manager/task.routes").then((m) => m.TASK_ROUTES),
+    },
+  },
 ];

@@ -10,6 +10,7 @@
     "noFallthroughCasesInSwitch": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "strictNullChecks": true,
     "sourceMap": true,
     "declaration": false,
     "experimentalDecorators": true,
@@ -27,6 +28,8 @@
       "@shared/*": ["shared/*"],
       "@core/*": ["core/*"],
       "@features/*": ["features/*"],
+      "@environments": ["../environments/environment"],
+      "@myschedulerapp/api-client": ["../../../api-client/src"]
     }
   },
   "angularCompilerOptions": {

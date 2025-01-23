@@ -10,13 +10,11 @@ public class TaskItemConfiguration : IEntityTypeConfiguration<TaskItemEntity>
     {
         builder.HasKey(t => t.Id);
 
-        builder.Property(t => t.Name).IsRequired().HasMaxLength(200); // Reasonable max length for a task name
+        builder.Property(t => t.Name).IsRequired().HasMaxLength(200);
 
         builder.Property(t => t.DueDate).IsRequired();
 
-        builder.Property(t => t.Duration).IsRequired();
-
-        builder.Property(t => t.PriorityLevel).IsRequired().HasConversion<string>(); // Store enum as string for better readability in DB
+        builder.Property(t => t.PriorityLevel).IsRequired().HasConversion<string>();
 
         builder.Property(t => t.TaskItemStatus).IsRequired().HasConversion<string>();
 
@@ -24,11 +22,21 @@ public class TaskItemConfiguration : IEntityTypeConfiguration<TaskItemEntity>
 
         builder.Property(t => t.EndDate).IsRequired(false);
 
-        builder.Property(t => t.FailureReason).IsRequired(false).HasMaxLength(1000); // Generous length for failure descriptions
+        builder.Property(t => t.FailureReason).IsRequired(false).HasMaxLength(1000);
 
         builder.HasIndex(t => t.TaskItemStatus);
 
         builder.HasIndex(t => t.DueDate);
+
+        builder.OwnsOne(
+            x => x.Duration,
+            d =>
+            {
+                d.Property(p => p.Days).HasColumnName("DurationDays");
+                d.Property(p => p.Hours).HasColumnName("DurationHours");
+                d.Property(p => p.Minutes).HasColumnName("DurationMinutes");
+            }
+        );
 
         builder
             .HasIndex(t => new { t.StartDate, t.EndDate })

@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Api.Configuration;
 using Api.Configuration.Filters;
 using Api.Configuration.Mapping;
@@ -13,9 +14,27 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers(options =>
+builder
+    .Services.AddControllers(options =>
+    {
+        options.Filters.Add<ResultActionFilter>();
+    })
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+    });
+
+var corsOrigins = builder.Configuration.GetSection("Cors:AllowedOrigins").Get<string[]>();
+
+builder.Services.AddCors(options =>
 {
-    options.Filters.Add<ResultActionFilter>();
+    options.AddPolicy(
+        "DefaultPolicy",
+        builder =>
+        {
+            builder.WithOrigins(corsOrigins).AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+        }
+    );
 });
 
 builder.Services.AddEndpointsApiExplorer();
@@ -43,6 +62,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("DefaultPolicy");
 
 app.UseHttpsRedirection();
 

@@ -1,10 +1,5 @@
 export type CalendarView = "month" | "week";
 
-export interface MonthCalendarCell {
-  currentMonth: boolean;
-  date: Date;
-}
-
 export interface TimeSlot {
   hour: number;
   display: string;
@@ -38,17 +33,3 @@ export interface WeekGridDay {
 }
 
 export type ModalType = "task" | "event";
-
-export interface TaskForm {
-  name: string;
-  deadline: Date;
-  estimatedHours: number;
-  priority: "low" | "medium" | "high";
-}
-
-export interface EventForm {
-  name: string;
-  date: Date;
-  length: number; // in hours
-  color: string;
-}

@@ -31,7 +31,7 @@ internal class TaskItemRepository : BaseRepository<TaskItem, TaskItemEntity>, IT
     {
         entity.Name = domain.Name;
         entity.DueDate = domain.DueDate;
-        entity.Duration = domain.Duration;
+        entity.Duration = domain.Duration.ToTimeRange();
         entity.PriorityLevel = domain.Priority;
         entity.TaskItemStatus = domain.Status;
         entity.StartDate = domain.IsScheduled ? domain.ScheduledTime?.StartDate : null;

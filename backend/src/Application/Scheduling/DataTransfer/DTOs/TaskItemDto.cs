@@ -4,13 +4,13 @@ namespace Application.Scheduling.DataTransfer.DTOs;
 
 public class TaskItemDto
 {
-    public Guid? Id { get; init; }
+    public Guid Id { get; init; }
 
     public required string Name { get; init; }
 
     public required DateTime DueDate { get; init; }
 
-    public required TimeSpan Duration { get; init; }
+    public required TimeSpanDto Duration { get; init; }
 
     public required PriorityLevel PriorityLevel { get; init; }
 
