@@ -1,5 +1,6 @@
 import {
   Component,
+  computed,
   effect,
   EffectRef,
   inject,
@@ -8,7 +9,11 @@ import {
   signal,
 } from "@angular/core";
 import { FormsModule } from "@angular/forms";
-import { CreateTaskRequest, PriorityLevel } from "@myschedulerapp/api-client";
+import {
+  CreateTaskRequest,
+  PriorityLevel,
+  UpdateTaskRequest,
+} from "@myschedulerapp/api-client";
 import { TaskManagerService } from "@core/task/task-manager.service";
 import { ModalService } from "@shared/components/modal/service/modal.service";
 import { TimeSpan } from "@shared/models/timespan.model";
@@ -57,26 +62,55 @@ export class TaskFormComponent implements OnDestroy {
   inputTaskForm = input(defaultTaskForm, {
     transform: (value: TaskForm | null) => value ?? defaultTaskForm,
   });
+  taskFormType = input<"Create" | "Update">("Create");
+  taskId = input<string | null>(null);
 
   // Internal form state
   formState = signal<TaskForm>(this.inputTaskForm());
+  buttonText = computed(() => {
+    return this.taskFormType() === "Create" ? "Create Task" : "Update Task";
+  });
 
   durationString = signal("00:00");
   readonly priorities: PriorityLevel[] = ["Low", "Medium", "High"] as const;
 
   async onSubmit() {
+    if (this.taskFormType() === "Create") {
+      await this.CreateTask();
+    } else if (this.taskFormType() === "Update") {
+      await this.UpdateTask();
+    }
+
+    this.createModalService.close();
+  }
+
+  private async CreateTask() {
     const dueDate = new Date(this.formState().dueDate);
-    console.log(this.formState());
+
     const createRequest: CreateTaskRequest = {
       duration: this.formState().duration.toString(),
       dueDate: dueDate.toISOString(),
       name: this.formState().name,
       priority: this.formState().priority,
     };
-
-    console.log(createRequest);
     await this.taskManagerService.createTask(createRequest);
-    this.createModalService.close();
+  }
+
+  private async UpdateTask() {
+    if (!this.taskId()) {
+      throw new Error("Task Id is required");
+    }
+
+    const dueDate = new Date(this.formState().dueDate);
+
+    const updateRequest: UpdateTaskRequest = {
+      duration: this.formState().duration.toString(),
+      dueDate: dueDate.toISOString(),
+      name: this.formState().name,
+      priority: this.formState().priority,
+    };
+
+    await this.taskManagerService.updateTask(this.taskId()!, updateRequest);
   }
 
   validateDuration(value: string): boolean {

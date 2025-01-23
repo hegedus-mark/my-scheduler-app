@@ -39,7 +39,15 @@
 
   <app-modal>
     @if (modalType() === "Task") {
-      <app-task-form [inputTaskForm]="editedTask()" />
+      @if (editedTask()) {
+        <app-task-form
+          [inputTaskForm]="editedTask()"
+          [taskFormType]="'Update'"
+          [taskId]="editedTask()?.id!"
+        />
+      } @else {
+        <app-task-form />
+      }
     } @else if (modalType() === "Delete") {
       <h1 class="text-xl font-bold">Delete {{ deletedTask()?.name }}?</h1>
       <div class="flex gap-3 items-center justify-end">
