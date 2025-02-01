@@ -8,6 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Infrastructure;
 
+/// <summary>
+///     Provides extension methods for configuring infrastructure services in the dependency injection container.
+///     This class centralizes all infrastructure-related service registrations.
+/// </summary>
 public static class DependencyInjection
 {
     public static IServiceCollection AddInfrastructure(
