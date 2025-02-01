@@ -3,16 +3,28 @@ using Application.Shared.Results;
 
 namespace Application.Shared.Messaging;
 
+/// <summary>
+///     Default implementation of IMediator that resolves and executes handlers.
+/// </summary>
+/// <remarks>
+///     This implementation:
+///     - Uses dependency injection to resolve handlers
+///     - Supports both command and query handling
+///     - Provides type-safe command/query execution
+/// </remarks>
 public class Mediator : IMediator
 {
     private readonly IServiceProvider _provider;
 
+    /// <summary>
+    ///     Initializes a new instance of the Mediator class.
+    /// </summary>
+    /// <param name="provider">The service provider used to resolve handlers</param>
     public Mediator(IServiceProvider provider)
     {
         _provider = provider;
     }
 
-    // Handles commands without return value
     public async Task<Result> SendAsync(
         ICommand command,
         CancellationToken cancellationToken = default
@@ -32,7 +44,6 @@ public class Mediator : IMediator
             handleMethod!.Invoke(handler, new object?[] { command, cancellationToken })!;
     }
 
-    // Handles commands with return value
     public async Task<Result<TResult>> SendAsync<TResult>(
         ICommand<TResult> command,
         CancellationToken cancellationToken = default
@@ -54,7 +65,6 @@ public class Mediator : IMediator
             handleMethod!.Invoke(handler, new object[] { command, cancellationToken })!;
     }
 
-    // Handles queries
     public async Task<TResult> SendAsync<TResult>(
         IQuery<TResult> query,
         CancellationToken cancellationToken = default
