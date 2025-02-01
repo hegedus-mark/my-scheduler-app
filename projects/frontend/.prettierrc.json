@@ -1,0 +1,9 @@
+{
+  "printWidth": 80,
+  "tabWidth": 2,
+  "experimentalTernaries": true,
+  "semi": true,
+  "singleQuote": false,
+  "quoteProps": "consistent",
+  "trailingComma": "all"
+}

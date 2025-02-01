@@ -1,0 +1,64 @@
+<div class="date-picker-container">
+  <div>
+    <input
+      type="text"
+      [placeholder]="placeholder()"
+      [value]="formattedSelectedDate()"
+      readonly
+      [disabled]="disabled()"
+      class="input input-bordered w-full cursor-pointer"
+      (click)="toggleCalendar()"
+    />
+  </div>
+
+  @if (showCalendar()) {
+    <div class="card shadow-lg bg-base-200 absolute">
+      <div class="p-2 flex justify-between">
+        <button
+          (click)="previousMonth()"
+          type="button"
+          class="btn btn-ghost btn-sm"
+        >
+          &lt;
+        </button>
+        <span class="month-year font-medium">
+          {{ currentMonth() | date: "MMMM yyyy" }}
+        </span>
+        <button
+          (click)="nextMonth()"
+          type="button"
+          class="btn btn-ghost btn-sm"
+        >
+          &gt;
+        </button>
+      </div>
+
+      <div class="calendar-body p-2">
+        <div class="weekdays">
+          @for (
+            day of ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+            track day
+          ) {
+            <div class="weekday">{{ day }}</div>
+          }
+        </div>
+
+        <div class="calendar-grid">
+          @for (cell of calendarDays(); track cell.date) {
+            @if (cell.currentMonth) {
+              <div
+                class="text-center rounded-full cursor-pointer"
+                [class]="getCellClasses(cell.date)"
+                (click)="!isDisabled(cell.date) && selectDate(cell.date)"
+              >
+                {{ cell.date.getDate() }}
+              </div>
+            } @else {
+              <div class="invisible">00</div>
+            }
+          }
+        </div>
+      </div>
+    </div>
+  }
+</div>
