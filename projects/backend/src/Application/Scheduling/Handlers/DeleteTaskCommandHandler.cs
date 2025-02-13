@@ -19,6 +19,8 @@ public class DeleteTaskCommandHandler : ICommandHandler<DeleteTaskCommand>
         CancellationToken cancellationToken = default
     )
     {
+        //TODO: Maybe this FastDelete isn't needed at all
+        //It would be better to use a regular delete and raise a domain event
         _unitOfWork.TaskItems.FastDeleteById(command.TaskId);
         await _unitOfWork.SaveChangesAsync();
 

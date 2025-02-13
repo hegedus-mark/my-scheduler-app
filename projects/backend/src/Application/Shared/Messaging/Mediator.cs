@@ -1,28 +1,26 @@
+using System.Collections.Concurrent;
+using System.Reflection;
 using Application.Shared.Exceptions;
 using Application.Shared.Results;
+using Domain.Shared.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Application.Shared.Messaging;
 
-/// <summary>
-///     Default implementation of IMediator that resolves and executes handlers.
-/// </summary>
-/// <remarks>
-///     This implementation:
-///     - Uses dependency injection to resolve handlers
-///     - Supports both command and query handling
-///     - Provides type-safe command/query execution
-/// </remarks>
 public class Mediator : IMediator
 {
+    // Caches for handler types and methods
+    private static readonly ConcurrentDictionary<Type, Type> HandlerTypeCache = new();
+    private static readonly ConcurrentDictionary<Type, MethodInfo> HandleMethodCache = new();
+
+    private readonly ILogger<Mediator> _logger;
     private readonly IServiceProvider _provider;
 
-    /// <summary>
-    ///     Initializes a new instance of the Mediator class.
-    /// </summary>
-    /// <param name="provider">The service provider used to resolve handlers</param>
-    public Mediator(IServiceProvider provider)
+    public Mediator(IServiceProvider provider, ILogger<Mediator> logger)
     {
         _provider = provider;
+        _logger = logger;
     }
 
     public async Task<Result> SendAsync(
@@ -32,16 +30,22 @@ public class Mediator : IMediator
     {
         var commandType = command.GetType();
 
-        var handlerType = typeof(ICommandHandler<>).MakeGenericType(commandType);
+        var handlerType = HandlerTypeCache.GetOrAdd(
+            commandType,
+            type => typeof(ICommandHandler<>).MakeGenericType(type)
+        );
 
         var handler = _provider.GetService(handlerType);
         if (handler == null)
             throw new MissingHandlerException(handlerType.Name);
 
-        var handleMethod = handlerType.GetMethod(nameof(ICommandHandler<ICommand>.HandleAsync));
+        var handleMethod = HandleMethodCache.GetOrAdd(
+            handlerType,
+            type => type.GetMethod(nameof(ICommandHandler<ICommand>.HandleAsync))!
+        );
 
         return await (Task<Result>)
-            handleMethod!.Invoke(handler, new object?[] { command, cancellationToken })!;
+            handleMethod.Invoke(handler, new object?[] { command, cancellationToken })!;
     }
 
     public async Task<Result<TResult>> SendAsync<TResult>(
@@ -51,18 +55,22 @@ public class Mediator : IMediator
     {
         var commandType = command.GetType();
 
-        var handlerType = typeof(ICommandHandler<,>).MakeGenericType(commandType, typeof(TResult));
+        var handlerType = HandlerTypeCache.GetOrAdd(
+            commandType,
+            type => typeof(ICommandHandler<,>).MakeGenericType(type, typeof(TResult))
+        );
 
         var handler = _provider.GetService(handlerType);
         if (handler == null)
             throw new MissingHandlerException(handlerType.Name);
 
-        var handleMethod = handlerType.GetMethod(
-            nameof(ICommandHandler<ICommand<TResult>, TResult>.HandleAsync)
+        var handleMethod = HandleMethodCache.GetOrAdd(
+            handlerType,
+            type => type.GetMethod(nameof(ICommandHandler<ICommand<TResult>, TResult>.HandleAsync))!
         );
 
         return await (Task<Result<TResult>>)
-            handleMethod!.Invoke(handler, new object[] { command, cancellationToken })!;
+            handleMethod.Invoke(handler, new object[] { command, cancellationToken })!;
     }
 
     public async Task<TResult> SendAsync<TResult>(
@@ -72,17 +80,47 @@ public class Mediator : IMediator
     {
         var queryType = query.GetType();
 
-        var handlerType = typeof(IQueryHandler<,>).MakeGenericType(queryType, typeof(TResult));
+        var handlerType = HandlerTypeCache.GetOrAdd(
+            queryType,
+            type => typeof(IQueryHandler<,>).MakeGenericType(type, typeof(TResult))
+        );
 
         var handler = _provider.GetService(handlerType);
         if (handler == null)
             throw new MissingHandlerException(handlerType.Name);
 
-        var handleMethod = handlerType.GetMethod(
-            nameof(IQueryHandler<IQuery<TResult>, TResult>.HandleAsync)
+        var handleMethod = HandleMethodCache.GetOrAdd(
+            handlerType,
+            type => type.GetMethod(nameof(IQueryHandler<IQuery<TResult>, TResult>.HandleAsync))!
         );
 
         return await (Task<TResult>)
-            handleMethod!.Invoke(handler, new object[] { query, cancellationToken })!;
+            handleMethod.Invoke(handler, new object[] { query, cancellationToken })!;
+    }
+
+    public async Task PublishAsync(IDomainEvent domainEvent)
+    {
+        var eventType = domainEvent.GetType();
+
+        var handlerType = HandlerTypeCache.GetOrAdd(
+            eventType,
+            type => typeof(IDomainEventHandler<>).MakeGenericType(type)
+        );
+
+        var handlers = _provider.GetServices(handlerType).ToArray();
+        if (handlers.Length == 0)
+        {
+            _logger.LogWarning("No handlers registered for domain event: {EventType}", eventType);
+            return;
+        }
+
+        var handleMethod = HandleMethodCache.GetOrAdd(
+            handlerType,
+            type => type.GetMethod(nameof(IDomainEventHandler<IDomainEvent>.HandleAsync))!
+        );
+
+        foreach (var handler in handlers)
+            await (Task)
+                handleMethod.Invoke(handler, new object[] { domainEvent, CancellationToken.None })!;
     }
 }

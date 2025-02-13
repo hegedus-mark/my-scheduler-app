@@ -11,10 +11,12 @@ namespace Application.Scheduling.Handlers;
 public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskCommand, TaskItemDto>
 {
     private readonly ISchedulingUnitOfWork _unitOfWork;
+    private readonly IMediator _mediator;
 
-    public UpdateTaskCommandHandler(ISchedulingUnitOfWork unitOfWork)
+    public UpdateTaskCommandHandler(ISchedulingUnitOfWork unitOfWork, IMediator mediator)
     {
         _unitOfWork = unitOfWork;
+        _mediator = mediator;
     }
 
     public async Task<Result<TaskItemDto>> HandleAsync(
@@ -43,6 +45,11 @@ public class UpdateTaskCommandHandler : ICommandHandler<UpdateTaskCommand, TaskI
 
         _unitOfWork.TaskItems.Update(task);
         await _unitOfWork.SaveChangesAsync();
+
+        var domainEvents = task.DomainEvents;
+        foreach (var domainEvent in domainEvents)
+            await _mediator.PublishAsync(domainEvent);
+        task.ClearDomainEvents();
 
         return Result<TaskItemDto>.Success(task.ToDto());
     }

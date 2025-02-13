@@ -1,4 +1,5 @@
 using Application.Shared.Results;
+using Domain.Shared.Interfaces;
 
 namespace Application.Shared.Messaging;
 
@@ -64,4 +65,6 @@ public interface IMediator
         IQuery<TResult> query,
         CancellationToken cancellationToken = default
     );
+
+    Task PublishAsync(IDomainEvent domainEvent);
 }
