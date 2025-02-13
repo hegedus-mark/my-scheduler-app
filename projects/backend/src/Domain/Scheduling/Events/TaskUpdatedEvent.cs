@@ -2,9 +2,7 @@ using Domain.Shared.Interfaces;
 
 namespace Domain.Scheduling.Events;
 
-public class TaskUpdatedEvent : IDomainEvent
+public record TaskUpdatedEvent(Guid Id, string Property, object NewValue) : IDomainEvent
 {
-    public TaskUpdatedEvent(Guid id, string property, object newProperty) { }
-
     public DateTime OccurredOn => DateTime.Now;
 }
