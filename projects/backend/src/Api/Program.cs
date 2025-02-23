@@ -43,7 +43,9 @@ builder.Services.ConfigureProblemDetails();
 
 //Add Layers
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+builder.Services.AddInfrastructure(connectionString);
 
 //AutoMapper
 builder.Services.AddAutoMapper(typeof(SchedulingMappingProfile).Assembly);

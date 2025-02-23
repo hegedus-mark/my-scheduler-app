@@ -1,0 +1,43 @@
+services:
+  # ASP.NET Core Backend
+  backend:
+    build:
+      context: . # Root of the project
+      dockerfile: docker/backend/Dockerfile
+      target: production
+    ports:
+      - "5000:80"
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_PORT=${DB_PORT}
+      - DB_USERNAME=${DB_USERNAME}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_DATABASE_NAME=${DB_DATABASE_NAME}
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on:
+      - db
+
+  # Angular Frontend
+  frontend:
+    build:
+      context: . # Root of the project
+      dockerfile: docker/frontend/Dockerfile
+      target: production
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+  # MSSQL Database
+  db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      SA_PASSWORD: "YourStrong!Passw0rd"
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql-data:/var/opt/mssql
+
+volumes:
+  mssql-data:
