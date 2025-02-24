@@ -6,7 +6,7 @@ using TimeSlot = Domain.Shared.ValueObjects.TimeSlot;
 
 namespace Domain.Calendar.Models.CalendarDays;
 
-public abstract class CalendarDay : AggregateRoot
+public class CalendarDay : AggregateRoot
 {
     private readonly List<CalendarItem> _items = new();
 
@@ -18,9 +18,17 @@ public abstract class CalendarDay : AggregateRoot
 
     public DateOnly Date { get; }
 
-    public abstract bool IsWorkingDay { get; }
-
     public IReadOnlyCollection<CalendarItem> Items => _items.AsReadOnly();
+
+    public static CalendarDay Load(Guid id, DateOnly date)
+    {
+        return new CalendarDay(date, id);
+    }
+
+    public static CalendarDay Create(DateOnly date)
+    {
+        return new CalendarDay(date);
+    }
 
     public virtual void AddItem(CalendarItem item)
     {

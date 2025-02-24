@@ -1,6 +1,5 @@
 using Application.Calendar.DataTransfer.DTOs;
 using Domain.Calendar.Models.CalendarDays;
-using Domain.Shared.ValueObjects;
 using SharedKernel.Extensions;
 
 namespace Application.Calendar.DataTransfer.Mapping;
@@ -13,17 +12,10 @@ public static class CalendarDayMappingExtensions
         {
             Id = day.Id,
             Date = day.Date.ToDateTime(TimeOnly.MinValue),
-            IsWorkingDay = day.IsWorkingDay,
             WorkStartTime = null,
             WorkEndTime = null,
             Reservations = day.Items.Select(i => i.ToDto(day)).ToList(),
         };
-
-        if (day is WorkingDay wd)
-        {
-            dto.WorkStartTime = wd.WorkingHours.Start.ToDateTime(wd.Date);
-            dto.WorkEndTime = wd.WorkingHours.End.ToDateTime(wd.Date);
-        }
 
         return dto;
     }
@@ -32,14 +24,7 @@ public static class CalendarDayMappingExtensions
     {
         if (dto.IsWorkingDay)
         {
-            var day = WorkingDay.Load(
-                dto.Date.ToDateOnly(),
-                TimeSlot.Create(
-                    dto.WorkStartTime!.Value.ToTimeOnly(),
-                    dto.WorkEndTime!.Value.ToTimeOnly()
-                ),
-                dto.Id
-            );
+            var day = CalendarDay.Load(dto.Id, dto.Date.ToDateOnly());
 
             foreach (var reservation in dto.Reservations)
                 day.AddItem(reservation.ToDomain());
@@ -48,7 +33,7 @@ public static class CalendarDayMappingExtensions
         }
         else
         {
-            var day = NonWorkingDay.Load(dto.Id, dto.Date.ToDateOnly());
+            var day = CalendarDay.Load(dto.Id, dto.Date.ToDateOnly());
 
             foreach (var reservation in dto.Reservations)
                 day.AddItem(reservation.ToDomain());
