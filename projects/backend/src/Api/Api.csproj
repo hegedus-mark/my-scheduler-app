@@ -18,16 +18,9 @@
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
-
     <ItemGroup>
-        <Folder Include="Controllers\Calendar\"/>
-    </ItemGroup>
-
-
-    <ItemGroup>
-        <ProjectReference Include="..\Application\Application.csproj"/>
-        <ProjectReference Include="..\Infrastructure\Infrastructure.csproj"/>
-        <ProjectReference Include="..\SharedKernel\SharedKernel.csproj"/>
+      <ProjectReference Include="..\Application\Application.csproj" />
+      <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     </ItemGroup>
 
 </Project>
